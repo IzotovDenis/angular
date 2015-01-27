@@ -1,0 +1,13 @@
+h4 Каталог
+.sidebar
+  ul#accordion.nav.nav-list
+    - groups.each do |group|
+      -unless group["disabled"]
+        li.panel
+          - unless group['children'].blank?
+            a data-parent="#accordion" data-toggle="collapse" href="#group_#{group['id']}"
+              .menu-text= group['title']
+              b.arrow.glyphicon.glyphicon-chevron-down
+            = render "groups/submenu", :group=>group
+          -else
+            = link_to group['title'], group_path(group['id']), :class=>"action-link"

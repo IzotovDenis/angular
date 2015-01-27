@@ -1,0 +1,26 @@
+input type="text" ng-model="newItem.id"
+| {{newItem.id}}
+span.btn.btn-default ng-click="addItem()"
+	| Добавить
+
+= content_tag :table, :class=>"table item-list" do
+	tbody
+		tr.head
+			th.center Фото
+			th.center Код/артикул
+			th.center Наименование
+		tr.tr_middle ng-repeat="item in items"
+			td.center.photo
+				img ng-src="{{item.img}}"
+			td.kod
+				.table_kod_lable = "код:"
+				.item_kod.table_kod_value 
+					| {{item.kod}}
+				.table_kod_lable = "артикул:"
+				.item_article.table_kod_value 
+					| {{item.article}}
+			td.title
+					| {{item.title}}
+			td.action
+				.btn.btn-danger.btn-xs ng-click="deleteItem($index)"
+					| Удалить

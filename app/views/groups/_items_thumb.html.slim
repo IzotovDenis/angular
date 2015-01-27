@@ -1,0 +1,19 @@
+.item-thumbs-content
+	ul.item-thumbs
+		- items.each do |item|
+			li.thumbnail.item-thumb
+				.item-full-width
+					= link_to "#{items_path}/#{item.properties['Код товара']}" do
+						.item-full-width-inner
+							.item-thumb-image
+								= image_tag item.image.thumb.url
+							.item-thumb-title
+								h3
+									= item.title
+							p.center.lead.price
+								- if can? :view_price, item
+									= "#{price(item.price)}"
+								- else
+									= "Цена: "
+									span.glyphicon.glyphicon-lock
+.clearfix

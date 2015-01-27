@@ -1,0 +1,23 @@
+h2 Мои заказы
+table.table.table-striped.table-admin-orders
+	tbody
+		tr.head
+			th.center номер
+			th.center дата
+			th.center сумма
+			th.center
+		- @orders.each do |order|
+			tr.tr_middle
+				td = order.id
+				td = Russian::strftime(order.formed, "%A %d %B %H:%M")
+				td = number_to_currency(order.amount, separator: ",")
+				td = link_to "открыть", order, :class=>'btn btn-default btn-xs', :remote=>true
+
+.modal.fade#order-modal aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1" 
+  .modal-dialog.modal-lg
+    .modal-content
+		.modal-header
+		  button.close aria-hidden="true" data-dismiss="modal" type="button"  &times;
+		  h4#OrderModalTitle.modal-title
+		.modal-body
+		.modal-footer

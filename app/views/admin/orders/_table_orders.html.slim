@@ -1,0 +1,17 @@
+table.table.table-striped.table-admin-orders
+	tbody
+		tr.head
+			th.center.id номер
+			th.center.user клиент
+			th.center.amount сумма
+			th.center.date дата
+			th.center действия
+		- orders.each do |order|
+			tr.tr_middle
+				td.id = link_to order.id, admin_order_path(order)
+				td.user = order.user.name
+				td.amount = number_to_currency(order.amount, separator: ",")
+				td.date = Russian::strftime(order.formed, "%d %B %H:%M")
+				td
+					= link_to forward_admin_orders_path(order), :class=>"btn btn-default btn-xs",data: { confirm: "Отправить заказ № #{order.id} от #{order.user.name} на почту?" }, :remote=>true, method: :post do
+						= "отправить"

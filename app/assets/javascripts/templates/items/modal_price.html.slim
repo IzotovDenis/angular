@@ -1,0 +1,9 @@
+H1 Как увидеть цены?
+div ng-if="user.authorized == false"
+	p.lead
+		| Нет времени объяснять, просто зарегистрируйся на сайте и позвони администратору.
+div ng-if="user.authorized == true && user.can_order == false"
+	p.lead
+		| Нет времени объяснять, просто позвони администратору.
+
+img ng-src="http://99px.ru/sstorage/56/2011/12/11312111650179593.jpg"

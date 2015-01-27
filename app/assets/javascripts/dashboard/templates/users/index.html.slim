@@ -1,0 +1,26 @@
+H1 Пользователи
+
+table.table
+	tr
+		th Id
+		th Наименование
+		th ИНН
+		th email
+		th Заказов
+		th Активности
+		th Статус
+	tr	ng-repeat="user in users" ng-click="showUser(user.id)"
+		td 
+			| {{user.id}}
+		td
+			| {{user.name}}
+		td
+			| {{user.inn}}
+		td
+			| {{user.email}}
+		td
+			| 323
+		td
+			| 2312312
+		td
+			| Покупатель

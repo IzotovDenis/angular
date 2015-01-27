@@ -1,0 +1,11 @@
+= form_tag (admin_orders_path), :remote=>true, method: :post do
+	= "показать с "
+	=text_field_tag "orders_from", Date.today
+	= " по " 
+	=text_field_tag "orders_to", Date.today
+	=submit_tag "показать"
+
+= @start
+= @end
+.content
+	= render "admin/orders/table_orders", :orders=>@orders

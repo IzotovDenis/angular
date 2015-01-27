@@ -1,0 +1,27 @@
+h1 Слайдеры
+ul.slider-sort data-update-url="#{sort_admin_sliders_url}"
+	- @sliders.each do |slider|
+		= content_tag_for :li, slider, :class=>"thumbnail admin-slider"
+			.row
+				.col-xs-1
+					span.handle.glyphicon.glyphicon-sort
+				.col-xs-4
+					= image_tag slider.image.url, :class=>"admin-slider-thumb"
+				.col-xs-6
+					p
+						- if !slider.action['link'].blank?
+							= "Действие: переход на страницу #{slider.action['link']}"
+						-	else
+							| Нет действия
+				.col-xs-1
+					= link_to "Удалить", admin_slider_path(slider), method: :delete
+p.lead Создать новый слайдер	
+= form_for [:admin, Slider.new] do |f|
+	= f.label "Выберете файл"
+	= f.file_field :image
+	= f.label "Введите ссылку"
+	= f.fields_for :action do |p|
+		= p.text_field :link
+	= f.submit 
+
+

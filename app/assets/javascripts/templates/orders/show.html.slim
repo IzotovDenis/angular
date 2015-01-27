@@ -1,0 +1,34 @@
+a ng-href="#/orders" class="btn btn-default"  Все заказы
+
+h1 Заказ № {{order.id}}
+
+p Дата отправики с сайта : {{order.formed}}
+
+p ng-show="order.comment"
+	| {{order.comment}}
+
+p * Цены указаны на текущий момент и могут отличатся от даты формирования заказа.
+table.table.item-list
+	tr.head
+		th.center.photo Картинка
+		th.center.kod Код/артикул
+		th.center.title Наименование
+		th.center.qty Кол-во
+		th.center.price Цена
+	tr.tr_middle ng-repeat="item in order.items"
+		td.center.photo
+			item-ordered
+			item-image image="item.image" size="img_thumb"
+		td.kod
+			.table_kod_lable = "код:"
+			.item_kod.table_kod_value
+				| {{item.kod}}
+			.table_kod_lable = "артикул:"
+			.item_article.table_kod_value
+				| {{item.article}}
+		td.title
+			| {{item.title}}
+		td.center.qty
+			| {{item.qty}}
+		td.center.price
+			| {{item.price}} руб.

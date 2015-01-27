@@ -1,0 +1,25 @@
+h1 Все заказы
+
+table.table
+	tr.head
+		th.center
+			| Номер
+		th.center
+			| Наименований
+		th.center
+			| Сумма
+		th.center
+			| Сформирован
+		th.center
+			| Комментарий
+	tr.cursor-pointer ng-repeat="order in orders" ng-click="showOrder(order.id)"
+		td.center
+			| {{order.id}}
+		td.center
+			| {{order.positions}}
+		td
+			| {{order.amount}}
+		td
+			| {{order.date}}
+		td
+			| {{order.comment}}

@@ -1,0 +1,7 @@
+Заявка с сайта
+Покупатель <%=@order.user.name %>
+Время отправки <%= Time.now%>
+Код | Кол-во | Наименование
+<% @order_items.each do |order_item| %>
+<%="#{order_item.item.properties['Код товара']} | #{order_item.qty} | #{order_item.item.full_title}"%>
+<% end %>

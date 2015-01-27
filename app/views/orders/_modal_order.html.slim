@@ -1,0 +1,39 @@
+table.table.table-bordered.order-list
+	tbody
+		tr.head
+			th.center Фото
+			th.center код/артикул
+			th.center Наименование
+			th.center Остаток
+			th.center Цена
+			th.center Заказ
+			th.center Сумма
+			th.center удалить
+		- order_items.each do |order_item|
+			=content_tag_for(:tr,order_item,:class=>"tr_middle") do
+				td.center.photo
+					= link_to "#{items_path}/#{order_item.item.properties['Код товара']}" do
+						= image_tag order_item.item.image.thumb.url, :class=>"group_item_image"
+				td.kod
+					.table_kod_lable = "код:"
+					.table_kod_value = "#{order_item.item.properties['Код товара']}"
+					.table_kod_lable = "артикул:"
+					.table_kod_value = "#{order_item.item.article}"
+				td 
+					= link_to order_item.item.full_title, "#{items_path}/#{order_item.item.properties['Код товара']}"
+				td.center.qty
+					= helper_item_qty(order_item.item.qty)
+				td.center.price
+					= price(order_item.item.price)
+				td.center.order
+					= form_for order_item, :remote=>true do |f|
+						= f.text_field :qty,:class=>'order-qty', :placeholder=>"0"
+				td.center.item-amount
+					span.order-item-total
+						= number_to_currency(order_item.amount)
+				td.center
+					= link_to  order_item, method: :delete, :remote=>true do
+						span.glyphicon.glyphicon-remove
+p.lead.right
+	= "Итого "
+	span.order-amount = number_to_currency(current_order.amount, separator: ",")

@@ -1,0 +1,5 @@
+= form_tag order_items_url, :remote=>true, method: :post, :class=>"edit_order_item"
+	= hidden_field_tag 'order_item_item_id',item.id,:name=>"order_item[item_id]"
+	= text_field_tag 'order_item_qty', order_item_qty(item), :name=>"order_item[qty]",:placeholder=>"1",:class=>"order-qty"
+	= button_tag(type: "submit", class:"btn btn-xs btn-default qty-btn btn-order", id: "btn_1") do
+		= "В корзину"

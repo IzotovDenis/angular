@@ -1,0 +1,27 @@
+h1 = @group.title
+- if @group.root?
+	= link_to "Все категории", admin_groups_path
+-else
+	= link_to @group.parent.title, admin_group_path(@group.parent)
+ul.list-group#group-sort data-update-url="#{sort_admin_groups_url}"
+	- @groups.each do |group|
+		= content_tag_for :li, group,:class=>"list-group-item" do
+			span.handle.glyphicon.glyphicon-sort
+			= link_to group.title, admin_group_path(group)
+			span.float-right
+				= link_to "Активна","#", :class=>"btn btn-success btn-xs"
+- if !@items.empty?
+	- case @group.sort_type
+		- when "auto"
+			p Вид сортировки: ПО НАЗВАНИЮ
+		- when "manual"
+			p Вид сортировки: РУЧНАЯ
+	= form_for @group, :url =>sort_items_admin_groups_url(@group), html: {:onsubmit => "return confirm('Вы уверены? Группа будет отсортирована по названию.');" } do |f|
+		= f.submit "АВТОМАТИЧЕСКАЯ СОРТИРОВКА"
+	ul.list-group#item-sort data-update-url="#{sort_admin_items_url}"
+		-@items.each do |item|
+			=content_tag_for :li, item, :class=>"list-group-item" do
+				span.handle.glyphicon.glyphicon-sort
+				= image_tag item.image.thumb, :class=>"item-sort-img"
+				= item.article
+				= item.full_title

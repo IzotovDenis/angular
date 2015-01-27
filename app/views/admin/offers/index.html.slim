@@ -1,0 +1,13 @@
+h1 Новинки
+table.table
+	tr
+		th Название
+		th Действие
+	- @offers.each do |offer|
+		tr
+			td
+				= link_to offer.title, edit_admin_offer_path(offer)
+			td
+				= link_to "Удалить", [:admin, offer], method: :delete
+
+p =link_to "Добавить новинку", new_admin_offer_path, :class=>"btn btn-primary"

@@ -1,0 +1,15 @@
+#accordion_sub
+	ul class="submenu nav-show collapse #{collapse_in(group['id'])}" id="group_#{group['id']}"
+		.panel-body
+		  ul.nav.nav-pills.nav-stacked
+		    - group['children'].each do |children|
+		      -unless children["disabled"]
+			      li
+			        - unless children['children'].blank?
+			          a data-parent="#accordion_sub" data-toggle="collapse" href="#group_#{children['id']}"
+			            span.menu-text= children['title']
+			            b.arrow.glyphicon.glyphicon-chevron-down
+			          = render "groups/submenu", :group=>children
+			        -else
+								= link_to group_path(children['id']), :class=>"action-link" do
+									= children['title']

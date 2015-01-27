@@ -1,0 +1,7 @@
+- page_title "Популярные товары"
+= render "layouts/scroll"
+.content
+	= render "layouts/carousel"
+	h3.h-underline = "Популярные товары"
+	.item-thumbs-content
+		=render 'groups/items_thumb', :items=>@items, :query=>@query

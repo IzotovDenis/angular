@@ -1,0 +1,14 @@
+doctype html
+html ng-app="Dashboard"
+  head
+    title = yield(:title)
+    = javascript_include_tag "dashboard"
+    = stylesheet_link_tag    "application", media: "all"
+    = csrf_meta_tags
+  body
+    .app ng-controller="MainCtrl"
+      = render 'layouts/navbar'
+      .wrapper
+        .inner-block.clearfix
+          = yield
+

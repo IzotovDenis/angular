@@ -1,0 +1,7 @@
+- if current_order.good?
+	.center.bg-danger
+		h3.lead.danger
+			= check_box_tag 'accept'
+			= "Наименование товаров и количество в заказе указано верно."
+	.center
+		p= link_to "Отправить заказ", forwarding_order_path, remote: :true, method: :post, :class=>"btn btn-primary",:id=>"submit-order-btn", :disabled=>true

@@ -1,0 +1,17 @@
+.offers-scroll
+  div ng-repeat="offer in offers"
+	a ng-href="#/offers/{{offer.id}}"
+		.col-sm-3.offer-scroll
+		  img ng-src="{{offer.thumb}}"
+			.caption
+			  span.strong
+				| {{offer.text}}
+
+.carousels
+	carousel interval="5000" 
+	  slide active="slider.active" ng-repeat="slider in sliders"
+	  	a ng-href="{{slider.href}}"
+				img ng-src="{{slider.img}}" style="margin:auto;"
+
+h1 Популярные товары
+div ng-include="'items/list.html'"

@@ -1,0 +1,35 @@
+h1 Hey
+.col-xs-6
+	p. Заказы
+	table.table
+		tr
+			th №
+			th Пользователь
+			th Сумма
+			th Время
+		tr ng-repeat="order in orders"
+			td 
+				| {{order.id}}
+			td 
+				| {{order.user_id}}
+			td 
+				| 432423
+			td 
+				| {{order.created_at}}
+.col-xs-6
+	p.lead Пользователи
+	table.table
+		tr
+			th id
+			th Имя
+			th инн
+		tr ng-repeat="user in users"
+			td
+				| {{user.id}}
+			td
+				| {{user.name}}
+			td
+				| {{user.inn}}
+.col-xs-6
+	p.lead Активность
+	p | {{activities}}

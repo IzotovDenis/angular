@@ -1,0 +1,35 @@
+=link_to "Добавить каталог", new_admin_promo_path, :class=>"btn btn-primary", :remote=>true
+=link_to "Добавить группу", new_admin_pcatalog_path, :class=>"btn btn-primary", :remote=>true
+
+ul.admin-pcatalog.panel-group.promo-sort data-update-url="#{sort_admin_pcatalogs_url}"
+	- @pcatalogs.each do |pcatalog|
+	  = content_tag_for :li, pcatalog,:class=>"panel panel-default" do
+	    .panel-heading
+	      h4.panel-title
+	      	span.handle.glyphicon.glyphicon-sort
+	      	= link_to pcatalog.name, "#collapse_#{pcatalog.id}", :data=>{:toggle=>"collapse"}
+	      	= link_to edit_admin_pcatalog_path(pcatalog), :remote=>true
+	      		span.glyphicon.glyphicon-edit
+	      	= link_to admin_pcatalog_path(pcatalog), method: :delete, data: { confirm: 'Are you sure?' } do
+						span.glyphicon.glyphicon-remove
+	    .panel-collapse.collapse id="collapse_#{pcatalog.id}"
+	      .panel-body
+	      	ul.list-group.promos-list.promo-sort data-update-url="#{sort_admin_promos_url}"
+	      		- pcatalog.promos.each do |promo|
+	      			= content_tag_for :li, promo,:class=>"list-group-item" do
+	      				span.handle.glyphicon.glyphicon-sort
+	      				= promo.name
+	      				= promo.brand
+	      				= link_to edit_admin_promo_path(promo), :remote=>true
+	      					span.glyphicon.glyphicon-edit
+								= link_to admin_promo_path(promo), method: :delete, data: { confirm: 'Are you sure?' } do
+									span.glyphicon.glyphicon-remove
+
+.modal.fade#promo-modal aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1" 
+  .modal-dialog.modal-lg
+    .modal-content
+		.modal-header
+		  button.close aria-hidden="true" data-dismiss="modal" type="button"  &times;
+		  h4#myModalLabel.modal-title Заявка
+		.modal-body
+		.modal-footer

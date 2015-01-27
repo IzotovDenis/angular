@@ -1,0 +1,4 @@
+$("#cart-modal").modal("show");
+$("#cart-modal .modal-body").html("<%= escape_javascript(render 'orders/modal_order', :order_items=>@order_items ) %>");
+$("#cart-modal .modal-footer").html("<%= escape_javascript(render 'orders/modal_order_footer') %>");
+ready();

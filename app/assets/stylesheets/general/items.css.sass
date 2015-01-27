@@ -1,0 +1,60 @@
+// Place all the styles related to the items controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.item-image-area
+	float: left
+	width: 360px
+	height: 360px
+	background-color: #fff
+	border: 1px solid #ececec
+	position: relative
+	img
+		position: absolute
+		margin: auto
+		top: 0
+		left: 0
+		right: 0
+		bottom: 0
+.item-text
+	font-size: 12px!important
+	line-height: 18px
+.item-content-area
+	float: left
+	width: 498px
+	padding: 0px 10px 10px
+.price
+	overflow: hidden
+	position: relative
+	.price-value
+		font-size: 14px
+		font-weight: bold
+	.price-currency
+		color: #555
+		
+.label-hit
+	color: red
+.oems
+	width: 450px
+	max-width: 450px
+	position: absolute
+	bottom: 2px	
+	.oems-label
+		font-size: 9px
+		font-weight: bold
+	.oem
+		font-size: 10px
+		padding: 0px 2px
+		&:hover
+			font-weight: bold
+
+.item-offers
+	position: absolute
+	top: 0px
+	right: 0px
+	.hit
+		background: #f77600
+	.new
+		background: #27c24c
+	.special
+		background: #ec2121

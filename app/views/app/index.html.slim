@@ -1,0 +1,18 @@
+form ng-submit="enterFind(newQuery)"
+	.input-group.center-find
+		input.form-control.find-input placeholder="введите запрос" type="text" ng-model="newQuery.query" ng-change="enterFind(newQuery)" ng-keydown='keyalert()' ng-model-options="{debounce: 700}" find-input=""
+		span.input-group-btn.find-select
+			select.form-control ng-model="newQuery.attr" ng-init="newQuery.attr = 'all'"
+          		option value="all" Везде
+          		option value="code" По коду
+          		option value="article" По артикулу
+          		option value="title" По наименованию
+          		option value="oem" По OEM
+ 		span.input-group-btn
+			submit.btn.btn-warning type="button"  Поиск
+  	.checkbox ng-show="system.group.id"
+    	label
+      		input type="checkbox" ng-model="newQuery.group"
+            | Искать в категории: {{system.group.title}}
+
+div ng-view="" autoscroll=""

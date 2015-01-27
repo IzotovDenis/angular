@@ -1,0 +1,56 @@
+h1 Редактирование профиля
+= form_for(@user) do |f|
+  - if @user.errors.any?
+    #error_explanation
+      h3 = "Ошибка при сохранении"
+      ul
+        -@user.errors.each do |attr|
+          li= I18n.t("activerecord.errors.models.user.attributes.#{attr}")
+  table.table.login-table
+    tr.tr_middle
+      td.right.required = "email:"
+      td = f.email_field :email, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right.required = "Фамилия Имя Отчество:"
+      td = f.text_field :person, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right.required = "Телефон:"
+      td = f.text_field :phone, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right.required = "Город:"
+      td = f.text_field :city, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right.required = "Юр. название компании:"
+      td = f.text_field :name, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right.required = "Юр. адресс компании:"
+      td = f.text_field :legal_address, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right.required = "Фактический адрес компании:"
+      td = f.text_field :actual_address, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right.required = "ИНН:"
+      td = f.text_field :inn, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right.required = "ОГРН:"
+      td = f.text_field :ogrn, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right = "КПП:"
+      td = f.text_field :kpp, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right = "Название банка:"
+      td = f.text_field :bank_name, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right = "Расчетный счет:"
+      td = f.text_field :curr_account, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right = "Корреспондентский счет:"
+      td = f.text_field :corr_account, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right = "БИК:"
+      td = f.text_field :bik, autofocus: true, :class=>'form-control login-input input-sm'
+    tr.tr_middle
+      td.right = "Примечение:"
+      td = f.text_area :note, autofocus: true, :class=>'form-control login-input input-sm'
+
+  div= f.submit "Сохранить", :class=>"btn btn-primary"

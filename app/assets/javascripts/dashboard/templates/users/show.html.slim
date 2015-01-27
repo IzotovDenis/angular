@@ -1,0 +1,81 @@
+H1 
+	| {{user.name}}
+
+.col-xs-3
+	.btn.btn-default.cursor-pointer ng-click="editUser(user.id)" Полная информация
+	p
+		span.bold Контактное лицо
+		br
+	 	span 
+	 		| {{user.person}}
+	p
+		span.bold Телефон
+		br
+		span
+			| {{user.phone}}
+	p
+		span.bold email
+		br
+		span
+			| {{user.email}}
+	p
+		span.bold Город
+		br
+		span
+			| {{user.city}}
+	p
+		span.bold ИНН
+		br
+		span
+			| {{user.inn}}
+			a ng-href="https://focus.kontur.ru/search?query={{user.inn}}" target="_blank"
+				| фокус
+.col-xs-9
+	.row
+		.col-md-4
+			.thumbnail
+				.caption
+					h3 Заказов
+					p 
+						| 3
+		.col-md-4
+			.thumbnail
+				.caption
+					h3 Заказов
+					p
+						| 3
+		.col-md-4
+			.thumbnail
+				.caption
+					h3 Заказов
+					p 
+						|3
+	p.lead Заказы
+	table.table
+		tr
+			th Id
+			th Позиций
+			th Сумма
+			th Дата
+		tr ng-repeat="order in orders"
+			td
+				| {{order.updated_at}}
+			td
+				| 3
+			td
+				| 32432 руб
+			td
+				| 12:32 15 декабря 2013 г
+	p.lead Активность
+	table.table
+		tr
+			th Дата
+			th Действие
+			th Лог
+		tr ng-repeat="activity in activities"
+			td
+				| {{activity.updated_at}}
+			td
+				| {{activity.controller}}
+			td
+				| {{activity.log}}

@@ -1,0 +1,7 @@
+h3.h-underline
+	= "Результат поиска '#{params[:find]}'" 
+-if !@items.blank?
+	=render 'groups/items_list', :items=>@items,:query=>@query_highlight
+	= will_paginate @items, renderer: BootstrapPagination::Rails, :next_label=>"Вперед", :previous_label=>"Назад", :params => { :find => @query }, method: :post
+-else
+	p Ничего не найдено

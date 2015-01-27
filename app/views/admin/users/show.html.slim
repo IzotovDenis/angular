@@ -1,0 +1,55 @@
+h2 = @user.name
+p.lead
+	| Активности:
+	= @user.activities.count
+p.lead
+	| Заказов:
+	= @user.orders.count
+
+table.table.profile.table-hover
+	tr
+		td.right = "Контактное лицо:"
+		td = @user.person
+	tr
+		td.right = "E-mail:"
+		td = @user.email
+	tr
+		td.right = "Телефон:"
+		td = @user.phone
+	tr
+		td.right = "Юридический адресс:"
+		td = @user.legal_address
+	tr
+		td.right = "Фактический адрес:"
+		td = @user.actual_address
+	tr
+		td.right = "Город:"
+		td = @user.city
+	tr
+		td.right = "ИНН:"
+		td = @user.inn
+	tr
+		td.right = "ОГРН:"
+		td = @user.ogrn
+	tr
+		td.right = "КПП:"
+		td = @user.kpp
+	tr
+		td.right = "Банк:"
+		td = @user.bank_name
+	tr
+		td.right = "Расчетный счет:"
+		td = @user.curr_account
+	tr
+		td.right = "Корреспондетский счет:"
+		td = @user.corr_account
+	tr
+		td.right = "БИК:"
+		td = @user.bik
+	tr
+		td.right = "Примечание:"
+		td = @user.note
+	tr
+		td.right = "Статус покупателя:"
+		td = @user.role
+=link_to "Редактировать", edit_user_path, :class=>'btn btn-default'
