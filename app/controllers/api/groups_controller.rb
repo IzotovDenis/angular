@@ -16,7 +16,6 @@ class Api::GroupsController < ApiController
   end
 
   def show
-    sleep 0.2
   	ids = @group.subtree_ids
     @order_list = order_list(current_order)
   	respond_with @items = Item.able.includes(:prices).where(:group_id=>ids).page(params[:page])

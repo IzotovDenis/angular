@@ -56,6 +56,7 @@ namespace :deploy do
   task :setup do
     on roles(:all) do
       execute "mkdir  #{shared_path}/config/"
+      execute "mkdir  /home/deployer/uploads"
       execute "mkdir  /home/deployer/apps/#{application}/run/"
       execute "mkdir  /home/deployer/apps/#{application}/log/"
       execute "mkdir  /home/deployer/apps/#{application}/socket/"
