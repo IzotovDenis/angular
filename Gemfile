@@ -57,7 +57,7 @@ gem 'whenever', :require => false
 # gem 'bcrypt', '~> 3.1.7'
 gem "spreadsheet"
 gem "sidekiq-status"
-gem 'angularjs-rails'
+gem 'angularjs-rails', '~> 1.3.10'
 gem 'ng-rails-csrf'
 gem 'angular-rails-templates'
 gem 'angular-ui-bootstrap-rails'

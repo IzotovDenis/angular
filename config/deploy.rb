@@ -69,8 +69,8 @@ namespace :deploy do
       upload!('shared/Procfile', "#{shared_path}/Procfile")
       upload!('shared/nginx.conf', "#{shared_path}/nginx.conf")
       sudo 'service nginx stop'
-      sudo "rm -f /etc/nginx/sites-available/default"
-      sudo "ln -s #{shared_path}/nginx.conf /etc/nginx/sites-available/default"
+      sudo "rm -f /etc/nginx/sites-enabled/default"
+      sudo "ln -s #{shared_path}/nginx.conf /etc/nginx/sites-enabled/default"
       sudo 'service nginx start'
 
       within release_path do
