@@ -1,4 +1,4 @@
-app.factory "Item", ($http) ->
+app.factory "Item", Item = ["$http", ($http) ->
 	item = {}
 	item.page = 1
 	item.busy = false
@@ -42,3 +42,4 @@ app.factory "Item", ($http) ->
 	item.getItems = ->
 		item.list
 	return item
+]
