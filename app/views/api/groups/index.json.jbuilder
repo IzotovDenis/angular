@@ -1,6 +1,6 @@
 json.sliders @sliders.each do |slider|
-	json.img slider.image.url
-	json.href slider.action["link"]
+	json.image slider.action["image"]
+	json.link slider.action["link"]
 end
 json.offers @offers.each do |offer|
 	json.variang offer.variant

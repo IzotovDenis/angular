@@ -16,7 +16,7 @@ ol
   div
     = f.label :email
     br/
-    = f.email_field :email, autofocus: true, :placeholder=>"Введите email", :class=>'form-control login-input input-sm'
+    = f.text_field :email, autofocus: true, :placeholder=>"Введите email", :class=>'form-control login-input input-sm'
     br
   div.center
     = f.submit "Отправить мне письмо", :class=>"btn btn-primary btn-lg"

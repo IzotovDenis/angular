@@ -96,9 +96,21 @@ end
 
   namespace :dashboard do
     namespace :api do
+      get "stat"
       resources :orders
       resources :activities
       resources :users
+      resources :offers do
+        collection do
+          get "get_items"
+        end
+      end
+      resources :groups do
+        collection do
+          get "tree"
+        end
+      end
+      resources :sliders
     end
   end
 

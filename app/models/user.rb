@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   has_many :orders, dependent: :destroy
   has_many :searches, dependent: :destroy
   has_many :activities, dependent: :destroy
+  scope :noobs, -> {where("created_at > :time AND role = 'user'", :time=>Time.now-7.days).order("created_at")}
+  scope :online, -> {joins(:activities).where("activities.updated_at >?", Time.now-7.minute).uniq}
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -19,9 +21,11 @@ class User < ActiveRecord::Base
 
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
+    puts conditions
     if login = conditions.delete(:login)
       where(conditions).where(["lower(inn) = :value OR lower(email) = :value", { :value => login.downcase }]).first
     else
+      conditions.permit! if conditions.class.to_s == "ActionController::Parameters"
       where(conditions).first
     end
   end

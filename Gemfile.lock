@@ -291,6 +291,7 @@ DEPENDENCIES
   nprogress-rails
   pg
   rails (= 4.1.8)
+  rake (~> 10.4.2)
   russian
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)

@@ -1,35 +1,47 @@
 h1 Hey
-.col-xs-6
-	p. Заказы
+.col-xs-3
+	p.lead Пользователи онлайн
+	ul.list-group
+		li.list-group-item ng-repeat="user in stat.online"
+			span.glyphicon.glyphicon-user
+			span 
+				| {{user.name}}
+
+
+	p.lead Новые пользователи
+	ul.list-group
+		li.list-group-item ng-repeat="user in stat.noobs"
+			span.glyphicon.glyphicon-user
+			span 
+				| {{user.name}}
+
+.col-xs-9
+	p.lead Последние заказы
 	table.table
 		tr
 			th №
 			th Пользователь
 			th Сумма
 			th Время
-		tr ng-repeat="order in orders"
+		tr ng-repeat="order in stat.orders"
 			td 
 				| {{order.id}}
 			td 
-				| {{order.user_id}}
+				| {{order.user.name}}
 			td 
-				| 432423
+				| {{order.amount}} руб.
 			td 
-				| {{order.created_at}}
-.col-xs-6
-	p.lead Пользователи
+				| {{order.date}}
+	p.lead Активность
 	table.table
 		tr
-			th id
-			th Имя
-			th инн
-		tr ng-repeat="user in users"
-			td
-				| {{user.id}}
-			td
-				| {{user.name}}
-			td
-				| {{user.inn}}
-.col-xs-6
-	p.lead Активность
-	p | {{activities}}
+			th Дата
+			th Пользователь
+			th Действие
+		tr ng-repeat="activity in stat.activities"
+			td 
+				| {{activity.date}}
+			td 
+				| {{activity.user}}
+			td 
+				actionlog controller="activity.controller" log="activity.log" action="activity.action"

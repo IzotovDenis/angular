@@ -1,11 +1,8 @@
-dashboard.controller "MainCtrl", MainCtrl = ["$scope", "$http", ($scope, $http) ->
+dashboard.controller "MainCtrl", MainCtrl = ["$scope", "$http", "$timeout", ($scope, $http, $timeout) ->
 
-	$http.get('api/orders').success (data) ->
-		$scope.orders = data
+	countUp = ->
+		$http.get('api/stat').success (data) ->
+			$scope.stat = data
 
-	$http.get('api/activities/').success (data) ->
-		$scope.activities = data
-
-	$http.get('api/users/').success (data) ->
-		$scope.users = data
+	countUp()
 ]

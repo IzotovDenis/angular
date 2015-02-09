@@ -1,0 +1,14 @@
+h1 ActivitiIndexCtrl
+
+table.table
+	tr
+		th Дата
+		th Пользователь
+		th Действие
+	tr ng-repeat="activity in activities"
+		td 
+			| {{activity.date}}
+		td 
+			| {{activity.user}}
+		td 
+			actionlog controller="activity.controller" log="activity.log" action="activity.action"

@@ -1,0 +1,23 @@
+json.id user.id
+json.name user.name
+json.email user.email
+json.inn user.inn
+json.role user.role
+json.phone user.phone
+json.legal_address user.legal_address
+json.ogrn user.ogrn
+json.city user.city
+json.actual_address user.actual_address
+json.bik user.bik
+json.bank_name user.bank_name
+json.bik user.bik
+json.curr_account user.curr_account
+json.corr_account user.corr_account
+json.note user.note
+json.person user.person
+json.kpp user.kpp
+json.orders user.orders.ready.count
+json.activities_count user.activities.count
+json.activities user.activities.count
+json.created_at user.created_at
+json.last_action user.activities.last.updated_at if !user.activities.blank?

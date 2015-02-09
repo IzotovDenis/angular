@@ -5,11 +5,10 @@ class Dashboard::Api::OrdersController < Dashboard::ApiController
 
   def index
     if params[:user_id]
-      @orders = Order.where(:user_id=>params[:user_id])
+     @orders = Order.where(:user_id=>params[:user_id]).order('formed DESC')
     else
-  	 @orders = Order.ready.order(:formed)
+  	 @orders = Order.ready.order('formed DESC')
     end
-    respond_with @orders
   end
 
     private

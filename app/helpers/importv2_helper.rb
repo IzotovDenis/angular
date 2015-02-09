@@ -1,10 +1,17 @@
 # coding: utf-8
 module Importv2Helper
 # Открытие файла xml, dir - каталог с файлом, type - тип файла import/offers
+	def open_file(dir,type)
+		location = "#{dir}/#{type}.xml"
+		file = File.open(location)
+	end
+
 	def open_xml(dir,type)
 		location = "#{dir}/#{type}.xml"
 		file = File.open(location)
-		Nokogiri::XML(file)
+		doc = Nokogiri::XML(file)
+		file.close
+		doc
 	end
 # Проверяется полная выгрузка или изменения
 	def check_changes(xml)

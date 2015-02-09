@@ -44,5 +44,5 @@ div ng-controller="ItemsCtrl" infinite-scroll='items.loadItems()' infinite-scrol
 			td.center.order ng-class="canOrder() ? 'visible' : 'invisible'"
 				item-ordered
 				form ng-submit="addToCart(item)"
-					input.order-qty type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0" focus-me=""
-					input.btn.btn-xs.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" value="В корзину"
+					input.order-qty type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
+					input.btn.btn-xs.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" value="В корзину" 

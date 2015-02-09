@@ -14,11 +14,15 @@ class Api::UsersController < ApiController
   end
 
   def update_password
-    if @user.valid_password?(params[:pswd][:old])
-      @user.password = params[:pswd][:pass]
-      @user.password_confirmation = params[:pswd][:confirm]
-      @user.save
-      sign_in(@user, :bypass => true)
+    if params[:pswd] && @user.valid_password?(params[:pswd][:old])
+      if params[:pswd][:pass].length > 5 && params[:pswd][:pass].length > 5
+        @user.password = params[:pswd][:pass]
+        @user.password_confirmation = params[:pswd][:confirm]
+        @user.save
+        sign_in(@user, :bypass => true)
+      else
+        @user.errors.add(:password, :empty)
+      end
     else
       @user.errors.add(:password, :invalid)
     end

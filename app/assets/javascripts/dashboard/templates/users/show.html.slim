@@ -3,6 +3,11 @@ H1
 
 .col-xs-3
 	.btn.btn-default.cursor-pointer ng-click="editUser(user.id)" Полная информация
+	.h-line-dashed
+	select.form-control ng-model="user.role" ng-disabled="user.role == 'dev'" ng-change="updateRole()"
+		option value='user' Пользователь
+		option value='buyer' Покупатель
+	.h-line-dashed	
 	p
 		span.bold Контактное лицо
 		br
@@ -30,6 +35,12 @@ H1
 			| {{user.inn}}
 			a ng-href="https://focus.kontur.ru/search?query={{user.inn}}" target="_blank"
 				| фокус
+	.h-line-dashed
+	p
+		span.bold Дата регистрации
+		br
+		span
+			| {{user.created_at}}
 .col-xs-9
 	.row
 		.col-md-4
@@ -37,19 +48,19 @@ H1
 				.caption
 					h3 Заказов
 					p 
-						| 3
+						| {{user.orders}}
 		.col-md-4
 			.thumbnail
 				.caption
-					h3 Заказов
+					h3 Всего действий
 					p
-						| 3
+						| {{user.activities_count}}
 		.col-md-4
 			.thumbnail
 				.caption
-					h3 Заказов
+					p.bold последнее действи
 					p 
-						|3
+						| {{activities[0].date}}
 	p.lead Заказы
 	table.table
 		tr
@@ -59,23 +70,20 @@ H1
 			th Дата
 		tr ng-repeat="order in orders"
 			td
-				| {{order.updated_at}}
+				| {{order.id}}
 			td
-				| 3
+				| {{order.count_positions}}
 			td
-				| 32432 руб
+				| {{order.amount}}
 			td
-				| 12:32 15 декабря 2013 г
+				| {{order.date}}
 	p.lead Активность
 	table.table
 		tr
-			th Дата
 			th Действие
-			th Лог
+			th Дата
 		tr ng-repeat="activity in activities"
 			td
-				| {{activity.updated_at}}
+				actionlog controller="activity.controller" log="activity.log" action="activity.action"
 			td
-				| {{activity.controller}}
-			td
-				| {{activity.log}}
+				| {{activity.date}}

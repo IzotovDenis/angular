@@ -1,0 +1,18 @@
+h1 Заказы
+
+table.table
+	tr
+		th id
+		th Клиент
+		th Сумма
+		th Дата
+	tr ng-repeat="order in orders"
+		td
+			| {{order.id}}
+		td
+			a ng-href="#/users/{{order.user.id}}"
+				| {{order.user.name}}
+		td
+			| {{order.amount}}
+		td
+			| {{order.date}}

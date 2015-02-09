@@ -3,11 +3,10 @@ class Dashboard::Api::ActivitiesController < Dashboard::ApiController
 
   def index
     if params[:user_id]
-      @activities = Activity.where(:user_id=>params[:user_id]).limit(20)
+      @activities = Activity.includes(:user).where(:user_id=>params[:user_id]).order("updated_at DESC").limit(20)
     else
-  	 @activities = Activity.all.limit(20)
+  	 @activities = Activity.where.not(user_id: '').includes(:user).limit(20).order("updated_at DESC").limit(20)
     end
-    respond_with @activities
   end
 
     private

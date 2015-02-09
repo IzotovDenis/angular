@@ -2,16 +2,39 @@ H1 Пользователи
 
 table.table
 	tr
-		th Id
-		th Наименование
-		th ИНН
-		th email
-		th Заказов
-		th Активности
-		th Статус
-	tr	ng-repeat="user in users" ng-click="showUser(user.id)"
 		td 
-			| {{user.id}}
+		td 
+			input.input-sm.form-control ng-model="search.name" placeholder="фильтр наименование"
+		td 
+			input.input-sm.form-control ng-model="search.inn" placeholder="фильтр инн"
+		td
+			input.input-sm.form-control ng-model="search.email" placeholder="фильтр email"
+		td 
+		td 
+		td 
+		td
+			select.form-control.input-sm ng-model="search.role" ng-init="search.role = ''"
+          		option value="" все
+          		option value="user" пользователи
+          		option value="buyer" покупатели
+	tr
+		th 
+		th 
+			a href="" ng-click="predicate = 'name'; reverse=!reverse" Наименование
+		th 
+			a href="" ng-click="predicate = 'inn'; reverse=!reverse" ИНН
+		th
+			a href="" ng-click="predicate = 'email'; reverse=!reverse" email
+		th
+			a href="" ng-click="predicate = 'orders'; reverse=!reverse" Заказов
+		th
+			a href="" ng-click="predicate = 'activities'; reverse=!reverse" Активности
+		th
+			a href="" ng-click="predicate = 'last_action'; reverse=!reverse" Работал
+		th Статус
+	tr	ng-repeat="user in users | filter:search:strict | orderBy:predicate:reverse" 
+		td
+			.btn.btn-info.btn-xs ng-click="showUser(user.id)" инфо
 		td
 			| {{user.name}}
 		td
@@ -19,8 +42,10 @@ table.table
 		td
 			| {{user.email}}
 		td
-			| 323
+			| {{user.orders}}
 		td
-			| 2312312
+			| {{user.activities}}
 		td
-			| Покупатель
+			| {{user.last_action}}
+		td
+			| {{user.role}}

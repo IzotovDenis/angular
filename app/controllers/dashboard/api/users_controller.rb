@@ -3,7 +3,6 @@ class Dashboard::Api::UsersController < Dashboard::ApiController
   before_action :set_user, :only=>[:show, :update]
   def index
   	@users = User.all
-    respond_with @users
   end
 
   def show
@@ -38,7 +37,7 @@ class Dashboard::Api::UsersController < Dashboard::ApiController
                                             :bik,
                                             :ogrn,
                                             :note,
-                                            :i)
+                                            :inn)
   end
 
 end

@@ -32,4 +32,7 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 	$scope.goFind = (query) ->
 		$location.url('/find/' + query)
 
+	$scope.setFocus = (item, event) ->
+		console.log(event.target)
+
 ]
