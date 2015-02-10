@@ -1,26 +1,26 @@
 dashboard.controller "OffersShowCtrl", OffersShowCtrl = ["$scope", "$http", "$location", "$routeParams", ($scope, $http, $location, $routeParams) ->
 
 	unless $routeParams.offerId == "new"
-		$http.get("api/offers/" + $routeParams.offerId).success (data) ->
+		$http.get("/dashboard/api/offers/" + $routeParams.offerId).success (data) ->
 			$scope.offer = data
 
 	else
 		$scope.offer = {}
 		$scope.offer.items = []
 
-	$http.get("api/groups/tree").success (data) ->
+	$http.get("/dashboard/api/groups/tree").success (data) ->
 		$scope.groups = data
 
 	$scope.itemRange = ->
-		$http.get("api/offers/get_items", params: {type: "item_range", from: $scope.newRange.from, to: $scope.newRange.to}).success (data) ->
+		$http.get("/dashboard/api/offers/get_items", params: {type: "item_range", from: $scope.newRange.from, to: $scope.newRange.to}).success (data) ->
 			addItems(data)
 
 	$scope.itemGroup = ->
-		$http.get("api/offers/get_items", params: {type: "item_group", group_id: $scope.newGroup.id}).success (data) ->
+		$http.get("/dashboard/api/offers/get_items", params: {type: "item_group", group_id: $scope.newGroup.id}).success (data) ->
 			addItems(data)
 
 	$scope.itemCode = ->
-		$http.get("api/offers/get_items", params: {type: "item_code", code: $scope.newItem.code}).success (data) ->
+		$http.get("/dashboard/api/offers/get_items", params: {type: "item_code", code: $scope.newItem.code}).success (data) ->
 			addItems(data)
 
 	$scope.deleteItem = (item) ->
@@ -39,9 +39,9 @@ dashboard.controller "OffersShowCtrl", OffersShowCtrl = ["$scope", "$http", "$lo
 
 	$scope.sendOffer = ->
 		if $routeParams.offerId == "new"
-			$http.post("api/offers/", offer: $scope.offer).success (data) ->
+			$http.post("/dashboard/api/offers/", offer: $scope.offer).success (data) ->
 				console.log(data)
 		else
-			$http.patch("api/offers/"+$scope.offer.id, offer: $scope.offer).success (data) ->
+			$http.patch("/dashboard/api/offers/"+$scope.offer.id, offer: $scope.offer).success (data) ->
 				console.log(data)
 ]

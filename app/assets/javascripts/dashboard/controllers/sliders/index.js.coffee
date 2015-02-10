@@ -4,7 +4,7 @@ dashboard.controller "SlidersIndexCtrl", SlidersIndexCtrl = ["$scope", "$http", 
 
 
 	loadSliders = ->
-		$http.get("api/sliders").success (data) ->
+		$http.get("/dashboard/api/sliders").success (data) ->
 			$scope.sliders = data
 
 	loadSliders()
@@ -15,11 +15,11 @@ dashboard.controller "SlidersIndexCtrl", SlidersIndexCtrl = ["$scope", "$http", 
 			$scope.newSlider.image = img
 
 	$scope.removeSlider = (id) ->
-		$http.delete("api/sliders/" + id).success (data) ->
+		$http.delete("/dashboard/api/sliders/" + id).success (data) ->
 			loadSliders()
 
 	$scope.createSlider = ->
-		$http.post("api/sliders", slider: $scope.newSlider).success (data) ->
+		$http.post("/dashboard/api/sliders", slider: $scope.newSlider).success (data) ->
 			$scope.newSlider = {}
 			loadSliders()
 ]

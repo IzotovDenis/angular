@@ -1,6 +1,6 @@
 dashboard.controller "GroupsIndexCtrl", GroupsIndexCtrl = ["$scope", "$http", "$location", ($scope, $http, $location) ->
 
-	$http.get("api/groups").success (data) ->
+	$http.get("/dashboard/api/groups").success (data) ->
 		$scope.groups = data
 
 	$scope.setDisabled = (id) ->
