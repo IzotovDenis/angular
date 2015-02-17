@@ -34,7 +34,6 @@ gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootst
 gem 'activerecord-postgres-hstore'
 gem 'slim'
 gem 'nokogiri'
-gem 'saxerator'
 gem 'sidekiq'
 gem 'foreman'
 gem 'ancestry'
