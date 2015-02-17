@@ -10,7 +10,7 @@ GIT
       railties (>= 3.1)
 
 GEM
-  remote: https://rubygems.org/
+  remote: http://gems.github.com/
   specs:
     actionmailer (4.1.8)
       actionpack (= 4.1.8)
@@ -188,6 +188,8 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
+    saxerator (0.9.3)
+      nokogiri (>= 1.4.0)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -294,6 +296,7 @@ DEPENDENCIES
   rake (~> 10.4.2)
   russian
   sass-rails (~> 4.0.3)
+  saxerator
   sdoc (~> 0.4.0)
   sidekiq
   sidekiq-status

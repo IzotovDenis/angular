@@ -16,8 +16,8 @@ json.corr_account user.corr_account
 json.note user.note
 json.person user.person
 json.kpp user.kpp
-json.orders user.orders.ready.count
-json.activities_count user.activities.count
-json.activities user.activities.count
+#json.orders user.orders.ready.count
+#json.activities_count user.activities.count
+#json.activities user.activities.count
 json.created_at user.created_at
 json.last_action user.activities.last.updated_at if !user.activities.blank?

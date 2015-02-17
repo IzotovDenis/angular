@@ -23,9 +23,8 @@ div ng-controller="ItemsCtrl" infinite-scroll='items.loadItems()' infinite-scrol
 				span.cursor-pointer ng-click="itemShow(item)"
 					| {{item.title}}
 				.item-offers
-					a.label.label-green ng-class="label.variant" ng-href="/offers/{{label.offer_id}}/" ng-repeat="label in item.labels"
-						| {{label.variant}}
-						| {{label.offer_id}}
+					a.label.label-green ng-class="label.variant" ng-href="#/offers/{{label.offer_id}}/" ng-repeat="label in item.labels"
+						labeltext variant="label.variant"
 				.oems ng-if="item.properties.oems"
 					span.oems-label
 						| OEM:

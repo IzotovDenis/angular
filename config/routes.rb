@@ -111,6 +111,7 @@ end
         end
       end
       resources :sliders
+      resources :currencies
     end
   end
 

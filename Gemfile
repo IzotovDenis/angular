@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://gems.github.com'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -34,6 +34,7 @@ gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootst
 gem 'activerecord-postgres-hstore'
 gem 'slim'
 gem 'nokogiri'
+gem 'saxerator'
 gem 'sidekiq'
 gem 'foreman'
 gem 'ancestry'

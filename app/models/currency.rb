@@ -3,7 +3,7 @@ class Currency < ActiveRecord::Base
 	has_many :rates
 
 	def rate
-		if rates.count > 0
+		if rates.last
 			rates.last.value
 		else
 			0

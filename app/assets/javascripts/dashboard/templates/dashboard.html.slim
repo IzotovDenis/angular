@@ -14,6 +14,18 @@ h1 Hey
 			span.glyphicon.glyphicon-user
 			span 
 				| {{user.name}}
+	p.lead Курсы валют
+	table.table
+		tr ng-repeat="currency in currencies"
+			td
+				| {{currency.name}}
+			td
+				| {{currency.value}}
+	.btn.btn-default ng-click="newValForm = true" ng-show="!newValForm" Добавить валюту
+	div ng-show="newValForm"
+		input.form-control ng-model="newCurrency.name"
+		.btn.btn-danger.btn-xs ng-click="newValForm = false" Отмена
+		.btn.btn-primary.btn-xs ng-click="addCurrency()" Добавить
 
 .col-xs-9
 	p.lead Последние заказы

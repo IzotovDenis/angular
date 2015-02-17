@@ -8,7 +8,7 @@ app.directive "itemImage", ->
 		if scope.image.exist
 			html = "<img src="+scope.image[attrs.size]+"></img>"
 		else
-			html = "<img src=/assets/"+scope.image[attrs.size]+"></img>"
+			html = "<div class='"+attrs.size+"'></div>"
 		element.append html
 
 app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
@@ -42,3 +42,18 @@ app.directive "currency", ["User", (User) ->
 				setPrice()
 				)
 ]
+
+app.directive "labeltext",  ->
+	restrict: "E"
+	scope:	{
+		variant: "="
+	}
+	link: (scope, element, attrs) ->
+      if scope.variant is "special"
+        text = "акция"
+      if scope.variant is "hit"
+        text = "популярный"
+      if scope.variant is "new"
+        text = "новинка"
+      element.html text
+

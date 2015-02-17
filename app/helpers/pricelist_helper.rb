@@ -1,3 +1,112 @@
+# coding: utf-8
 module PricelistHelper
 
+	def create
+		require 'spreadsheet'
+		@groups = Group.arrange_as_array(:order=>"position").each {|n| n.position ="#{n.depth}" }
+		book = Spreadsheet::Workbook.new
+		format = Spreadsheet::Format.new :size => 8
+		format_head = Spreadsheet::Format.new :size => 8, :weight => :bold, :horizontal_align => :center
+		# Head formats
+		pricelist_title_format = Spreadsheet::Format.new :size => 12, :horizontal_align => :center
+		data_format = Spreadsheet::Format.new :size => 8, :horizontal_align => :center
+		text_format = Spreadsheet::Format.new :size => 10, :horizontal_align => :center, :text_wrap => :true
+		link_format = Spreadsheet::Format.new :size => 14, :weight => :bold, :horizontal_align => :center
+		# End head formats
+		title_format = Spreadsheet::Format.new :size => 9, :weight => :bold, :pattern => 1, :pattern_fg_color => :silver, :bottom=>:thin, :top=>:thin
+		title_first = Spreadsheet::Format.new :size => 9, :weight => :bold, :pattern => 1, :pattern_fg_color => :silver, :bottom=>:thin, :top=>:thin, :left => :thin
+		title_last = Spreadsheet::Format.new :size => 9, :weight => :bold, :pattern => 1, :pattern_fg_color => :silver, :bottom=>:thin, :top=>:thin, :right => :thin
+		sheet = book.create_worksheet
+		sheet[0,4] = "Прайс-лист ИП Пономарев Е.В."
+		sheet.row(0).set_format 4, pricelist_title_format
+		sheet[1,4] = "Дата формирования 12:23 17 февраля 2015 г. #{Russian::strftime(DateTime.now, '%H:%M %d %B %Y')}"
+		sheet.row(1).set_format 4, data_format
+		sheet[2,4] = "Воспользоваться удобным поиском, посмотреть актуальные цены, фотографии товара, скачать свежий прайс-лист или сделать заказ он-лайн вы можете на нашем сайте"
+		sheet.row(2).set_format 4, text_format
+		[20,20,50,20].each_with_index do |value, index|
+			sheet.row(index).height = value
+		end
+		sheet[3,4] = Spreadsheet::Link.new "http://planeta-avtodv.ru/?marker=price_list_title", 'ПЕРЕЙТИ НА САЙТ'
+		sheet.row(3).set_format 4, link_format
+		sheet.row(4).concat %w{Фото Код Бренд Артикул Наименование Тип OEM Кросс Цена Заказ}
+		10.times do |x|
+			sheet.row(4).set_format x, format_head
+		end
+		row = 5
+		@groups.each do |group|
+			sheet[row,4] = group.title
+			10.times do |x|
+				sheet.row(row).set_format x, title_format
+			end
+			row = add_items(sheet, group, row, format)
+			row = row+1
+			[7,7,13,13,70,15,23,13,13,7].each_with_index do |value,index|
+				sheet.column(index).width = value
+			end
+		end
+		book.write 'out.xls'
+		nil
+	end
+
+	def add_items(sheet, group, row, format)
+		format = Spreadsheet::Format.new :size => 8, :bottom=>:thin, :top=>:thin, :left => :thin, :right => :thin, :text_wrap => :true
+		kod_format = Spreadsheet::Format.new :size => 8, :horizontal_align => :right, :bottom=>:thin, :top=>:thin, :left => :thin, :right => :thin
+		link_format = Spreadsheet::Format.new :size => 8, :color=>:blue, :horizontal_align => :right, :bottom=>:thin, :top=>:thin, :left => :thin, :right => :thin
+		order_format = title_first = Spreadsheet::Format.new :size => 8, :weight => :bold, :pattern => 1, :pattern_fg_color => :yellow, :bottom=>:thin, :top=>:thin, :left => :thin
+		price_format = Spreadsheet::Format.new(:number_format => "#,##0.00\\ [$руб.-419];\\-#,##0.00\\ [$руб.-419]", :size => 8, :bottom=>:thin, :top=>:thin, :left => :thin, :right => :thin)
+		items = Item.where(:group_id=>group.id).able.includes(:prices).sort_by &:full_title
+			items.each do |item|
+			row = row+1
+			sheet[row,0] = Spreadsheet::Link.new "http://planeta-avtodv.ru/items/#{item.properties["Код товара"]}", 'фото'
+			sheet[row,1] = item.properties["Код товара"].to_i
+			sheet[row,2] = item.brand.strip if item.brand
+			sheet[row,3] = item.article.strip if item.article
+			sheet[row,4] = item.properties["Полное наименование"].strip if item.properties["Полное наименование"]
+			sheet[row,5] = item.properties["Тип"].strip if item.properties["Тип"]
+			sheet[row,6] = item.properties["ОЕМ"].strip if item.properties["ОЕМ"]
+			sheet[row,8] = item.price
+			10.times do |x|
+				sheet.row(row).set_format x, format
+			end
+			sheet.row(row).set_format 0, link_format
+			sheet.row(row).set_format 1, kod_format
+			sheet.row(row).set_format 8, price_format
+			sheet.row(row).set_format 9, order_format
+		end
+		row
+	end
+
+	def groups(group,i,level=0)
+		if group.has_children?
+			puts i
+			puts group.title
+			puts level
+			i = i+1
+			group.children.able.each do |children|
+				i = groups(children,i,level+1)
+			end
+		else
+			puts i
+			puts level			
+			puts group.title
+			i = i+1
+		end
+		i
+	end
+
+
+	def test_sp
+		book = Spreadsheet.open('/home/den/template1.xls')
+		format = Spreadsheet::Format.new :color => :blue, :weight => :bold, :size => 18
+		sheet = book.worksheet(0)
+		row = 14
+		item = Item.first
+		sheet[row,0] = item.properties["Код товара"]
+		sheet[row,1] = item.article
+		sheet[row,2] = item.properties["Полное наименование"]
+		sheet[row,3] = item.price
+		sheet.row(14).default_format = format
+		book.write 'out.xls'
+		nil
+	end
 end

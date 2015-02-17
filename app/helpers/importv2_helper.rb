@@ -43,7 +43,7 @@ module Importv2Helper
 				parent = Group.where(:cid=>group.parent_cid).first
 				group.parent_id = parent.id
 			else
-			   group.parent_id = nil
+				group.parent_id = nil
 			end
 			group.save
 		end
