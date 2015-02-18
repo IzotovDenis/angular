@@ -3,8 +3,11 @@ dashboard.controller "GroupsIndexCtrl", GroupsIndexCtrl = ["$scope", "$http", "$
 	$http.get("/dashboard/api/groups").success (data) ->
 		$scope.groups = data
 
-	$scope.setDisabled = (id) ->
-		setDisbled()
+	$scope.groupToggle = (id) ->
+		$scope.toggle_progress = true
+		$http.post("/dashboard/api/groups/toggle", id: id).success (data) ->
+			$scope.toggle_progress = false
+			$scope.groups = data
 
 	$scope.showGroup = (id) ->
 		showGroup()

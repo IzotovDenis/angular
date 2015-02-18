@@ -20,9 +20,12 @@ def self.arrange_as_array(options={}, hash=nil)
     arrange_as_array(:order=>"position").each {|n| n.title ="#{'--' * n.depth} #{n.title}" }
   end
 
-  def set_disabled
+  def toggle_disabled
+    val = !self.disabled
+    self.disabled = val
+    self.save
     self.subtree.each do |group|
-      group.disabled = true
+      group.disabled = val
       group.save
     end
   end

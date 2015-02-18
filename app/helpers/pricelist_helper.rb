@@ -1,6 +1,10 @@
 # coding: utf-8
 module PricelistHelper
 
+	def generate
+
+	end
+
 	def create
 		require 'spreadsheet'
 		@groups = Group.arrange_as_array(:order=>"position").each {|n| n.position ="#{n.depth}" }
@@ -44,8 +48,8 @@ module PricelistHelper
 				sheet.column(index).width = value
 			end
 		end
-		book.write 'out.xls'
-		nil
+		book.write 'public/sys/pricelist/out.xls'
+		system ("zip -j -o public/sys/pricelist/ponomarev-pricelist.zip public/sys/pricelist/out.xls")
 	end
 
 	def add_items(sheet, group, row, format)
@@ -76,37 +80,4 @@ module PricelistHelper
 		row
 	end
 
-	def groups(group,i,level=0)
-		if group.has_children?
-			puts i
-			puts group.title
-			puts level
-			i = i+1
-			group.children.able.each do |children|
-				i = groups(children,i,level+1)
-			end
-		else
-			puts i
-			puts level			
-			puts group.title
-			i = i+1
-		end
-		i
-	end
-
-
-	def test_sp
-		book = Spreadsheet.open('/home/den/template1.xls')
-		format = Spreadsheet::Format.new :color => :blue, :weight => :bold, :size => 18
-		sheet = book.worksheet(0)
-		row = 14
-		item = Item.first
-		sheet[row,0] = item.properties["Код товара"]
-		sheet[row,1] = item.article
-		sheet[row,2] = item.properties["Полное наименование"]
-		sheet[row,3] = item.price
-		sheet.row(14).default_format = format
-		book.write 'out.xls'
-		nil
-	end
 end

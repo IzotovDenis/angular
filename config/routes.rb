@@ -69,6 +69,7 @@ end
   root "app#index"
 
   namespace :api do
+    resources :pricelists, :only =>[:index]
     resources :groups, :only =>[:index, :show] do
       collection do 
         get 'tree'
@@ -108,6 +109,7 @@ end
       resources :groups do
         collection do
           get "tree"
+          post "toggle"
         end
       end
       resources :sliders

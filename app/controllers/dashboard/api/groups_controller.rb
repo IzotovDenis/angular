@@ -1,10 +1,17 @@
 class Dashboard::Api::GroupsController < Dashboard::ApiController
   respond_to :json
-  before_action :set_group, only: [:show]
+  before_action :set_group, only: [:show, :toggle]
 
   def index
-    @groups = Group.roots
+    @groups = Group.roots.order(:position)
     respond_with @groups
+  end
+
+  def toggle
+    if @group.toggle_disabled
+      @groups = Group.roots.order(:position)
+      render :json => @groups
+    end
   end
 
   def show
