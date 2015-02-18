@@ -17,4 +17,4 @@ json.note user.note
 json.person user.person
 json.kpp user.kpp
 json.created_at user.created_at
-json.last_action user.activities.last.updated_at if !user.activities.blank?
+#json.last_action user.activities.last.updated_at if !user.activities.blank?
