@@ -1,5 +1,5 @@
 class Activity < ActiveRecord::Base
-	belongs_to :user
+	belongs_to :user, :counter_cache => true
 	scope :today, ->{where(:created_at=>DateTime.now.beginning_of_day..DateTime.now.end_of_day)}
 	scope :yesterday, ->{where(:created_at=>DateTime.now.beginning_of_day-1.day..DateTime.now.end_of_day-1.day)}
 

@@ -3,8 +3,9 @@ html
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	body
 		h4 Заказ с сайта
-		p style="font-size: 12px"= "Покупатель #{@order.user.name}"
+		p style="font-size: 12px" = "Покупатель: #{@order.user.name} ИНН: #{@order.user.inn}"
 		p style="font-size: 12px" = "Дата #{Russian::strftime(@order.formed, '%d %B %H:%M')}"
+		p style="font-size: 12px" = "Комментарий: #{@order.comment}"
 		table style="font-size: 12px; width: 620px;border-collapse: collapse"
 			tr
 				td style="text-align: center;border: 1px solid #ccc;width: 60px" = "Код"
