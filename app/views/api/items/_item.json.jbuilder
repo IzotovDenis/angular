@@ -15,7 +15,6 @@ json.image do
 	json.img_item item.image.item.url
 	json.img_large item.image.large.url
 end
-json.ordered @order_list[item.id] ? @order_list[item.id] : ""
 if item.properties
 	json.properties do
 		json.country item.properties['Страна изготовления']

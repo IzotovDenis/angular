@@ -4,7 +4,6 @@ class Api::FindController < ApiController
   after_action :set_activity
   respond_to :json
   def index
-    @order_list = Hash[OrderItem.includes(:item).pluck(:item_id, :qty)]
     @query = params[:query]
     @items = Item.search(str_query(params[:query]), set_options)
     respond_with @items
