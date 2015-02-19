@@ -26,9 +26,9 @@ table.table
 		th
 			a href="" ng-click="predicate = 'email'; reverse=!reverse" email
 		th
-			a href="" ng-click="predicate = 'orders'; reverse=!reverse" Заказов
+			a href="" ng-click="predicate = 'orders_count'; reverse=!reverse" Заказов
 		th
-			a href="" ng-click="predicate = 'activities'; reverse=!reverse" Активности
+			a href="" ng-click="predicate = 'activities_count'; reverse=!reverse" Активности
 		th
 			a href="" ng-click="predicate = 'last_action'; reverse=!reverse" Работал
 		th Статус
@@ -42,7 +42,7 @@ table.table
 		td
 			| {{user.email}}
 		td
-			| {{user.orders}}
+			| {{user.orders_count}}
 		td
 			| {{user.activities_count}}
 		td

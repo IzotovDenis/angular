@@ -9,6 +9,14 @@ class Order < ActiveRecord::Base
 	scope :formed_from, ->(period) {where(["formed >= ?", period]).ready}
 	scope :formed_before, ->(period) {where(["formed <= ?", period]).ready}
 
+	after_save :update_orders_counter_cache
+	after_destroy :update_orders_counter_cache
+
+	def update_orders_counter_cache
+  		self.user.orders_count = self.user.orders.ready.count
+  		self.user.save
+	end
+
 	def amount
 		@total = 0
 		self.order_items.includes(:item=>:prices).each do |order_item|
