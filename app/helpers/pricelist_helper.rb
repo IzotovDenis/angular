@@ -5,51 +5,55 @@ module PricelistHelper
 
 	end
 
-	def create
-		require 'spreadsheet'
-		@groups = Group.arrange_as_array(:order=>"position").each {|n| n.position ="#{n.depth}" }
-		book = Spreadsheet::Workbook.new
-		format = Spreadsheet::Format.new :size => 8
-		format_head = Spreadsheet::Format.new :size => 8, :weight => :bold, :horizontal_align => :center
-		# Head formats
-		pricelist_title_format = Spreadsheet::Format.new :size => 12, :horizontal_align => :center
-		data_format = Spreadsheet::Format.new :size => 8, :horizontal_align => :center
-		text_format = Spreadsheet::Format.new :size => 10, :horizontal_align => :center, :text_wrap => :true
-		link_format = Spreadsheet::Format.new :size => 14, :weight => :bold, :horizontal_align => :center
-		# End head formats
-		title_format = Spreadsheet::Format.new :size => 9, :weight => :bold, :pattern => 1, :pattern_fg_color => :silver, :bottom=>:thin, :top=>:thin
-		title_first = Spreadsheet::Format.new :size => 9, :weight => :bold, :pattern => 1, :pattern_fg_color => :silver, :bottom=>:thin, :top=>:thin, :left => :thin
-		title_last = Spreadsheet::Format.new :size => 9, :weight => :bold, :pattern => 1, :pattern_fg_color => :silver, :bottom=>:thin, :top=>:thin, :right => :thin
-		sheet = book.create_worksheet
-		sheet[0,4] = "Прайс-лист ИП Пономарев Е.В."
-		sheet.row(0).set_format 4, pricelist_title_format
-		sheet[1,4] = "Дата формирования 12:23 17 февраля 2015 г. #{Russian::strftime(DateTime.now, '%H:%M %d %B %Y')}"
-		sheet.row(1).set_format 4, data_format
-		sheet[2,4] = "Воспользоваться удобным поиском, посмотреть актуальные цены, фотографии товара, скачать свежий прайс-лист или сделать заказ он-лайн вы можете на нашем сайте"
-		sheet.row(2).set_format 4, text_format
-		[20,20,50,20].each_with_index do |value, index|
-			sheet.row(index).height = value
-		end
-		sheet[3,4] = Spreadsheet::Link.new "http://planeta-avtodv.ru/?marker=price_list_title", 'ПЕРЕЙТИ НА САЙТ'
-		sheet.row(3).set_format 4, link_format
-		sheet.row(4).concat %w{Фото Код Бренд Артикул Наименование Тип OEM Кросс Цена Заказ}
-		10.times do |x|
-			sheet.row(4).set_format x, format_head
-		end
-		row = 5
-		@groups.each do |group|
-			sheet[row,4] = group.title
+	def create_pricelist
+		begin
+			require 'spreadsheet'
+			@groups = Group.arrange_as_array(:order=>"position").each {|n| n.position ="#{n.depth}" }
+			book = Spreadsheet::Workbook.new
+			format = Spreadsheet::Format.new :size => 8
+			format_head = Spreadsheet::Format.new :size => 8, :weight => :bold, :horizontal_align => :center
+			# Head formats
+			pricelist_title_format = Spreadsheet::Format.new :size => 12, :horizontal_align => :center
+			data_format = Spreadsheet::Format.new :size => 8, :horizontal_align => :center
+			text_format = Spreadsheet::Format.new :size => 10, :horizontal_align => :center, :text_wrap => :true
+			link_format = Spreadsheet::Format.new :size => 14, :weight => :bold, :horizontal_align => :center
+			# End head formats
+			title_format = Spreadsheet::Format.new :size => 9, :weight => :bold, :pattern => 1, :pattern_fg_color => :silver, :bottom=>:thin, :top=>:thin
+			sheet = book.create_worksheet
+			sheet[0,4] = "Прайс-лист ИП Пономарев Е.В."
+			sheet.row(0).set_format 4, pricelist_title_format
+			sheet[1,4] = "Дата формирования 12:23 17 февраля 2015 г. #{Russian::strftime(DateTime.now, '%H:%M %d %B %Y')}"
+			sheet.row(1).set_format 4, data_format
+			sheet[2,4] = "Воспользоваться удобным поиском, посмотреть актуальные цены, фотографии товара, скачать свежий прайс-лист или сделать заказ он-лайн вы можете на нашем сайте"
+			sheet.row(2).set_format 4, text_format
+			[20,20,50,20].each_with_index do |value, index|
+				sheet.row(index).height = value
+			end
+			sheet[3,4] = Spreadsheet::Link.new "http://planeta-avtodv.ru/?marker=price_list_title", 'ПЕРЕЙТИ НА САЙТ'
+			sheet.row(3).set_format 4, link_format
+			sheet.row(4).concat %w{Фото Код Бренд Артикул Наименование Тип OEM Кросс Цена Заказ}
 			10.times do |x|
-				sheet.row(row).set_format x, title_format
+				sheet.row(4).set_format x, format_head
 			end
-			row = add_items(sheet, group, row, format)
-			row = row+1
-			[7,7,13,13,70,15,23,13,13,7].each_with_index do |value,index|
-				sheet.column(index).width = value
+			row = 5
+			@groups.each do |group|
+				sheet[row,4] = group.title
+				10.times do |x|
+					sheet.row(row).set_format x, title_format
+				end
+				row = add_items(sheet, group, row, format)
+				row = row+1
+				[7,7,13,13,70,15,23,13,13,7].each_with_index do |value,index|
+					sheet.column(index).width = value
+				end
 			end
+			book.write 'public/sys/pricelist/out.xls'
+			system ("zip -j -o public/sys/pricelist/ponomarev-pricelist.zip public/sys/pricelist/out.xls")
+			return true
+		rescue => e
+			puts e.to_s
+			return false
 		end
-		book.write 'public/sys/pricelist/out.xls'
-		system ("zip -j -o public/sys/pricelist/ponomarev-pricelist.zip public/sys/pricelist/out.xls")
 	end
 
 	def add_items(sheet, group, row, format)
@@ -61,7 +65,7 @@ module PricelistHelper
 		items = Item.where(:group_id=>group.id).able.includes(:prices).sort_by &:full_title
 			items.each do |item|
 			row = row+1
-			sheet[row,0] = Spreadsheet::Link.new "http://planeta-avtodv.ru/items/#{item.properties["Код товара"]}", 'фото'
+			sheet[row,0] = Spreadsheet::Link.new "http://planeta-avtodv.ru/items/#{item.properties["Код товара"]}", 'фото' if item.image.file
 			sheet[row,1] = item.properties["Код товара"].to_i
 			sheet[row,2] = item.brand.strip if item.brand
 			sheet[row,3] = item.article.strip if item.article

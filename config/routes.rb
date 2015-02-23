@@ -98,7 +98,9 @@ end
   namespace :dashboard do
     namespace :api do
       get "stat"
+      resources :rates, :only => [:create]
       resources :orders
+      resources :pricelists
       resources :activities
       resources :users
       resources :offers do

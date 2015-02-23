@@ -14,18 +14,47 @@ h1 Hey
 			span.glyphicon.glyphicon-user
 			span 
 				| {{user.name}}
-	p.lead Курсы валют
-	table.table
-		tr ng-repeat="currency in currencies"
-			td
-				| {{currency.name}}
-			td
-				| {{currency.value}}
-	.btn.btn-default ng-click="newValForm = true" ng-show="!newValForm" Добавить валюту
-	div ng-show="newValForm"
-		input.form-control ng-model="newCurrency.name"
-		.btn.btn-danger.btn-xs ng-click="newValForm = false" Отмена
-		.btn.btn-primary.btn-xs ng-click="addCurrency()" Добавить
+	.well
+		p.bold Курсы валют
+		table.table.table-currencies
+			tr.tr_middle ng-repeat="currency in currencies"
+				td.col-xs-4
+					span.glyphicon.glyphicon-remove-circle ng-click="currencyDeleted[currency.id] = true"
+					span
+					| {{currency.name}}
+				td.col-xs-8
+					form ng-submit="setRate(currency, $index)" ng-show="!currencyDeleted[currency.id]"
+						div class="input-group"
+							input.form-control.input-sm ng-model="currency.value" ng-disabled="!isEnabled(currency)"
+							div class="input-group-btn"
+								.btn.btn-default.btn-sm ng-click="setEnabled(currency)" ng-show="!isEnabled(currency)"
+									span.glyphicon.glyphicon-edit
+								.btn.btn-default.btn-sm.btn-primary ng-show="isEnabled(currency)" ng-click="setRate(currency, $index)"
+									span.glyphicon.glyphicon-ok
+					div class="input-group" ng-show="currencyDeleted[currency.id]"
+						input.form-control.input-sm ng-model="deleteCurrencyName"
+						div class="input-group-btn"
+							.btn.btn-danger.btn-sm ng-click="currencyDelete(deleteCurrencyName, currency, $index)"
+								span.glyphicon.glyphicon-ok
+							.btn.btn-success.btn-sm.btn-primary ng-click="currencyDeleted[currency.id] = false"
+								span.glyphicon.glyphicon-remove
+		.btn.btn-default.btn-block ng-click="newValForm = true" ng-show="!newValForm" Добавить валюту
+		div ng-show="newValForm"
+			div class="input-group"
+				input.form-control ng-model="newCurrency.name"
+				div class="input-group-btn"
+					.btn.btn-primary ng-click="addCurrency()" OK
+					.btn.btn-danger ng-click="newValForm = false" X
+	.well
+		p.bold Прайс лист
+		.btn.btn-block.btn-primary.btn-xs ng-click="newPricelist()" Создать прайс-лист
+		p 
+			| Дата формирования:
+			br
+			span.bold 12:12 12 января 2015 г.
+		p 
+			| Загрузок: 
+			span.bold 4
 
 .col-xs-9
 	p.lead Последние заказы
