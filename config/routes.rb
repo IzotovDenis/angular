@@ -68,6 +68,8 @@ end
 
   root "app#index"
 
+  get 'pricelist.zip' => "api/pricelists#download"
+
   namespace :api do
     resources :pricelists, :only =>[:index]
     resources :groups, :only =>[:index, :show] do

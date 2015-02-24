@@ -22,7 +22,7 @@ module PricelistHelper
 			sheet = book.create_worksheet
 			sheet[0,4] = "Прайс-лист ИП Пономарев Е.В."
 			sheet.row(0).set_format 4, pricelist_title_format
-			sheet[1,4] = "Дата формирования 12:23 17 февраля 2015 г. #{Russian::strftime(DateTime.now, '%H:%M %d %B %Y')}"
+			sheet[1,4] = "Дата формирования #{Russian::strftime(DateTime.now, '%H:%M %d %B %Y')}"
 			sheet.row(1).set_format 4, data_format
 			sheet[2,4] = "Воспользоваться удобным поиском, посмотреть актуальные цены, фотографии товара, скачать свежий прайс-лист или сделать заказ он-лайн вы можете на нашем сайте"
 			sheet.row(2).set_format 4, text_format

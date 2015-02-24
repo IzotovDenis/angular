@@ -15,7 +15,7 @@ app.factory "User", ["$http", "$q", ($http, $q) ->
 
 	user.getCurrent = ->
 	  defer = $q.defer()
-	  $http.get("api/users/current").success((res) ->
+	  $http.get("api/users/current?r="+Math.random()).success((res) ->
 	    user.set(res)
 	    defer.resolve res
 	    return
