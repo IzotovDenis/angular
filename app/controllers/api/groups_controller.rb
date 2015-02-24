@@ -12,7 +12,6 @@ class Api::GroupsController < ApiController
   end
 
   def tree
-    sleep 15
     respond_with Group.able.select("id, title, ancestry").arrange_serializable
   end
 

@@ -1,8 +1,11 @@
 class Api::UsersController < ApiController
-  before_action :set_user, only: [:index, :update, :update_password]
+  before_action :set_user, only: [:index, :update, :update_password, :current]
   respond_to :json
 
   def index
+    if !@user
+      render nothing: true, status: :unauthorized
+    end
   end
 
   def update
@@ -29,7 +32,6 @@ class Api::UsersController < ApiController
   end
 
   def current
-  	@user = current_user
   	if @user
     	respond_with @user
     else
