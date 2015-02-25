@@ -1,15 +1,9 @@
 # coding: utf-8
 class Api::ItemsController < ApiController
+  respond_to :json
 	before_action :set_item, only: [:show, :edit, :update, :destroy]
+
   def show
-  	if @item
-  		@group = @item.group
-	  	respond_to do |format|
-		  format.html # show.html.erb
-		  format.json
-      format.js
-		end
-	end
   end
 
   def range
@@ -25,6 +19,6 @@ class Api::ItemsController < ApiController
 	private
 	# Use callbacks to share common setup or constraints between actions.
 		def set_item
-		@item = Item.where("properties -> 'Код товара' = :value", :value=>params[:id]).first
+		@item = Item.joins(:group).where("properties -> 'Код товара' = :value", :value=>params[:id]).select('distinct items.*, groups.title as group_title').first
 		end
 end

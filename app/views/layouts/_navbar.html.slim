@@ -4,7 +4,12 @@ nav.navbar.navbar-blue.header.navbar-fixed-top role="navigation"
       .navbar-blue-brand
         = link_to "/#/" do
           = image_tag "logo100.png", :height=>"48px"
-      ul.nav.navbar-nav.navbar-right ng-cloak=""
+      ul.nav.navbar-nav.navbar-right
+        li.nav-link
+          = link_to new_user_session_path, :target=>"_self" do
+            span.glyphicon.glyphicon-info-sign
+            span.btn-head-lable
+              | Доставка и оплата
         li.dropdown.dropdown-discount.cursor-pointer ng-if="user.authorized == true"
           a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" role="button"
             span.text
@@ -53,9 +58,9 @@ nav.navbar.navbar-blue.header.navbar-fixed-top role="navigation"
             span.caret
           ul.dropdown-menu.dropdown-user role="menu" 
             li
-              a ng-href="#/profile"  Профиль
+              a ng-href="/profile"  Профиль
             li
-              a ng-href="#/orders"  Мои заказы
+              a ng-href="/orders"  Мои заказы
             li.divider
             li
               = link_to 'выход', destroy_user_session_path, :method=>:delete

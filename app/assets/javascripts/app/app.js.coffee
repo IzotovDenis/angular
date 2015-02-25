@@ -1,8 +1,9 @@
 @app = angular.module("App", ["ngResource", "treeControl","ng-rails-csrf", "templates", "infinite-scroll", "ngRoute", "ui.bootstrap", "ngSanitize"])
 
 app.config ["$routeProvider", "$locationProvider", ($routeProvider, $locationProvider) ->
-	$locationProvider.html5Mode false
+	$locationProvider.html5Mode true
 	$routeProvider.when '/groups/:groupId', templateUrl: 'groups/show.html', controller: 'GroupCtrl'
+	$routeProvider.when '/items/:itemId', templateUrl: 'items/show.html', controller: 'ItemShowCtrl'
 	$routeProvider.when '/find', templateUrl: 'find/index.html', controller: 'FindCtrl'
 	$routeProvider.when '/profile', templateUrl: 'profile/index.html', controller: "ProfileCtrl"
 	$routeProvider.when '/orders', templateUrl: 'orders/index.html', controller: "OrderIndexCtrl"

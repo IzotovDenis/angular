@@ -1,26 +1,33 @@
-app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order", "System",  "$location", "$modal", ($scope, $http, Group, User,Order, System, $location, $modal) ->
+app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order", "System",  "$location", "$modal", "Page", ($scope, $http, Group, User,Order, System, $location, $modal, Page) ->
 	
+	# Привязываем фабрики
 	$scope.order = Order
 	$scope.user = User
+	$scope.system = System
+	$scope.title = Page
 
+	# Может ли пользователь видеть цены, оформлять заказы?
 	$scope.canOrder = ->
 		User.can_order
 
 	$scope.newQuery = {}
 
-	$scope.system = System
-
+	# Метод установки скидки
 	$scope.setDiscount = (value) ->
 		User.setDiscount(value)
 
+	# Получить текущего пользователя
 	User.getCurrent().then ((res) ->
 		Order.getCurrent().then	((res) ->
 			Order.current = res)
 	), (reason) ->
 		console.log('error')
 
+	# Получить список групп меню
 	$scope.groups = Group.tree()
 
+
+	# Метода поиска
 	$scope.enterFind = (newQuery) ->
 		unless (newQuery.query == undefined || newQuery.query.length == 0)
 			query = "query=" + newQuery.query
@@ -30,9 +37,14 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 				query += "&attr=" + newQuery.attr
 			$location.url('/find?' + query)
 
+
+	# TODO: разобраться
 	$scope.keyalert = ->
 		console.log("alert") 
 
+
+	# Что то для работы с модалью заказа
+	# TODO: разобраться, переименовать
 	$scope.open = ->
 	  modalInstance = $modal.open(
 	    templateUrl: "modal.html"
@@ -40,11 +52,15 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 	    windowClass: 'modal-order'
 	  )
 
+
+	# Показать выбранную группу меню
+	# TODO: скрывать другие открытые ветки 
 	$scope.showSelected = (sel) ->
 		if sel
 			$scope.newQuery.group = false
 			$location.url('/groups/' + sel.id)
 
+	# Настрокий дерева меню
 	$scope.treeOptions = {
 	    nodeChildren: "children",
 	    dirSelectable: false,

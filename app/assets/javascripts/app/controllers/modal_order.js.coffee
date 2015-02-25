@@ -1,4 +1,4 @@
-app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "Order", "$http", ($scope, $modalInstance, Order, $http) ->
+app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "Order", "$http", "$window", ($scope, $modalInstance, Order, $http, $window) ->
 	$scope.order = Order
 	$scope.aler = (item) ->
 		console.log(item.id)
@@ -18,11 +18,12 @@ app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "
 
 	$scope.forwardOrder = ->
 		$http.post('api/orders/forwarding', comment: $scope.orderComment).success (data) ->
-			if data.success == true
-				console.log("SEND")
+			if data.status == "success"
 				$modalInstance.close()
+				$window.alert("Заказ успешно отправлен!")
 				Order.getCurrent().then	((res) ->
 					Order.current = res)
 			else
+				$window.alert("Ошибка при отправке!")
 				console.log("SOME ERROR")
 ]

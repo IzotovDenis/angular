@@ -1,26 +1,26 @@
 doctype html
-html ng-app="App"
+html ng-app="App" ng-controller="MainCtrl"
   head
-    title = yield(:title)
+    title ng-bind="title.getTitle()" Автотовары оптом Планета-Авто
     = javascript_include_tag "application"
     = stylesheet_link_tag    "application", media: "all"
     = csrf_meta_tags
+    base href="/"
   body
-    .app ng-controller="MainCtrl"
-      = render 'layouts/navbar'
-      .wrapper
-        .inner-block.clearfix
-          .left-bar
-            = link_to "pricelist.zip" do
-              .btn.btn-success.btn-block Скачать прайс-лист [zip]
-            .tree-menu
-              h4
-                | Каталог товаров
-              treecontrol class="tree-classic" tree-model="groups" options="treeOptions" on-selection="showSelected(node)" selected-node="node1" order-by="id"
-                | {{node.title}}
-          .content
-            = yield
-      .footer
-        = render "layouts/footer"
+    = render 'layouts/navbar'
+    .wrapper
+      .inner-block.clearfix
+        .left-bar
+          = link_to "pricelist.zip" do
+            .btn.btn-success.btn-block Скачать прайс-лист [zip]
+          .tree-menu
+            h4
+              | Каталог товаров
+            treecontrol class="tree-classic" tree-model="groups" options="treeOptions" on-selection="showSelected(node)" selected-node="node1" order-by="id"
+              | {{node.title}}
+        .content
+          = yield
+    .footer
+      = render "layouts/footer"
 
 

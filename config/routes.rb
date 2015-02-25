@@ -77,7 +77,7 @@ end
         get 'tree'
       end
     end
-    resources :items
+    resources :items, :only => [:show]
     resources :orders, :only => [:index, :show] do
       collection do
         get 'current'
@@ -121,4 +121,5 @@ end
     end
   end
 
+  get '*path', to: 'app#index'
 end

@@ -23,9 +23,9 @@ class Api::OrdersController < ApiController
       @order.formed = Time.now
       @order.save
   		ForwardingWorker.perform_async(@order.id)
-  		@status = true
+  		render :json => {status: "success"}
   	else
-  		@status = false
+  		render :json => {status: "error"}
   	end
   end
 

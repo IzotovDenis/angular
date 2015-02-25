@@ -5,11 +5,19 @@ app.directive "itemImage", ->
 		image: "="
 	}
 	link: (scope, element, attrs) ->
-		if scope.image.exist
-			html = "<img src="+scope.image[attrs.size]+"></img>"
-		else
-			html = "<div class='"+attrs.size+"'></div>"
-		element.append html
+
+		scope.$watch (->
+			scope.image), ((newVal,oldVal) ->
+				if newVal
+					setImage()
+				)
+
+		setImage = ->
+			if scope.image.exist
+				html = "<img src="+scope.image[attrs.size]+"></img>"
+			else
+				html = "<div class='"+attrs.size+"'></div>"
+			element.append html
 
 app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
 	restrict: "E"
@@ -30,8 +38,11 @@ app.directive "currency", ["User", (User) ->
 	}
 	link: (scope, element, attrs) ->
 		setPrice = ->
-			price = scope.value * (100-User.discount) / 100
-			element.html accounting.formatMoney(price, "", 2, " ", ",")
+			if scope.value == "0.00" && scope.item == true
+				element.html "по запросу"
+			else
+				price = scope.value * (100-User.discount) / 100
+				element.html accounting.formatMoney(price, "", 2, " ", ",")
 
 		scope.$watch (->
 			User.discount), ((newVal,oldVal) ->

@@ -31,8 +31,8 @@
 		p.lead
 			| Оптовая цена: 
 			span.price-value
-				currency value="item.price"
-			span.price-currency
+				currency value="item.price" item="true"
+			span.price-currency ng-if="item.price != 0.00"
 				|  руб.
 		form ng-submit="addToCart(item)"
 			.input-group.input-group-qty

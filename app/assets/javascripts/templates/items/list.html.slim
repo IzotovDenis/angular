@@ -23,7 +23,7 @@ div ng-controller="ItemsCtrl" infinite-scroll='items.loadItems()' infinite-scrol
 				span.cursor-pointer ng-click="itemShow(item)"
 					| {{item.title}}
 				.item-offers
-					a.label.label-green ng-class="label.variant" ng-href="#/offers/{{label.offer_id}}/" ng-repeat="label in item.labels"
+					a.label.label-green ng-class="label.variant" ng-href="/offers/{{label.offer_id}}/" ng-repeat="label in item.labels"
 						labeltext variant="label.variant"
 				.oems ng-if="item.properties.oems"
 					span.oems-label
@@ -33,10 +33,10 @@ div ng-controller="ItemsCtrl" infinite-scroll='items.loadItems()' infinite-scrol
 			td.center.qty ng-class="canOrder() ? 'visible' : 'invisible'"
 				| {{item.qty}}
 			td.center.price ng-if="canOrder() != false"
-				span.price-value
-					currency value="item.price"
+				span.price-value ng-class="{'price-confirm': item.price == 0.00}"
+					currency value="item.price" item="true"
 				br
-				span.price-currency
+				span.price-currency ng-if="item.price != 0.00"
 					| руб.
 			td.center ng-if="canOrder() == false"
 				.btn.btn-info.btn-xs ng-click="priceShow()" увидеть цены

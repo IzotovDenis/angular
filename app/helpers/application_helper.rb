@@ -7,9 +7,7 @@ end
 
 def helper_item_qty(qty)
 	case qty
-		when 0
-			"0"
-		when 1..9
+		when 0..9
 			qty.to_s
 		when 10..49
 			"10-49"
@@ -29,17 +27,16 @@ def devise_mapping
 end
 
 def price(value)
-	if value == 0
-		"по запросу"
-	else
-		number_with_precision(value, precision: 2) 
-	end
+	number_with_precision(value, precision: 2) 
 end
 
 def cy_value(currency_name)
-if @currency = Currency.where(:name=>currency_name)
-@currency.first.rate
+if @currency = Currency.where(:name=>currency_name).first
+	@currency.rate
+else
+	0
 end
+
 end
 
 def page_title(page_title)
