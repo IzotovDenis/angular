@@ -15,7 +15,7 @@ production:
  morphology: "stem_ru"
  wordforms: "config/wordforms.txt"
  stopwords: "config/stopwords.txt"
- pid_file: /apps/pavto/shared/tmp/searchd.pid
- indices_location: /apps/pavto/shared/db/sphinx
- configuration_file: /apps/pavto/shared/production.sphinx.conf
- binlog_path: /apps/pavto/shared/binlog
+ pid_file: "config/sphinx/tmp/searchd.pid"
+ indices_location: "config/sphinx/db/sphinx"
+ configuration_file: "config/sphinx/production.sphinx.conf"
+ binlog_path: "config/sphinx/binlog"
