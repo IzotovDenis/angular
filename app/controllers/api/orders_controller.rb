@@ -20,10 +20,10 @@ class Api::OrdersController < ApiController
   	@order = current_order
   	if @order.good?
       @order.comment = params[:comment]
-      @order.formed = Time.now
-      @order.save
-  		ForwardingWorker.perform_async(@order.id)
-  		render :json => {status: "success"}
+      if @order.complete
+  		  ForwardingWorker.perform_async(@order.id)
+  		  render :json => {status: "success"}
+      end
   	else
   		render :json => {status: "error"}
   	end

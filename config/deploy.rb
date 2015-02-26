@@ -93,9 +93,9 @@ namespace :deploy do
       execute "ln -s #{shared_path}/config/application.yml #{release_path}/config/application.yml"
       execute "ln -s #{shared_path}/config/secrets.yml #{release_path}/config/secrets.yml"
       execute "ln -s #{shared_path}/Procfile #{release_path}/Procfile"
-      execute "ln -s #{shared_path}/config/sphinx #{release_path}/confix/sphinx"
       execute "ln -s #{shared_path}/system #{release_path}/public/system"
       execute "ln -s /home/deployer/uploads #{release_path}/public/uploads"
+      execute "ln -s #{shared_path}/config/sphinx #{release_path}/config/sphinx"
     end
   end
 

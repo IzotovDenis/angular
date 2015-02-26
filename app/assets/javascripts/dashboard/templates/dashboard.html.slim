@@ -1,19 +1,20 @@
-h1 Hey
 .col-xs-3
 	p.lead Пользователи онлайн
 	ul.list-group
 		li.list-group-item ng-repeat="user in stat.online"
-			span.glyphicon.glyphicon-user
-			span 
-				| {{user.name}}
+			a ng-href="#/users/{{user.id}}"
+				span.glyphicon.glyphicon-user
+				span 
+					| {{user.name}}
 
 
 	p.lead Новые пользователи
 	ul.list-group
 		li.list-group-item ng-repeat="user in stat.noobs"
-			span.glyphicon.glyphicon-user
-			span 
-				| {{user.name}}
+			a ng-href="#/users/{user.id}"
+				span.glyphicon.glyphicon-user
+				span 
+					| {{user.name}}
 	.well
 		p.bold Курсы валют
 		table.table.table-currencies

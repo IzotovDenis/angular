@@ -17,6 +17,15 @@ class Order < ActiveRecord::Base
   		self.user.save
 	end
 
+	def complete
+		self.formed = Time.now
+      	self.order_items.each do |order_item|
+      		order_item.set_price
+      		self.total += order_item.price*order_item.qty
+      	end
+      	self.save!
+	end
+
 	def amount
 		@total = 0
 		self.order_items.includes(:item=>:prices).each do |order_item|

@@ -5,8 +5,12 @@ class OrderItem < ActiveRecord::Base
 	belongs_to :user
 
 	before_save :check_qty
-	scope :able, ->{includes(:item=>:group).order("groups.position, items.position")}
+	scope :able, -> {includes(:item=>:group).order("groups.position, items.position")}
 
+	def set_price
+		self.price = item.price.to_f
+		self.save
+	end
 
 	def amount
 		self.qty * self.item.price
