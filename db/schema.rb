@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 20150226042002) do
     t.integer  "qty"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "price"
+    t.float    "price",      default: 0.0
   end
 
   add_index "order_items", ["item_id"], name: "index_order_items_on_item_id", using: :btree

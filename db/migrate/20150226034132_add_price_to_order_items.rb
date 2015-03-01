@@ -12,7 +12,7 @@ class AddPriceToOrderItems < ActiveRecord::Migration
 	end
 
 	def self.down
-	  remove_column :orders_items, :price
+	  remove_column :order_items, :price
 	end
 
 end
