@@ -1,4 +1,4 @@
-app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order", "System",  "$location", "$modal", "Page", ($scope, $http, Group, User,Order, System, $location, $modal, Page) ->
+app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order", "System",  "$location", "$modal", "Page", "$window", ($scope, $http, Group, User,Order, System, $location, $modal, Page, $window) ->
 	
 	# Привязываем фабрики
 	$scope.order = Order
@@ -51,6 +51,16 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 	    controller: "ModalOrderCtrl"
 	    windowClass: 'modal-order'
 	  )
+
+	# Кнопка скачать прайс-лис
+	$scope.downloadPricelist = ->
+		if $scope.canOrder()
+			$window.location.replace("pricelist.zip")
+		else
+			modalInstance = $modal.open(
+				templateUrl: "items/modal_price.html"
+				controller: "ModalPriceCtrl"
+			)
 
 
 	# Показать выбранную группу меню

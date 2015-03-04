@@ -39,7 +39,7 @@ div ng-controller="ItemsCtrl" infinite-scroll='items.loadItems()' infinite-scrol
 				span.price-currency ng-if="item.price != 0.00"
 					| руб.
 			td.center ng-if="canOrder() == false"
-				.btn.btn-info.btn-xs ng-click="priceShow()" увидеть цены
+				.btn.btn-default.btn-xs ng-click="priceShow()" увидеть цены
 			td.center.order ng-class="canOrder() ? 'visible' : 'invisible'"
 				item-ordered
 				form ng-submit="addToCart(item)"

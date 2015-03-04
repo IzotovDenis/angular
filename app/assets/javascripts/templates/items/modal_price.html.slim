@@ -1,9 +1,14 @@
-H1 Как увидеть цены?
-div ng-if="user.authorized == false"
-	p.lead
-		| Нет времени объяснять, просто зарегистрируйся на сайте и позвони администратору.
-div ng-if="user.authorized == true && user.can_order == false"
-	p.lead
-		| Нет времени объяснять, просто позвони администратору.
-
-img ng-src="http://99px.ru/sstorage/56/2011/12/11312111650179593.jpg"
+.alert.alert-danger.bold.center.lead Внимание! Цены только для оптовых клиентов.
+div.center ng-if="user.authorized == false"
+	p.bold Уважаемый клиент, для просмотра цен и прайс-листа необходимо авторизироваться.
+	p.center
+		a.btn.btn-primary.btn-lg ng-href="/users/sign_in" target="_self"
+			| Войти
+	.h-line-dashed
+	p.bold Если вы новый клиент, вам необходимо зарегистрироваться.
+	p.center
+		a.btn.btn-primary.btn-lg ng-href="/users/sign_up" target="_self"
+			| Регистрация
+div.center ng-if="user.authorized == true && user.can_order == false"
+	p.bold Уважаемый клиент. Вам необходимо позвонить администратору для получения доступа к ценам:
+	p.lead тел. (4232) 35-55-17

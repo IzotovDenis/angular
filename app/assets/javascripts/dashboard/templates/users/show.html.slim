@@ -33,8 +33,8 @@ H1
 		br
 		span
 			| {{user.inn}}
-			a ng-href="https://focus.kontur.ru/search?query={{user.inn}}" target="_blank"
-				| фокус
+			a.focus-checker ng-href="https://focus.kontur.ru/search?query={{user.inn}}" target="_blank"
+				| [проверить]
 	.h-line-dashed
 	p
 		span.bold Дата регистрации
@@ -45,21 +45,21 @@ H1
 	.row
 		.col-md-4
 			.thumbnail
-				.caption
-					h3 Заказов
-					p 
-						| {{user.orders}}
+				.caption.center
+					p.bold Заказов
+					p.lead
+						| {{user.orders_count}}
 		.col-md-4
 			.thumbnail
-				.caption
-					h3 Всего действий
-					p
+				.caption.center
+					p.bold Всего действий
+					p.lead
 						| {{user.activities_count}}
 		.col-md-4
 			.thumbnail
-				.caption
+				.caption.center
 					p.bold последнее действи
-					p 
+					p.lead
 						| {{activities[0].date}}
 	p.lead Заказы
 	table.table

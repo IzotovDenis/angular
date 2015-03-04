@@ -16,7 +16,6 @@ json.corr_account user.corr_account
 json.note user.note
 json.person user.person
 json.kpp user.kpp
-json.created_at user.created_at
+json.created_at Russian::strftime(user.created_at, "%H:%M %d %B %Y")
 json.orders_count user.orders_count
 json.activities_count user.activities_count
-#json.last_action user.activities.last.updated_at if !user.activities.blank?

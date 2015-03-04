@@ -46,7 +46,7 @@ nav.navbar.navbar-blue.header.navbar-fixed-top role="navigation"
             span.btn-head-lable
               | Войти
         li.nav-link ng-if="user.authorized == false"
-          = link_to new_user_session_path, :target=>"_self" do
+          = link_to new_user_registration_path, :target=>"_self" do
             span.glyphicon.glyphicon-edit
             span.btn-head-lable 
               | Регистрация

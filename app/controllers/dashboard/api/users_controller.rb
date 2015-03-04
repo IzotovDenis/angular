@@ -1,6 +1,6 @@
 class Dashboard::Api::UsersController < Dashboard::ApiController
   respond_to :json
-  before_action :set_user, :only=>[:show, :update]
+  before_action :set_user, :only=>[:show, :update, :update_role]
   def index
   	@users = User.all
   end
@@ -14,6 +14,12 @@ class Dashboard::Api::UsersController < Dashboard::ApiController
       @status = true
     else
       @status = false
+    end
+  end
+
+  def update_role
+    if @user.update_attribute('role', params[:role])
+      render :json => @user
     end
   end
 

@@ -57,11 +57,6 @@ end
   end
 
   devise_for :users
-  resources :users do
-    collection do
-      patch "update_role/:id", :action=>'update_role', as: :update_role
-    end
-  end
 
   get '1c_import' => "imports#index"
   post '1c_import' => "imports#index" 
@@ -104,7 +99,11 @@ end
       resources :orders
       resources :pricelists
       resources :activities
-      resources :users
+      resources :users do
+        collection do
+          post "update_role"
+        end
+      end
       resources :offers do
         collection do
           get "get_items"
