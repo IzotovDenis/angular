@@ -9,7 +9,7 @@ form ng-submit="enterFind(newQuery)"
           		option value="title" По наименованию
           		option value="oem" По OEM
  		span.input-group-btn
-			submit.btn.btn-warning type="button"  Поиск
+			.btn.btn-warning type="button" ng-click="enterFind(newQuery)" Поиск
   	.checkbox ng-show="system.group.id"
     	label
       		input type="checkbox" ng-model="newQuery.group"

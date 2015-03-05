@@ -1,6 +1,6 @@
 div ng-controller="ItemsCtrl" infinite-scroll='items.loadItems()' infinite-scroll-disabled='items.busy' infinite-scroll-distance='1'
-	table.table.item-list
-		tr.head
+	table.table.item-list.sample-show-hide ng-show="showHead()"
+		tr.head ng-show="showHead()"
 			th.center.photo Картинка
 			th.center.kod Код/артикул
 			th.center.title Наименование

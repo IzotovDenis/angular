@@ -20,25 +20,37 @@
 			span.bold
 				|  {{item.kod}}
 		.clear.h-line-dashed
-		p
-			span На складе: 
-			span.bold 
-				| {{item.qty}} шт.
-		p
-			span Количество в упаковке:
-			span.bold
-				| {{item.properties.in_pack}} шт.
-		p.lead
-			| Оптовая цена: 
-			span.price-value
-				currency value="item.price" item="true"
-			span.price-currency ng-if="item.price != 0.00"
-				|  руб.
-		form ng-submit="addToCart(item)"
-			.input-group.input-group-qty
-				input.form-control type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
-				span.input-group-btn
-					button.btn.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" В корзину 
+		.div ng-show="canOrder()"
+			p
+				span На складе: 
+				span.bold 
+					| {{item.qty}} шт.
+			p
+				span Количество в упаковке:
+				span.bold
+					| {{item.properties.in_pack}} шт.
+			p.lead
+				| Оптовая цена: 
+				span.price-value
+					currency value="item.price" item="true"
+				span.price-currency ng-if="item.price != 0.00"
+					|  руб.
+			form ng-submit="addToCart(item)"
+				.input-group.input-group-qty
+					input.form-control type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
+					span.input-group-btn
+						button.btn.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" В корзину 
+		.div ng-hide="canOrder()"
+			p.bold Цена доступна для клиентов:
+			p.center
+				a.btn.btn-primary ng-href="/users/sign_in" target="_self"
+					span.glyphicon.glyphicon-log-in
+					span.btn-head-lable
+						| Войти
+				a.btn.btn-default ng-href="/users/sign_up" target="_self"
+					span.glyphicon.glyphicon-edit
+					span.btn-head-lable
+						| Регистрация
 		.clear.h-line-dashed
 		div
 			table.table

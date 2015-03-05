@@ -1,19 +1,8 @@
-.glyphicon-menu-loading
-	font-size: 20px
-
-.glyphicon-refresh-animate
-	-animation: spin .7s infinite linear
-	-webkit-animation: spin2 .7s infinite linear
-
-@-webkit-keyframes spin2
-	from
-		-webkit-transform: rotate(0deg)
-	to
-		-webkit-transform: rotate(360deg)
-
-@keyframes spin
-	from
-		transform: scale(1) rotate(0deg)
-	to
-		transform: scale(1) rotate(360deg)
-
+.sample-show-hide1
+  padding: 10px
+  border: 1px solid black
+  background: white
+  -webkit-transition: all linear 0.2s
+  transition: all linear 0.2s
+  &.ng-hide
+    opacity: 0

@@ -1,6 +1,9 @@
 app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$filter", "$location", ($scope, Item, $modal, Order, $filter, $location) ->
 	$scope.items = Item
 
+	$scope.showHead = ->
+		$scope.items.list.length > 0
+
 	$scope.itemShow = (item) ->
 	  modalInstance = $modal.open(
 	    templateUrl: "items/modal.html"

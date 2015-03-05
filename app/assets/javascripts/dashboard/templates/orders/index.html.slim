@@ -1,18 +1,31 @@
 h1 Заказы
-
-table.table
-	tr
-		th id
-		th Клиент
-		th Сумма
-		th Дата
-	tr ng-repeat="order in orders"
-		td
-			| {{order.id}}
-		td
-			a ng-href="#/users/{{order.user.id}}"
-				| {{order.user.name}}
-		td
-			| {{order.amount}}
-		td
-			| {{order.date}}
+.row
+	.col-xs-3.center
+		p.bold Показать с 
+		datepicker ng-model="period.date" min-date="minDate" show-weeks="false" starting-day="1" date-format="yyyy-MM-dd"
+		p.bold Показывать период:
+	    .btn-group
+	        label class="btn btn-default" ng-model="period.range" btn-radio="'day'" День
+	        label class="btn btn-default" ng-model="period.range" btn-radio="'week'" Неделя
+	        label class="btn btn-default" ng-model="period.range" btn-radio="'month'" Месяц
+	.col-xs-9
+		p.lead Заказы за {{date}}
+		table.table
+			tr
+				th id
+				th Клиент
+				th Сумма
+				th Дата
+				th Действия
+			tr ng-repeat="order in orders"
+				td
+					| {{order.id}}
+				td
+					a ng-href="#/users/{{order.user.id}}"
+						| {{order.user.name}}
+				td
+					| {{order.amount}}
+				td
+					| {{order.date}}
+				td
+					.btn.btn-default.btn-xs отправить

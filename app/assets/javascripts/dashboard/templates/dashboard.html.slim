@@ -11,7 +11,7 @@
 	p.lead Новые пользователи
 	ul.list-group
 		li.list-group-item ng-repeat="user in stat.noobs"
-			a ng-href="#/users/{user.id}"
+			a ng-href="#/users/{{user.id}}"
 				span.glyphicon.glyphicon-user
 				span 
 					| {{user.name}}

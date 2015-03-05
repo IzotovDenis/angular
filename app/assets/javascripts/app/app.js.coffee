@@ -1,4 +1,4 @@
-@app = angular.module("App", ["ngResource", "treeControl","ng-rails-csrf", "templates", "infinite-scroll", "ngRoute", "ui.bootstrap", "ngSanitize"])
+@app = angular.module("App", ["ngResource", "treeControl","ng-rails-csrf", "templates", "infinite-scroll", "ngRoute", "ui.bootstrap", "ngSanitize", "ngAnimate"])
 
 app.config ["$routeProvider", "$locationProvider", ($routeProvider, $locationProvider) ->
 	$locationProvider.html5Mode true

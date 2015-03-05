@@ -7,7 +7,16 @@ class Dashboard::Api::OrdersController < Dashboard::ApiController
     if params[:user_id]
      @orders = Order.ready.where(:user_id=>params[:user_id]).order('formed DESC')
     else
-  	 @orders = Order.ready.order('formed DESC')
+      @start = Date.strptime(params[:date], '%Y-%m-%d').beginning_of_day
+      case params[:period]
+        when "day"
+          @end = @start + 1.day
+        when "week"
+          @end = @start + 1.week
+        when "month"
+          @end = @start + 1.month
+      end 
+      @orders = Order.ready.where(:formed=>@start..@end).order('formed DESC')
     end
   end
 
