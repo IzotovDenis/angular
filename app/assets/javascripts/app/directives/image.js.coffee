@@ -27,6 +27,10 @@ app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
 				found = $filter('getById')(Order.itemList, scope.item.kod)
 				if found
 					scope.item.ordered = found.qty
+					scope.item.orderitem_id = found.order_item_id
+				else
+					delete scope.item.ordered
+					delete scope.item.orderitem_id
 				)
 ]
 

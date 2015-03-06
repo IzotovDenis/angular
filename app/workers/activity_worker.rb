@@ -1,10 +1,10 @@
 class ActivityWorker
-  include Sidekiq::Worker
+	include Sidekiq::Worker
 
-  def perform(hash)
-  	puts "start"
-  	puts hash
-  	if hash["controller"] == "find"
+	def perform(hash)
+		puts "start"
+		puts hash
+		if hash["controller"] == "find"
 			@last_activity = Activity.where(:user_id=>hash["user_id"], :controller=>"find").last
 			puts "cool"
 			if @last_activity
@@ -21,8 +21,7 @@ class ActivityWorker
 			else
 				Activity.create!(hash)
 			end
-		end
-		if hash["controller"] == "groups"
+		else
 			Activity.create!(hash)
 		end
 	end

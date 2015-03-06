@@ -24,6 +24,15 @@ app.factory "Order", ["$http", "$q", ($http, $q) ->
 			defer.reject(err)
 		defer.promise
 
+	order.updateInCart = (item, orderitem_id) ->
+		defer = $q.defer()
+		$http.patch('api/order_items/'+orderitem_id, item).success((res) ->
+			order.getCurrent()
+			defer.resolve res
+		).error (err, status) ->
+			defer.reject(err)
+		defer.promise
+
 	order.deleteFromCart = (item) ->
 		$http.delete("api/order_items/" + item.order_item_id).success((data) ->
 			order.itemList.splice(order.itemList.indexOf(item), 1)

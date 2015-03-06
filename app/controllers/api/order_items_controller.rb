@@ -1,6 +1,6 @@
 class Api::OrderItemsController < ApiController
   include OrderItemsHelper
-
+  after_action :set_activity
   load_and_authorize_resource only: [:create,:update,:destroy]
   before_action :set_order_item, only: [:update, :destroy, :set_activity]
 
@@ -15,7 +15,9 @@ class Api::OrderItemsController < ApiController
   end
 
   def update
-    @order_item.update(order_item_params)
+    if @order_item.update(order_item_params)
+      render :json => @order_item
+    end
   end
 
   def destroy
@@ -31,6 +33,11 @@ class Api::OrderItemsController < ApiController
 
     def order_item_params
       @params = params.require(:order_item).permit(:item_id, :qty)
+    end
+
+    def set_activity
+      @item ||=@order_item.item
+      activity_save :controller=>controller_name, :action=>action_name, :item_kod=>@item.properties['Код товара'],:item_title=>@item.properties['Полное наименование'], :qty=>@order_item.qty, :path=>URI(request.referer).path
     end
 
 end

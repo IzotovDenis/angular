@@ -75,15 +75,15 @@
 			td 
 				| {{order.date}}
 	p.lead Активность
-	table.table
+	table.table.dashboard-activities
 		tr
 			th Дата
 			th Пользователь
 			th Действие
 		tr ng-repeat="activity in stat.activities"
-			td 
+			td.date
 				| {{activity.date}}
-			td 
+			td.user
 				| {{activity.user}}
 			td 
 				actionlog controller="activity.controller" log="activity.log" action="activity.action"

@@ -20,7 +20,7 @@
 			span.bold
 				|  {{item.kod}}
 		.clear.h-line-dashed
-		.div ng-show="canOrder()"
+		.div ng-show="!canOrder()"
 			p
 				span На складе: 
 				span.bold 
@@ -40,7 +40,7 @@
 					input.form-control type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
 					span.input-group-btn
 						button.btn.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" В корзину 
-		.div ng-hide="canOrder()"
+		.div ng-hide="!canOrder()"
 			p.bold Цена доступна для клиентов:
 			p.center
 				a.btn.btn-primary ng-href="/users/sign_in" target="_self"
