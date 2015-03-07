@@ -8,24 +8,24 @@ dashboard.directive "actionlog", ->
 	}
 	link: (scope, element, attrs) ->
 		renderFind = ->
-			html = "Искал: " + scope.log.text + " Результатов: " + scope.log.result
+			html = "Искал: <b>" + scope.log.text + "</b> Результатов: <b>" + scope.log.result + "</b>"
 
 		renderGroup = ->
 			switch (scope.action)
 				when "index"
 					html = "Зашел на главную"
 				when "show"
-					html = "Зашел в группу " + scope.log.group
+					html = "Зашел в группу: " + scope.log.group
 			html
 
 		renderOrderItem = ->
 			switch (scope.action)
 				when "create"
-					html = "Добавил в корзину <b>" + scope.log.item_title + "</b> " + scope.log.qty + " шт."
+					html = "Добавил в корзину: <b>" + scope.log.item_title + "</b> " + scope.log.qty + " шт."
 				when "update"
-					html = "Изменил кол-во <b>" + scope.log.item_title + "</b> " + scope.log.qty + " шт."
+					html = "Изменил кол-во: <b>" + scope.log.item_title + "</b> " + scope.log.qty + " шт."
 				when "destroy"
-					html = "Удалил из корзины <b>" + scope.log.item_title + "</b> " + scope.log.qty + " шт."
+					html = "Удалил из корзины: <b>" + scope.log.item_title + "</b> " + scope.log.qty + " шт."
 			html
 
 		switch (scope.controller)

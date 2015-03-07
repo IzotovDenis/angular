@@ -1,5 +1,8 @@
 json.id activity.id
-json.user activity.user.name
+json.user do
+	json.id activity.user.id
+	json.name activity.user.name
+end
 json.controller activity.controller
 json.action activity.action
 json.log activity.log

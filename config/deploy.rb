@@ -56,13 +56,12 @@ namespace :deploy do
   task :setup do
     on roles(:all) do
       execute "mkdir  #{shared_path}/config/"
+      execute "mkdir  #{shared_path}/sys/"
+      execute "mkdir  #{shared_path}/sys/pricelist/"
       execute "mkdir  #{shared_path}/config/sphinx/"
       execute "mkdir  #{shared_path}/config/sphinx/tmp/"
       execute "mkdir  #{shared_path}/config/sphinx/db/"
       execute "mkdir  /home/deployer/uploads"
-      execute "mkdir  /home/deployer/apps/#{application}/run/"
-      execute "mkdir  /home/deployer/apps/#{application}/log/"
-      execute "mkdir  /home/deployer/apps/#{application}/socket/"
       execute "mkdir #{shared_path}/system"
       execute "mkdir /home/deployer/log/"
       sudo "ln -s /var/log/upstart /home/deployer/log/upstart"
@@ -93,9 +92,10 @@ namespace :deploy do
       execute "ln -s #{shared_path}/config/application.yml #{release_path}/config/application.yml"
       execute "ln -s #{shared_path}/config/secrets.yml #{release_path}/config/secrets.yml"
       execute "ln -s #{shared_path}/Procfile #{release_path}/Procfile"
-      execute "ln -s #{shared_path}/system #{release_path}/public/system"
+      execute "ln -s #{shared_path}/sys #{release_path}/public/sys"
       execute "ln -s /home/deployer/uploads #{release_path}/public/uploads"
       execute "ln -s #{shared_path}/config/sphinx #{release_path}/config/sphinx"
+
     end
   end
 

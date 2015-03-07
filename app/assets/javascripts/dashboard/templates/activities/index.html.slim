@@ -1,25 +1,21 @@
 h1 Активность пользователей
 .row
-	.col-xs-3.center
-		p.bold Показать число
-		datepicker ng-model="activity.date" min-date="minDate" show-weeks="false" starting-day="1" date-format="yyyy-MM-dd"
-		.h-line-dashed
-		p.bold Фильтр действий
-		select.form-control ng-model="activity.attr" ng-init="activity.attr = 'all'"
-			option value="all" Показать все
-			option value="find" Показать поиски
-			option value="group" Показать просмотр групп
-			option value="order_item" Показать работу с корзиной
-	.col-xs-9
-		table.table
-			tr
+	.col-xs-12
+		table.table.dashboard-activities
+			tr.head
 				th Дата
 				th Пользователь
 				th Действие
-			tr ng-repeat="activity in activities"
-				td 
+			tr ng-repeat="activity in activities" 
+				td.date
 					| {{activity.date}}
-				td 
-					| {{activity.user}}
-				td 
+				td.user
+					a ng-href="#/users/{{activity.user.id}}" 
+						| {{activity.user.name}}
+				td ng-class="{
+					success: activity.controller=='order_items' && activity.action=='create',
+					danger: activity.controller=='order_items' && activity.action=='destroy',
+					warning: activity.controller=='order_items' && activity.action=='update',
+					info: activity.controller=='find'
+					}"
 					actionlog controller="activity.controller" log="activity.log" action="activity.action"
