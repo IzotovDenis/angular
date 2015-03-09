@@ -4,9 +4,13 @@ h1 Активность пользователей
 		p dasdas
 	.col-xs-9
 			.activity-group ng-repeat="activ in activs"
-				.activity-group-user
-					.glyphicon.glyphicon-user
-					| {{activ.name}}
+				.activity-group-header
+					span.activity-group-user
+						.glyphicon.glyphicon-user
+						| {{activ.name}}
+					span.activity-group-count
+						| Действий в группе:
+						|  {{activ.activities.length}}
 				ul.activity-group-activities
 					li.activity-group-activity ng-repeat="activity in activ.activities" ng-class="{
 					success: activity.controller=='order_items' && activity.action=='create',
