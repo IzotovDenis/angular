@@ -9,7 +9,7 @@
 		div
 			span Категория
 			span.bold 
-				a ng-href="#/groups/{{item.group.id}}"
+				a ng-href="/groups/{{item.group.id}}"
 					|  {{item.group.title}}
 		div
 			span Артикул:
@@ -20,7 +20,7 @@
 			span.bold
 				|  {{item.kod}}
 		.clear.h-line-dashed
-		.div ng-show="!canOrder()"
+		.div ng-show="item.price"
 			p
 				span На складе: 
 				span.bold 
@@ -39,8 +39,8 @@
 				.input-group.input-group-qty
 					input.form-control type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
 					span.input-group-btn
-						button.btn.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" В корзину 
-		.div ng-hide="!canOrder()"
+						button.btn.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" В корзину
+		.div ng-hide="item.price"
 			p.bold Цена доступна для клиентов:
 			p.center
 				a.btn.btn-primary ng-href="/users/sign_in" target="_self"

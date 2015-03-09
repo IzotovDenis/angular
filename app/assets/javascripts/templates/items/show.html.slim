@@ -6,7 +6,7 @@ h1
 	div
 		span Категория
 		span.bold 
-			a ng-href="#/groups/{{item.group.id}}"
+			a ng-href="/groups/{{item.group.id}}"
 				|  {{item.group.title}}
 	div
 		span Артикул:
@@ -31,11 +31,12 @@ h1
 			currency value="item.price"
 		span.price-currency
 			|  руб.
+	item-ordered
 	form ng-submit="addToCart(item)"
 		.input-group.input-group-qty
 			input.form-control type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
 			span.input-group-btn
-				button.btn.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" В корзину 
+				button.btn.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" В корзину
 	.clear.h-line-dashed
 	div
 		table.table

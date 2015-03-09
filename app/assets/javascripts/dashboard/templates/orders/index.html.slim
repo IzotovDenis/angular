@@ -18,8 +18,9 @@ h1 Заказы
 				th Дата
 				th Действия
 			tr ng-repeat="order in orders"
-				td
-					| {{order.id}}
+				td 
+					a ng-href="#/orders/{{order.id}}" target="_blank"
+						| {{order.id}}
 				td
 					a ng-href="#/users/{{order.user.id}}"
 						| {{order.user.name}}

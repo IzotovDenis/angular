@@ -19,7 +19,7 @@ div ng-controller="ItemsCtrl" infinite-scroll='items.loadItems()' infinite-scrol
 				.table_kod_lable = "артикул:"
 				.item_article.table_kod_value
 					| {{item.article}}
-			td.title 
+			td.title
 				span.cursor-pointer ng-click="itemShow(item)"
 					| {{item.title}}
 				.item-offers

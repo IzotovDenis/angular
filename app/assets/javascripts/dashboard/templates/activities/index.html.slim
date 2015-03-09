@@ -1,21 +1,20 @@
 h1 Активность пользователей
 .row
-	.col-xs-12
-		table.table.dashboard-activities
-			tr.head
-				th Дата
-				th Пользователь
-				th Действие
-			tr ng-repeat="activity in activities" 
-				td.date
-					| {{activity.date}}
-				td.user
-					a ng-href="#/users/{{activity.user.id}}" 
-						| {{activity.user.name}}
-				td ng-class="{
+	.col-xs-3
+		p dasdas
+	.col-xs-9
+			.activity-group ng-repeat="activ in activs"
+				.activity-group-user
+					.glyphicon.glyphicon-user
+					| {{activ.name}}
+				ul.activity-group-activities
+					li.activity-group-activity ng-repeat="activity in activ.activities" ng-class="{
 					success: activity.controller=='order_items' && activity.action=='create',
 					danger: activity.controller=='order_items' && activity.action=='destroy',
 					warning: activity.controller=='order_items' && activity.action=='update',
 					info: activity.controller=='find'
 					}"
-					actionlog controller="activity.controller" log="activity.log" action="activity.action"
+						span.activity-group-activity-date
+							| {{activity.date}}
+						span.activity-group-activity-log
+							actionlog controller="activity.controller" log="activity.log" action="activity.action"
