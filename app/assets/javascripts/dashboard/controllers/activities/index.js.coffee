@@ -1,6 +1,7 @@
 dashboard.controller "ActivitiesIndexCtrl", ActivitiesIndexCtrl = ["$scope", "$http", "$location", ($scope, $http, $location) ->
-
+	$scope.loading = true
 	$scope.activs = []
+
 	$http.get("/dashboard/api/activities").success (data) ->
 		$scope.activities = data
 		angular.forEach(data, (value) ->
@@ -12,8 +13,10 @@ dashboard.controller "ActivitiesIndexCtrl", ActivitiesIndexCtrl = ["$scope", "$h
 				else
 					addUser($scope.activs, value)
 		)
-		console.log($scope.activs)
+		$scope.loading = false
 
+	$scope.loading = ->
+		$scope.loading
 	addUser = (array, activity) ->
 		array.push(activity.user)
 		array[array.length-1].activities = []

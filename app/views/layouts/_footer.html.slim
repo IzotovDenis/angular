@@ -2,18 +2,21 @@
 	.row
 		.col-xs-2.center
 			= image_tag "logo100.png"
-		.col-xs-3
-			p.bold Навигация
-			p Главная
-			p Доставка
-			p Оплата
-			p Контакты
-		.col-xs-4
-			p.bold Внимание. Если сайт отображается некорректно, вам необходимо установить современный браузер из списка.
-			ul
-				li = link_to "Google Chrome", "https://www.google.ru/chrome/browser/desktop/"
-				li = link_to "Opera", "http://www.opera.com/ru"
-				li = link_to "Mozilla Firefox", "https://www.mozilla.org/ru/firefox/new/"
+		.col-xs-7
+			p.bold Планета-авто - автотовары, автохимия, автомобильные аккумуляторы, аксессуары AUTOPROFI, автомобильные запчасти, автомузыка оптом и в розницу, доставка по Приморскому краю и Дальнему Востоку.
+			p.danger Внимание. Если сайт отображается некорректно, вам необходимо установить современный браузер из списка.
+			ul.browsers
+				= link_to "https://www.google.ru/chrome/browser/desktop/", :target=>"_blank" do
+					li.chrome
+				= link_to "http://www.mozilla.org/ru/firefox/new/", :target=>"_blank" do
+					li.firefox 
+				= link_to "http://www.opera.com/ru", :target=>"_blank" do
+					li.opera
+				= link_to "http://www.apple.com/safari/", :target=>"_blank" do
+					li.safari
+				= link_to "http://windows.microsoft.com/ru-ru/internet-explorer/download-ie", :target=>"_blank" do
+					li.ie 
+					
 		.col-xs-3.right
 			p.lead Планета-Авто
 			p

@@ -26,3 +26,16 @@
 			background: rgba(52, 152, 219, 0.50)	
 		li.warning
 			background: rgba(230, 126, 34, 0.50)
+
+
+.spinner-container
+	z-index: 2
+	-webkit-animation: rotate 2s linear infinite
+	animation: rotate 2s linear infinite
+.spinner-container .path
+	stroke-dasharray: 1,150
+	stroke-dashoffset: 0
+	stroke: rgba(27, 154, 89, 0.7)
+	stroke-linecap: round
+	-webkit-animation: dash 1.5s ease-in-out infinite
+	animation: dash 1.5s ease-in-out infinite

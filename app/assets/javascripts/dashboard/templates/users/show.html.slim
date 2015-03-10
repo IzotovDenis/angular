@@ -78,12 +78,15 @@ H1
 			td
 				| {{order.date}}
 	p.lead Активность
-	table.table
-		tr
-			th Действие
-			th Дата
-		tr ng-repeat="activity in activities"
-			td
-				actionlog controller="activity.controller" log="activity.log" action="activity.action"
-			td
-				| {{activity.date}}
+	.activity-group
+		ul.activity-group-activities
+			li.activity-group-activity ng-repeat="activity in activities" ng-class="{
+			success: activity.controller=='order_items' && activity.action=='create',
+			danger: activity.controller=='order_items' && activity.action=='destroy',
+			warning: activity.controller=='order_items' && activity.action=='update',
+			info: activity.controller=='find'
+			}"
+				span.activity-group-activity-date
+					| {{activity.date}}
+				span.activity-group-activity-log
+					actionlog controller="activity.controller" log="activity.log" action="activity.action"

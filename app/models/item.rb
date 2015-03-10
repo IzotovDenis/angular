@@ -9,7 +9,7 @@ class Item < ActiveRecord::Base
 	has_many :orders, through: :order_items
 	has_many :order_items_pop, -> (object){ where("order_items.created_at >= ?", Time.now-1.month)}, :class_name => 'OrderItem'
 	mount_uploader :image, ImageUploader
-	self.per_page = 20
+	self.per_page = 25
 	scope :able, ->{joins(:group).where(:groups => {:disabled => [nil,false]}).select('distinct items.*, groups.title as group_title').order("position")}
 
   sphinx_scope(:visible) {

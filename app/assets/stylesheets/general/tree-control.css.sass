@@ -42,6 +42,7 @@ treecontrol
     .tree-selected
       font-weight: bold
       color: #03a9f4
+      background: #ebebeb
 .tree-branch-head
   width: 16px
   height: 16px
@@ -54,7 +55,6 @@ treecontrol
   cursor: pointer
   display: flex
   padding: 3px 0px 3px 4px
-  border-top: 1px solid #e5e5e5
   &:hover
     background: #F5F5F5
     color: #03a9f4
@@ -71,9 +71,8 @@ treeitem > ul > li > treeitem > ul > li
     border-top: 0
     font-size: 11px
     padding: 0px 0px 0px 17px
-treeitem > ul > li > treeitem > ul > li:first-child
-  .tree-label
-    border-top: 1px solid #e5e5e5
+treeitem > ul > li
+  border-left: 3px solid #616161
 
 .menu-collapse-text
 .panel-heading
