@@ -12,6 +12,7 @@ json.certificate item.certificate
 json.image do 
 	json.exist item.image?
 	json.img_thumb item.image.thumb.url
+	json.img_thumb_m item.image.thumb_m.url
 	json.img_item item.image.item.url
 	json.img_large item.image.large.url
 end

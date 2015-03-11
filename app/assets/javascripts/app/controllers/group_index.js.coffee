@@ -3,6 +3,12 @@ app.controller "GroupIndexCtrl", GroupIndexCtrl = ["$scope", "$http", "Item", "O
 	# Очищаемся System.group для скрытия чекбока "Искать в группе"
 	System.group = {}
 
+	# Делаем вид главной страницы плиткой
+	Item.itemsView = "thumbs"
+
+	# Убираем контроль панель на главной
+	Item.itemsControl = false
+
 	# Устанавливаем стандартный титл страницы
 	Page.setDefaultTitle()
 

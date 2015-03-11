@@ -4,7 +4,7 @@ class AddPriceToOrderItems < ActiveRecord::Migration
 	  add_column :order_items, :price, :float, :default => 0
 
 	  OrderItem.reset_column_information
-	  OrderItem.all.each do |order_item|
+	  OrderItem.includes(:order, :prices).find_each do |order_item|
 	  	if order_item.order != nil && order_item.order.formed?
 	  		order_item.update_attribute("price", order_item.item.price)
 	  	end

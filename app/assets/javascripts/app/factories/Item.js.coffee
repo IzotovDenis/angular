@@ -4,6 +4,8 @@ app.factory "Item", Item = ["$http", ($http) ->
 	item.busy = false
 	item.url = ""
 	item.end = false
+	item.itemsView = "list"
+	item.itemsControl = true
 
 	item.list = []
 	item.setItems = (newItems) ->

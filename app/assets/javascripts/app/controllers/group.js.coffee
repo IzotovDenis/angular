@@ -4,6 +4,11 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 	Item.list = []
 	# Устанавлием "занят", отключая infinity-scroll пока не закгрузится новая страница
 	Item.busy = true
+	# Делаем вид в группах списком
+	Item.itemsView = "list"
+
+	# Показываем контроль панель в группах
+	Item.itemsControl = true
 	
 	# Урл для запросов infinity-scroll
 	url = "/api/groups/" + $routeParams.groupId

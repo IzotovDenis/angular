@@ -28,6 +28,14 @@ class ImageUploader < CarrierWave::Uploader::Base
     end 
   end
 
+  version :thumb_m do
+    process :resize_to_limit => [230,200]
+    def full_filename (for_file = model.logo.file) 
+      name = Digest::MD5.hexdigest("#{model.id}thumb_m")
+      "thumb_m_#{name}.jpg"
+    end 
+  end
+
   version :item, :from_version => :large do
     process :resize_to_limit => [350,350]
     def full_filename (for_file = model.logo.file) 
