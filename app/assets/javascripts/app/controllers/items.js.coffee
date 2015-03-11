@@ -5,20 +5,30 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 		$scope.items.list.length > 0
 
 	$scope.itemShow = (item) ->
-	  modalInstance = $modal.open(
-	    templateUrl: "items/modal.html"
-	    controller: "ModalItemCtrl"
-	    windowClass: 'modal-item'
-	    resolve:
-	      item: ->
-	        item
-	  )
+		modalInstance = $modal.open(
+			templateUrl: "items/modal.html"
+			controller: "ModalItemCtrl"
+			windowClass: 'modal-item'
+			resolve:
+				item: ->
+					item
+		)
+
+	$scope.itemShowImage = (item) ->
+		modalInstance = $modal.open(
+			templateUrl: "items/modal_image.html"
+			controller: "ModalImageCtrl"
+			windowClass: 'modal-item'
+			resolve:
+				item: ->
+					item
+		)
 
 	$scope.priceShow = (item) ->
-	  modalInstance = $modal.open(
-	    templateUrl: "items/modal_price.html"
-	    controller: "ModalPriceCtrl"
-	  )
+		modalInstance = $modal.open(
+			templateUrl: "items/modal_price.html"
+			controller: "ModalPriceCtrl"
+		)
 
 	$scope.addToCart = (item) ->
 		new_order_item = {

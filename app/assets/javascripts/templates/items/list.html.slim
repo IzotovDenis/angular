@@ -10,13 +10,13 @@
 	.items-area
 		.item-thumbs.sample-show-hide ng-if="items.itemsView == 'thumbs'"
 			.item-thumb ng-repeat="item in items.list"
-				.thumb-image
+				.thumb-image ng-click="itemShowImage(item)"
 					item-image image="item.image" size="img_thumb_m"
 				.caption
 					span.article
-						| Арт. {{item.article}}
+						| Арт. {{::item.article}}
 					span.title.cursor-pointer ng-click="itemShow(item)"
-						| {{item.title}}
+						| {{::item.title}}
 				.item-thumb-footer
 					.item-thumb-footer-price ng-if="canOrder() != false"
 						p.center.price
