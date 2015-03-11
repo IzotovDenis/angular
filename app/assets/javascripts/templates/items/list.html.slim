@@ -8,7 +8,7 @@
 				label.btn.btn-default btn-radio="'thumbs'" ng-model="items.itemsView"
 					.glyphicon.glyphicon-th-large
 	.items-area
-		.item-thumbs.sample-show-hide ng-show="items.itemsView == 'thumbs'"
+		.item-thumbs.sample-show-hide ng-if="items.itemsView == 'thumbs'"
 			.item-thumb ng-repeat="item in items.list"
 				.thumb-image
 					item-image image="item.image" size="img_thumb_m"
@@ -26,6 +26,8 @@
 							span.price-currency ng-if="item.price != 0.00"
 								| руб.
 					.item-thumb-footer-order ng-if="canOrder() != false"
+						p.qty
+							| остаток: {{item.qty}} шт.
 						item-ordered
 						form ng-submit="addToCart(item)"
 							input.order-qty type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
@@ -33,7 +35,7 @@
 					.item-thumb-not-auth ng-if="canOrder() == false"
 						.btn.btn-default.btn-xs ng-click="priceShow()" увидеть цены
 
-		table.table.item-list.sample-show-hide ng-show="items.itemsView == 'list'"
+		table.table.item-list.sample-show-hide ng-if="items.itemsView == 'list'"
 			tr.head ng-show="showHead()"
 				th.center.photo Картинка
 				th.center.kod Код/артикул
