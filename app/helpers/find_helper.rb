@@ -2,7 +2,7 @@ module FindHelper
 
 	def str_query(query)
 		string = query.dup
-		string.gsub! '*', ' '
+		string.gsub!(/[^0-9A-Za-z]/, ' ')
 		d = []
 		d << ["(#{string} | *#{string}*)"]
 		string.split(" ").each do |i|
