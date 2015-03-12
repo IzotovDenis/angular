@@ -26,7 +26,6 @@ app.factory "Item", Item = ["$http", ($http) ->
 		unless item.end
 			unless item.busy
 				if item.url.length > 1
-					console.log(item.url)
 					item.busy = true
 					$http.get(item.url, params: {page: item.page}).success (data) ->
 						items = data.items
@@ -35,10 +34,8 @@ app.factory "Item", Item = ["$http", ($http) ->
 							item.list.push items[i]
 							i++
 						if items.length < 20
-							console.log("konec")
 							item.end = true
 						item.page = item.page + 1
-						console.log(item.page)
 						item.busy = false
 
 	item.getItems = ->

@@ -1,0 +1,7 @@
+h1 
+	| {{brand.title}}
+ul
+	li ng-repeat="group in groups"
+		a.btn.btn-default.btn-xs ng-href="/brands/{{brand.id}}?group_id={{group.id}}"
+			| {{group.title}}
+div ng-include="'items/list.html'" 

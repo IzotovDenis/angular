@@ -3,6 +3,8 @@
 app.config ["$routeProvider", "$locationProvider", ($routeProvider, $locationProvider) ->
 	$locationProvider.html5Mode true
 	$routeProvider.when '/groups/:groupId', templateUrl: 'groups/show.html', controller: 'GroupCtrl'
+	$routeProvider.when '/brands', templateUrl: 'brands/index.html', controller: 'BrandIndexCtrl'
+	$routeProvider.when '/brands/:brandId', templateUrl: 'brands/show.html', controller: 'BrandShowCtrl'
 	$routeProvider.when '/items/:itemId', templateUrl: 'items/show.html', controller: 'ItemShowCtrl'
 	$routeProvider.when '/find', templateUrl: 'find/index.html', controller: 'FindCtrl'
 	$routeProvider.when '/profile', templateUrl: 'profile/index.html', controller: "ProfileCtrl"

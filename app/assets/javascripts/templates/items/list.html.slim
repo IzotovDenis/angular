@@ -10,7 +10,7 @@
 	.items-area
 		.item-view-table.sample-show-hide ng-show="items.itemsView == 'thumbs'"
 			.item-thumbs.sample-show-hide ng-if="items.itemsView == 'thumbs'"
-				.item-thumb ng-repeat="item in items.list"
+				.item-thumb ng-repeat="item in items.list" key-focus=""
 					.thumb-image ng-click="itemShowImage(item)"
 						item-image image="item.image" size="img_thumb_m"
 					.caption

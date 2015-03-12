@@ -88,6 +88,7 @@ end
         get 'current'
       end
     end
+    resources :brands, :only => [:index, :show]
   end
 
   get 'dashboard' => "dashboard#index"
