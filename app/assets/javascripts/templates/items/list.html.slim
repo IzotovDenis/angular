@@ -8,78 +8,79 @@
 				label.btn.btn-default btn-radio="'thumbs'" ng-model="items.itemsView"
 					.glyphicon.glyphicon-th-large
 	.items-area
-		.item-thumbs.sample-show-hide ng-if="items.itemsView == 'thumbs'"
-			.item-thumb ng-repeat="item in items.list"
-				.thumb-image ng-click="itemShowImage(item)"
-					item-image image="item.image" size="img_thumb_m"
-				.caption
-					span.article
-						| Арт. {{::item.article}}
-					span.title.cursor-pointer ng-click="itemShow(item)"
-						| {{::item.title}}
-				.item-thumb-footer
-					.item-thumb-footer-price ng-if="canOrder() != false"
-						p.center.price
-							span.price-value ng-class="{'price-confirm': item.price == 0.00}"
-								currency value="item.price" item="true"
-							br
-							span.price-currency ng-if="item.price != 0.00"
-								| руб.
-					.item-thumb-footer-order ng-if="canOrder() != false"
-						p.qty
-							| остаток: {{item.qty}} шт.
+		.item-view-table.sample-show-hide ng-show="items.itemsView == 'thumbs'"
+			.item-thumbs.sample-show-hide ng-if="items.itemsView == 'thumbs'"
+				.item-thumb ng-repeat="item in items.list"
+					.thumb-image ng-click="itemShowImage(item)"
+						item-image image="item.image" size="img_thumb_m"
+					.caption
+						span.article
+							| Арт. {{::item.article}}
+						span.title.cursor-pointer ng-click="itemShow(item)"
+							| {{::item.title}}
+					.item-thumb-footer
+						.item-thumb-footer-price ng-if="canOrder() != false"
+							p.center.price
+								span.price-value ng-class="{'price-confirm': item.price == 0.00}"
+									currency value="item.price" item="true"
+								br
+								span.price-currency ng-if="item.price != 0.00"
+									| руб.
+						.item-thumb-footer-order ng-if="canOrder() != false"
+							p.qty
+								| остаток: {{item.qty}} шт.
+							item-ordered
+							form ng-submit="addToCart(item)"
+								input.order-qty type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
+								input.btn.btn-xs.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" value="В корзину"
+						.item-thumb-not-auth ng-if="canOrder() == false"
+							.btn.btn-default.btn-xs ng-click="priceShow()" увидеть цены
+		.item-view-table.sample-show-hide ng-show="items.itemsView == 'list'"	
+			table.table.item-list.sample-show-hide ng-if="items.itemsView == 'list'"
+				tr.head ng-show="showHead()"
+					th.center.photo Картинка
+					th.center.kod Код/артикул
+					th.center.title Наименование
+					th.center.qty ng-class="canOrder() ? 'visible' : 'invisible'" 
+						| Остаток
+					th.center.price Цена
+					th.center.order ng-class="canOrder() ? 'visible' : 'invisible'"
+						| Заказ
+				tr.tr_middle ng-repeat="item in items.list" key-focus=""
+					td.center.photo
+						item-image image="item.image" size="img_thumb"
+					td.kod
+						.table_kod_lable = "код:"
+						.item_kod.table_kod_value
+							| {{::item.kod}}
+						.table_kod_lable = "артикул:"
+						.item_article.table_kod_value
+							| {{::item.article}}
+					td.title
+						span.cursor-pointer ng-click="itemShow(item)"
+							| {{::item.title}}
+						.item-offers
+							a.label.label-green ng-class="label.variant" ng-href="/offers/{{label.offer_id}}/" ng-repeat="label in ::item.labels"
+								labeltext variant="label.variant"
+						.oems ng-if="item.properties.oems"
+							span.oems-label
+								| OEM:
+							span.oem.cursor-pointer ng-repeat="oem in item.properties.oems" go-find="{{::oem.oem}}" title="Искать товары с ОЕМ: {{::oem.oem}}" 
+								| {{::oem.oem}}
+					td.center.qty ng-class="canOrder() ? 'visible' : 'invisible'"
+						| {{::item.qty}}
+					td.center.price ng-if="canOrder() != false"
+						span.price-value ng-class="{'price-confirm': item.price == 0.00}"
+							currency value="item.price" item="true"
+						br
+						span.price-currency ng-if="item.price != 0.00"
+							| руб.
+					td.center ng-if="canOrder() == false"
+						.btn.btn-default.btn-xs ng-click="priceShow()" увидеть цены
+					td.center.order ng-class="canOrder() ? 'visible' : 'invisible'"
 						item-ordered
 						form ng-submit="addToCart(item)"
 							input.order-qty type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
 							input.btn.btn-xs.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" value="В корзину"
-					.item-thumb-not-auth ng-if="canOrder() == false"
-						.btn.btn-default.btn-xs ng-click="priceShow()" увидеть цены
-
-		table.table.item-list.sample-show-hide ng-if="items.itemsView == 'list'"
-			tr.head ng-show="showHead()"
-				th.center.photo Картинка
-				th.center.kod Код/артикул
-				th.center.title Наименование
-				th.center.qty ng-class="canOrder() ? 'visible' : 'invisible'" 
-					| Остаток
-				th.center.price Цена
-				th.center.order ng-class="canOrder() ? 'visible' : 'invisible'"
-					| Заказ
-			tr.tr_middle ng-repeat="item in items.list" key-focus=""
-				td.center.photo
-					item-image image="item.image" size="img_thumb"
-				td.kod
-					.table_kod_lable = "код:"
-					.item_kod.table_kod_value
-						| {{item.kod}}
-					.table_kod_lable = "артикул:"
-					.item_article.table_kod_value
-						| {{item.article}}
-				td.title
-					span.cursor-pointer ng-click="itemShow(item)"
-						| {{item.title}}
-					.item-offers
-						a.label.label-green ng-class="label.variant" ng-href="/offers/{{label.offer_id}}/" ng-repeat="label in item.labels"
-							labeltext variant="label.variant"
-					.oems ng-if="item.properties.oems"
-						span.oems-label
-							| OEM:
-						span.oem.cursor-pointer ng-repeat="oem in item.properties.oems" go-find="{{oem.oem}}" title="Искать товары с ОЕМ: {{oem.oem}}" 
-							| {{oem.oem}}
-				td.center.qty ng-class="canOrder() ? 'visible' : 'invisible'"
-					| {{item.qty}}
-				td.center.price ng-if="canOrder() != false"
-					span.price-value ng-class="{'price-confirm': item.price == 0.00}"
-						currency value="item.price" item="true"
-					br
-					span.price-currency ng-if="item.price != 0.00"
-						| руб.
-				td.center ng-if="canOrder() == false"
-					.btn.btn-default.btn-xs ng-click="priceShow()" увидеть цены
-				td.center.order ng-class="canOrder() ? 'visible' : 'invisible'"
-					item-ordered
-					form ng-submit="addToCart(item)"
-						input.order-qty type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
-						input.btn.btn-xs.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" value="В корзину"
 	.center ng-show="items.busy"
 		.glyphicon.glyphicon-refresh.glyphicon-refresh-animate.loading

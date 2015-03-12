@@ -5,25 +5,23 @@ app.directive "itemImage", ->
 		image: "="
 	}
 	link: (scope, element, attrs) ->
-
 		scope.$watch (->
 			scope.image), ((newVal,oldVal) ->
 				if newVal
 					setImage()
 				)
-
 		setImage = ->
 			if scope.image.exist
 				html = "<img src="+scope.image[attrs.size]+"></img>"
 			else
 				html = "<div class='"+attrs.size+"'></div>"
 			element.append html
-
 app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
 	restrict: "E"
 	link: (scope, element, attrs) ->
 		scope.$watch (->
 			Order.itemList), ((newVal,oldVal) ->
+				console.log(scope.item.title)
 				found = $filter('getById')(Order.itemList, scope.item.kod)
 				if found
 					scope.item.ordered = found.qty
@@ -32,6 +30,8 @@ app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
 					delete scope.item.ordered
 					delete scope.item.orderitem_id
 				)
+		scope.$on '$destroy', ->
+		  console.log("destroy")
 ]
 
 app.directive "currency", ["User", (User) ->

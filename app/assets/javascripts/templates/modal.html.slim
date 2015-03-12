@@ -18,14 +18,14 @@
 			td.kod
 				.table_kod_lable = "код:"
 				.item_kod.table_kod_value
-					| {{item.kod}}
+					| {{::item.kod}}
 				.table_kod_lable = "артикул:"
 				.item_article.table_kod_value
-					| {{item.article}}
+					| {{::item.article}}
 			td.title
-				| {{item.title}}
+				| {{::item.title}}
 			td.center.qty
-				| {{item.item_qty}}
+				| {{::item.item_qty}}
 			td.center.price
 				span.price-value
 					currency value="item.price"
