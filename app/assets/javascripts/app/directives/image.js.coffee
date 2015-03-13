@@ -5,17 +5,13 @@ app.directive "itemImage", ->
 		image: "="
 	}
 	link: (scope, element, attrs) ->
-		scope.$watch (->
-			scope.image), ((newVal,oldVal) ->
-				if newVal
-					setImage()
-				)
 		setImage = ->
 			if scope.image.exist
 				html = "<img src="+scope.image[attrs.size]+"></img>"
 			else
 				html = "<div class='"+attrs.size+"'></div>"
 			element.append html
+		setImage()
 app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
 	restrict: "E"
 	link: (scope, element, attrs) ->
@@ -49,10 +45,7 @@ app.directive "currency", ["User", (User) ->
 			User.discount), ((newVal,oldVal) ->
 				setPrice()
 				)
-		scope.$watch (->
-			scope.value), ((newVal,oldVal) ->
-				setPrice()
-				)
+		setPrice()
 ]
 
 app.directive "labeltext",  ->

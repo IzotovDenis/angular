@@ -3,7 +3,7 @@
   h4.modal-title
   	| {{item.title}}
 .modal-body.modal-item-body
-	.item-image-area
+	.item-image-area ng-click="itemShowImage(item)"
 		item-image image="item.image" size="img_item"
 	.item-content-area
 		div

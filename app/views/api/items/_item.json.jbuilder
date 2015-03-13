@@ -39,4 +39,4 @@ if !item.label.blank?
 		json.offer_id value
 	end
 end
-json.text simple_format(item.text) if item.text
+#json.text simple_format(item.text) if item.text

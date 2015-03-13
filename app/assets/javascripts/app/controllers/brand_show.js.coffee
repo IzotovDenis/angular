@@ -1,5 +1,6 @@
 app.controller "BrandShowCtrl", BrandShowCtrl = ["$scope", "$http", "$routeParams", "Item", ($scope, $http, $routeParams, Item) ->
 
+	$scope.groups = []
 	# Урл для запросов infinity-scroll
 	url = "api/brands/"+ $routeParams.brandId
 	if $routeParams.group_id

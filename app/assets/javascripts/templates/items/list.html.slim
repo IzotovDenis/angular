@@ -7,10 +7,10 @@
 					.glyphicon.glyphicon-th-list
 				label.btn.btn-default btn-radio="'thumbs'" ng-model="items.itemsView"
 					.glyphicon.glyphicon-th-large
-	.items-area
+	.items-area.sample-show-hide ng-show="showHead()"
 		.item-view-table.sample-show-hide ng-show="items.itemsView == 'thumbs'"
 			.item-thumbs.sample-show-hide ng-if="items.itemsView == 'thumbs'"
-				.item-thumb ng-repeat="item in items.list" key-focus=""
+				.item-thumb ng-repeat="item in items.list"
 					.thumb-image ng-click="itemShowImage(item)"
 						item-image image="item.image" size="img_thumb_m"
 					.caption
@@ -41,10 +41,10 @@
 					th.center.photo Картинка
 					th.center.kod Код/артикул
 					th.center.title Наименование
-					th.center.qty ng-class="canOrder() ? 'visible' : 'invisible'" 
+					th.center.qty ng-if="canOrder()" 
 						| Остаток
 					th.center.price Цена
-					th.center.order ng-class="canOrder() ? 'visible' : 'invisible'"
+					th.center.order ng-if="canOrder()"
 						| Заказ
 				tr.tr_middle ng-repeat="item in items.list" key-focus=""
 					td.center.photo
@@ -67,7 +67,7 @@
 								| OEM:
 							span.oem.cursor-pointer ng-repeat="oem in item.properties.oems" go-find="{{::oem.oem}}" title="Искать товары с ОЕМ: {{::oem.oem}}" 
 								| {{::oem.oem}}
-					td.center.qty ng-class="canOrder() ? 'visible' : 'invisible'"
+					td.center.qty ng-if="canOrder()"
 						| {{::item.qty}}
 					td.center.price ng-if="canOrder() != false"
 						span.price-value ng-class="{'price-confirm': item.price == 0.00}"
@@ -77,7 +77,7 @@
 							| руб.
 					td.center ng-if="canOrder() == false"
 						.btn.btn-default.btn-xs ng-click="priceShow()" увидеть цены
-					td.center.order ng-class="canOrder() ? 'visible' : 'invisible'"
+					td.center.order ng-if="canOrder()"
 						item-ordered
 						form ng-submit="addToCart(item)"
 							input.order-qty type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"

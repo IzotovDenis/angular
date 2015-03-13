@@ -1,4 +1,4 @@
-app.controller "ModalItemCtrl", ModalItemCtrl = ["$scope", "$modalInstance", "item", "Order", "$filter", "$http", ($scope, $modalInstance, item, Order, $filter, $http) ->
+app.controller "ModalItemCtrl", ModalItemCtrl = ["$scope", "$modalInstance", "item", "Order", "$filter", "$http","$modal", ($scope, $modalInstance, item, Order, $filter, $http, $modal) ->
 	$scope.item = item
 
 	$scope.addToCart = (item) ->
@@ -22,4 +22,14 @@ app.controller "ModalItemCtrl", ModalItemCtrl = ["$scope", "$modalInstance", "it
 		
 	$scope.$on "$routeChangeStart", ->
 	  $modalInstance.close()
+
+	$scope.itemShowImage = (item) ->
+		modalInstance = $modal.open(
+			templateUrl: "items/modal_image.html"
+			controller: "ModalImageCtrl"
+			windowClass: 'modal-item'
+			resolve:
+				item: ->
+					item
+		)
 ]

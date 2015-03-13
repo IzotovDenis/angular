@@ -26,3 +26,5 @@ class Api::BrandsController < ApiController
   		@brand = Brand.find(params[:id])
   	end
 end
+
+

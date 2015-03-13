@@ -15,8 +15,8 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 
 	# Отправляемся запрос
 	$http.get(url).success (data) ->
-		# Записываем группу в скопе
-		$scope.group = data
+		# Записываем группу в скоуп
+		$scope.group = data.group
 
 		# Записываем текущую группу в сустем для отображения чекбока "искать в группе"
 		System.group = {}

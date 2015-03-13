@@ -4,9 +4,11 @@ app.directive "keyFocus", ["$document", ($document) ->
     elem.bind "keydown", (e) ->
       if e.keyCode is 38
         unless scope.$first
-          console.log e
+          console.log elem[0]
+          console.log scope
           elem[0].previousElementSibling.querySelector(".order-qty").focus()
         if scope.$first
+          console.log elem[0]
           console.log($document[0].querySelector(".find-input").focus())
       else if e.keyCode is 40
         unless scope.$last
