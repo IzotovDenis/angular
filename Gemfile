@@ -59,6 +59,7 @@ gem "spreadsheet"
 gem "sidekiq-status"
 gem 'angularjs-rails', '~> 1.3.10'
 gem 'ng-rails-csrf'
+gem 'saxerator'
 gem 'angular-rails-templates'
 gem 'angular-ui-bootstrap-rails'
 group :production do

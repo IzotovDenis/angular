@@ -22,24 +22,7 @@ class Api::FindController < ApiController
     options[:order_by] = 'properties["Код товара"]'
     options[:with] = {:group_id => params[:group].to_i} if params[:group]
     options[:page] = params[:page]
-    #options[:indices] = set_indices
     options
-  end
-
-  def set_indices
-    case params[:attr]
-      when "code"
-        indices = ['item_kod_core']
-      when "article"
-        indices = ['item_article_core']
-      when "title"
-        indices = ['item_title_core']
-      when "oem"
-        indices = ['item_oem_core']
-      else
-        indices = ['item_core']
-      end
-    indices
   end
 
 end

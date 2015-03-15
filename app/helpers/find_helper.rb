@@ -1,27 +1,26 @@
 # coding: utf-8
 module FindHelper
 
-	def indexes(where="any")
+	def indexes(where)
 		case where
 			when "code"
 				index = ["kod"]
 			when "article"
 				index = ["article"]
 			when "title"
-				index = ["full_name"]
+				index = ["full_name", "cross"]
 			when "oem"
 				index = ["oem"]
 			else
-				index = ["kod", "article", "full_name", "oem"]
+				index = ["kod", "article", "full_name", "oem", "cross"]
 			end
 		index
 	end
 
-	def str_query(string, index)
+	def str_query(string, index="any")
 		query = []
 		where_find = indexes(index)
 		if where_find.include? "kod"
-			puts "======== INCLUDE"
 			query << kod_find(string) if kod_find(string)
 			where_find.delete("kod")
 		end
@@ -30,9 +29,6 @@ module FindHelper
 		end
 		query = query.join(" | ")
 		query = "(#{query})"
-		puts "------------------------"
-		puts query
-		puts "------------------------"
 		return query
 	end
 
@@ -48,7 +44,11 @@ module FindHelper
 		d << " | #{string_find(string)}"
 		string.delete!(" ")
 		d << " | (#{string} | *#{string}*)"
-		d = "(@(#{where_find.join(",")}) #{d})"
+		query = []
+		where_find.each do |index|
+			query << "(@(#{index}) #{d})"
+		end
+		query
 	end
 
 	def string_find(string)

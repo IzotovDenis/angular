@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312044446) do
+ActiveRecord::Schema.define(version: 20150314024000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,8 +112,10 @@ ActiveRecord::Schema.define(version: 20150312044446) do
     t.string   "brand"
     t.hstore   "label"
     t.string   "certificate"
+    t.string   "cross",                        array: true
   end
 
+  add_index "items", ["cross"], name: "index_items_on_cross", using: :btree
   add_index "items", ["group_id"], name: "index_items_on_group_id", using: :btree
   add_index "items", ["properties"], name: "items_properties", using: :gin
 
