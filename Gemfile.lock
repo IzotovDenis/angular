@@ -17,7 +17,7 @@ GIT
       nokogiri (>= 1.4.0)
 
 GEM
-  remote: http://gems.github.com/
+  remote: https://rubygems.org/
   specs:
     actionmailer (4.1.8)
       actionpack (= 4.1.8)
