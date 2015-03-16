@@ -35,20 +35,6 @@ module Importv2Helper
 		end
 	end
 
-# Установка иерархии групп
-	def set_parent_group
-		groups = Group.all
-		groups.each do |group|
-			if group.parent_cid
-				parent = Group.where(:cid=>group.parent_cid).first
-				group.parent_id = parent.id
-			else
-				group.parent_id = nil
-			end
-			group.save
-		end
-	end
-
 # Скрытие групп если родитель скрытый
 	def set_disabled_group
 		@group = Group.disableded
@@ -158,20 +144,6 @@ module Importv2Helper
 		return hash
 	end
 # Установка групп для товаров
-	def set_group(importsession_id)
-		items = Item.where("importsession_id"=>importsession_id)
-		items.each do |item|
-			if item.group_cid
-				group = Group.where(:cid=>item.group_cid).first
-					if group
-						item.group = group
-						item.save
-						puts "#{item.full_title} -- >> #{group.title}"
-					end
-			end
-		end
-	end
-
 
 	def import1c(dir, importsession_id)
 			xml_import = open_xml(dir, "import")

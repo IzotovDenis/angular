@@ -79,6 +79,19 @@ module Importv3Helper
 		end 
 	end
 
+	def set_group(importsession_id)
+		items = Item.where("importsession_id"=>importsession_id)
+		items.each do |item|
+			if item.group_cid
+				group = Group.where(:cid=>item.group_cid).first
+					if group
+						item.group = group
+						item.save
+						puts "#{item.full_title} -- >> #{group.title}"
+					end
+			end
+		end
+	end
 
 	def tree_to_a(tree, p = nil)
 	  cid = tree["Ид"]
@@ -94,6 +107,19 @@ module Importv3Helper
 	  end
 	  el.flat_map { |sub| tree_to_a(sub, cid) }
 	  	.unshift("cid" => cid,"title"=> title ,"parent_cid" => p)
+	end
+
+	def set_parent_group
+		groups = Group.all
+		groups.each do |group|
+			if group.parent_cid
+				parent = Group.where(:cid=>group.parent_cid).first
+				group.parent_id = parent.id
+			else
+				group.parent_id = nil
+			end
+			group.save
+		end
 	end
 
 end
