@@ -17,8 +17,11 @@ module FindHelper
 		index
 	end
 
-	def str_query(string, index="any")
+	def str_query(query_str, index="any")
 		query = []
+		string = query_str.dup
+		#Оставляем только разрешенные символы
+		string.gsub!(/[^0-9A-Za-zА-Яа-я]/, ' ')
 		where_find = indexes(index)
 		if where_find.include? "kod"
 			query << kod_find(string) if kod_find(string)
@@ -36,7 +39,6 @@ module FindHelper
 		#создаем копию запроса
 		string = query.dup
 		#Оставляем только разрешенные символы
-		string.gsub!(/[^0-9A-Za-zА-Яа-я]/, ' ')
 		# Формируем строку для поиска
 		d = string_find(string)
 		#Если в строке цифра добавляем разделяем ее пробелами

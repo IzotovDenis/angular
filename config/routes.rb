@@ -58,8 +58,8 @@ end
 
   devise_for :users
 
-  get '1c_import' => "imports#index"
-  post '1c_import' => "imports#index" 
+  get '1c_import/:exchange_type' => "imports#index"
+  post '1c_import/:exchange_type' => "imports#index" 
 
   root "app#index"
 

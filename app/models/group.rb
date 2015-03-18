@@ -1,7 +1,7 @@
 class Group < ActiveRecord::Base
 	has_ancestry
 	has_many :items
-	scope :able, ->{ where(disabled: [false,nil]).order('position') }
+	scope :able, ->{ where(disabled: [false,nil]).order('title') }
   scope :disableded, -> {where(disabled: true)}
 
 
@@ -17,7 +17,7 @@ def self.arrange_as_array(options={}, hash=nil)
   end
 
   def self.array_for_select
-    arrange_as_array(:order=>"position").each {|n| n.title ="#{'--' * n.depth} #{n.title}" }
+    arrange_as_array(:order=>"title").each {|n| n.title ="#{'--' * n.depth} #{n.title}" }
   end
 
   def toggle_disabled
@@ -26,6 +26,13 @@ def self.arrange_as_array(options={}, hash=nil)
     self.save
     self.subtree.each do |group|
       group.disabled = val
+      group.save
+    end
+  end
+
+  def set_disabled
+    self.subtree.each do |group|
+      group.disabled = true
       group.save
     end
   end

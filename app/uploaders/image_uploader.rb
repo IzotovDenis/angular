@@ -21,22 +21,29 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   version :thumb do
+    process :convert => 'jpg'
+    process :strip
     process :resize_to_limit => [80,60]
     def full_filename (for_file = model.logo.file) 
       name = Digest::MD5.hexdigest("#{model.id}thumb")
       "thumb_#{name}.jpg"
-    end 
+    end
+    process :quality => 95
   end
 
   version :thumb_m do
+    process :convert => 'jpg'
+    process :strip
     process :resize_to_limit => [230,200]
     def full_filename (for_file = model.logo.file) 
       name = Digest::MD5.hexdigest("#{model.id}thumb_m")
       "thumb_m_#{name}.jpg"
-    end 
+    end
+    process :quality => 95
   end
 
   version :item, :from_version => :large do
+    process :convert => 'jpg'
     process :resize_to_limit => [350,350]
     def full_filename (for_file = model.logo.file) 
       name = Digest::MD5.hexdigest("#{model.id}item")
@@ -45,12 +52,15 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   version :large do
+    process :convert => 'jpg'
+    process :strip
     process :resize_to_limit => [640,750]
     process :watermark
     def full_filename (for_file = model.logo.file) 
       name = Digest::MD5.hexdigest("#{model.id}large")
       "large_#{name}.jpg"
     end 
+    process :quality => 85
   end
 
   def watermark

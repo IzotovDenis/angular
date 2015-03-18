@@ -1,11 +1,12 @@
 module Importv3Helper
 
-	def import_group
-		parser = Saxerator.parser(File.new("/home/den/import.xml"))
-		a = ''
+	def parse_groups(importsession_id)
+		file = "public/uploads/imports/#{importsession_id}/import.xml"
+		parser = Saxerator.parser(File.new(file))
 		parser.for_tag("Группа").each do |tag|
 			tree_to_a(tag).each do |xml_group|
 				group = Group.find_or_initialize_by(cid: xml_group['cid'])
+				xml_group['importsession_id'] = importsession_id
 				group.update(xml_group)
 				puts group.title
 			end
@@ -94,19 +95,19 @@ module Importv3Helper
 	end
 
 	def tree_to_a(tree, p = nil)
-	  cid = tree["Ид"]
-	  title = tree["Наименование"]
-	    if tree["Группы"]["Группа"]
-		  	if tree["Группы"]["Группа"].class.to_s == "Saxerator::Builder::HashElement"
-		  		el = [tree["Группы"]["Группа"]]
-		  	else
-		  		el = tree["Группы"]["Группа"]
-		  	end
-	  	else	
-	  	el = []
-	  end
-	  el.flat_map { |sub| tree_to_a(sub, cid) }
-	  	.unshift("cid" => cid,"title"=> title ,"parent_cid" => p)
+		cid = tree["Ид"]
+		title = tree["Наименование"]
+			if tree["Группы"]["Группа"]
+				if tree["Группы"]["Группа"].class.to_s == "Saxerator::Builder::HashElement"
+					el = [tree["Группы"]["Группа"]]
+				else
+					el = tree["Группы"]["Группа"]
+				end
+			else	
+			el = []
+		end
+		el.flat_map { |sub| tree_to_a(sub, cid) }
+			.unshift("cid" => cid,"title"=> title ,"parent_cid" => p)
 	end
 
 	def set_parent_group
@@ -121,6 +122,107 @@ module Importv3Helper
 			group.save
 		end
 	end
+
+
+#### ДЕБАГ
+
+# Удаление старых групп
+	def remove_old_groups(importsession_id)
+		# Поиск групп не из текущей сессии обмена
+		groups = Group.where.not(importsession_id: importsession_id)
+			if groups
+				groups.each do |group|
+						group.destroy
+				end
+			end
+	end
+
+# Делаем группы скрытыми
+	def set_disabled_group
+		@group = Group.disableded
+		@group.each do |group|
+			group.set_disabled
+		end
+	end
+
+# Импорт
+	def import1c(importsession_id)
+			# проверяем тип выгрузки
+			importsessions = Importsessions.find(importsession_id)
+			if importsession.exchange_type == "changes"
+				# Действия для изменений
+				change_import(importsession_id)
+			elsif importsession.exchange_type == "full"
+				# Действия для полной выгрузки
+				full_import(importsession_id)
+			end
+	end
+
+
+#Полный импорт
+	def full_import(importsession_id)
+		#Импортируем группы
+		parse_groups(importsession_id)
+		#Устанавливаем иерархию
+		set_parent_group
+		#Удаляем старые группы
+		remove_old_groups(importsession_id)
+		#Скрываем скрытые папки
+		set_disabled_group
+		#Импортируем товары
+		parse_items(importsession_id)
+		#Импортируем цены
+		get_offers(importsession_id)
+		#Привязываем товары к группе
+		set_group(importsession_id)
+		return true
+	end
+
+# Выгрузка цен и остатков
+	def get_offers(importsession_id)
+		file = "public/uploads/imports/#{importsession_id}/offers.xml"
+		parser = Saxerator.parser(File.new(file))
+		price_types = Hash[Pricetype.pluck(:cid, :id)]
+		parser.for_tag("Предложение").each do |tag|
+			item = Item.find_by_cid(tag["Ид"])
+			next if !item
+			item.qty = tag["Количество"].to_i
+			item.save
+			next unless tag["Цены"]
+
+			if tag["Цены"]["Цена"]
+				if tag["Цены"]["Цена"].class.to_s == "Saxerator::Builder::HashElement"
+					el = [tag["Цены"]["Цена"]]
+				else
+					el = tag["Цены"]["Цена"]
+				end
+			else	
+				el = []
+			end
+
+			el.each do |offer|
+				if price_types[offer["ИдТипаЦены"]]
+					hash = parsing_price(offer)
+					hash['pricetype_id'] = price_types[offer["ИдТипаЦены"]].to_i
+					hash['item_id'] = item.id
+					price = Price.find_or_initialize_by(:item_id=>hash['item_id'],:pricetype_id=>hash['pricetype_id'])
+					price.update(hash)
+				else
+					next
+				end
+			end
+		end
+	end
+
+	def parsing_price(tag)
+		hash = Hash.new
+		hash['title'] = item_tag(tag["Представление"])
+		hash['value'] = item_tag(tag["ЦенаЗаЕдиницу"]).gsub(",",".").to_f 
+		hash['unit'] = item_tag(tag["Единица"])
+		hash['cy'] = item_tag(tag["Валюта"]) 
+		return hash
+	end
+#### КОНЕЦ ДЕБАГА
 
 end
 

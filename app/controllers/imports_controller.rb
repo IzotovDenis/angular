@@ -17,7 +17,7 @@ class ImportsController < ApplicationController
   private 
 
   def checkauth
-  	cookie = Importsession.create!(:cookie=>set_cookie)
+  	cookie = Importsession.create!(:cookie=>set_cookie,:exchange_type=>params[:exchange_type])
   	render :text => "success\nimport_cookie\n#{cookie.cookie}\n"
   end
   
