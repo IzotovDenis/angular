@@ -4,11 +4,11 @@
 		| Скачать прайс-лист [zip]
 .menu
 	ul.menu-bar
-		li.menu-bar-root denismenu="" id="1"
+		li.menu-bar-root denismenu="" id="brand"
 			span.title
 				| БРЕНДЫ
 			span.glyphicon.glyphicon-chevron-right
-			.test-drop ng-show="aa == 1" denismenu1="" id="1" class="column3"
+			.test-drop ng-show="aa == 'brand'" denismenu1="" id="brand" class="column3"
 				ul
 					- Brand.all.order(:title).each do |brand|
 						li
@@ -17,21 +17,27 @@
 		li.menu-bar-root-title
 			| КАТАЛОГ ТОВАРОВ
 		- Group.roots.each do |group|
-			li.menu-bar-root denismenu="" id="#{group.id}"
-				span.title
-					= group.title
-				span.glyphicon.glyphicon-chevron-right
-			.test-drop ng-show="aa == #{group.id}" denismenu1="" id="#{group.id}" class="column#{group_column(group.descendants.count)}"
-				ul
-					- group.children.each do |gr|
-						li
-							.menu-block
-								= link_to gr.title, "groups/#{gr.id}"
-								ul
-									- gr.children.each do |grs|
-										li
-											= link_to grs.title, "groups/#{grs.id}"
-											ul
-												- grs.children.each do |grss|
-													li
-														= link_to grss.title, "groups/#{grss.id}"
+			-if group.has_children?
+				li.menu-bar-root denismenu="" id="#{group.id}"
+					span.title
+						= group.title
+					span.glyphicon.glyphicon-chevron-right
+				.test-drop ng-show="aa == #{group.id}" denismenu1="" id="#{group.id}" class="column#{group_column(group.descendants.count)}"
+					ul
+						- group.children.each do |gr|
+							li
+								.menu-block
+									= link_to gr.title, "groups/#{gr.id}"
+									ul
+										- gr.children.each do |grs|
+											li
+												= link_to grs.title, "groups/#{grs.id}"
+												ul
+													- grs.children.each do |grss|
+														li
+															= link_to grss.title, "groups/#{grss.id}"
+			-else
+				li.menu-bar-root
+					span.title
+						= link_to group.title, "groups/#{group.id}" 
+
