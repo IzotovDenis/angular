@@ -11,12 +11,7 @@ html ng-app="App" ng-controller="MainCtrl"
     .wrapper
       .inner-block.clearfix
         .left-bar
-          .btn.btn-success.btn-block ng-click="downloadPricelist()" Скачать прайс-лист [zip]
-          .tree-menu
-            h4
-              | Каталог товаров
-            treecontrol class="tree-classic" tree-model="groups" options="treeOptions" on-selection="showSelected(node)" selected-node="node1" order-by="title"
-              | {{node.title}}
+          = render "layouts/menu"
         .content
           = yield
     .footer

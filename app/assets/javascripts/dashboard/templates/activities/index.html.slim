@@ -1,10 +1,14 @@
 h1 Активность пользователей
-div
-	svg.spinner-container height="65px" viewbox=("0 0 52 52") width="65px" 
-	  circle.path cx="26px" cy="26px" fill="none" r="20px" stroke-width="4px" 
 .row
 	.col-xs-3
 		p.lead Пользователи онлайн
+		ul.list-group
+			li.list-group-item ng-repeat="user in stat.online"
+				a ng-href="#/users/{{user.id}}"
+					span.glyphicon.glyphicon-user
+					span 
+						| {{user.name}}
+		p.lead Были на сайте сегодня
 		ul.list-group
 			li.list-group-item ng-repeat="user in stat.online"
 				a ng-href="#/users/{{user.id}}"

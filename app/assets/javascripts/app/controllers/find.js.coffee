@@ -7,14 +7,17 @@ app.controller "FindCtrl", GroupCtrl = ["$scope", "$http", "$location","Item", "
 	# Отправляем запрос на поиск
 	sendRequest = ->
 		url = "/api" + $location.url()
-		Item.itemsControl = false
+		if Item.list.length < 0
+			Item.itemsControl = false
 		$http.get(url).success (data) ->
 			if data.items.length > 0
+				$scope.total_count = data.total_count
+				console.log(data.total_count)
 				# Устанавлием "занят", отключая infinity-scroll пока не закгрузится новая страница
 				Item.busy = true
 				$scope.find_success = true
 				# Добавляем первые товары в фабрику
-				Item.firstLoad(data.items, url)
+				Item.firstLoad(data.items, url, data.total_entries)
 				Item.itemsControl = true
 			else
 				Item.list = []

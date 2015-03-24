@@ -24,4 +24,3 @@ app.factory "User", ["$resource",($resource) ->
 
 
 
-

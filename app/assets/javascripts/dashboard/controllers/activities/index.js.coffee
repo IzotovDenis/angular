@@ -15,6 +15,9 @@ dashboard.controller "ActivitiesIndexCtrl", ActivitiesIndexCtrl = ["$scope", "$h
 		)
 		$scope.loading = false
 
+	$http.get("/dashboard/api/activities/user_online").success (data) ->
+		$scope.online = data
+
 	$scope.loading = ->
 		$scope.loading
 	addUser = (array, activity) ->

@@ -26,6 +26,9 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 	# Получить список групп меню
 	$scope.groups = Group.tree()
 
+	$scope.$on "$routeChangeStart", ->
+	  $scope.aa = false
+
 
 	# Метода поиска
 	$scope.enterFind = (newQuery) ->

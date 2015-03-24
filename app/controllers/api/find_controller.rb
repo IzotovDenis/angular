@@ -17,11 +17,19 @@ class Api::FindController < ApiController
 
   def set_options
     options = {}
-    options[:sql] = {:include => :prices, :joins => :group, :select=>"distinct items.*, groups.title as group_title"}
+    options[:sql] = {:include => :prices, :joins => :group, :select=>"distinct items.*, groups.title as group_title, groups.id as group_id"}
     options[:field_weights] = {:kod => 1000, :article => 60, :oem => 5,:full_name => 20}
     options[:order_by] = 'properties["Код товара"]'
     options[:with] = {:group_id => params[:group].to_i} if params[:group]
     options[:page] = params[:page]
+    options
+  end
+
+  def set_options_ids
+    options = set_options
+    options[:group_by] = :group_id
+    options[:per_page] = 50
+    options.except(:page)
     options
   end
 

@@ -23,7 +23,7 @@ module Importv3Helper
 			if item.update(hash)
 				puts "import item #{item.full_title}"
 				puts tag["Картинка"]
-				save_image1(importsession_id, tag["Картинка"])
+				save_image(importsession_id, tag["Картинка"], item.id)
 			end
 		end
 	end 
@@ -44,9 +44,10 @@ module Importv3Helper
 		return item
 	end
 	
-	def save_image1(importsession_id,image_tag)
+	def save_image(importsession_id, image_tag, item_id)
+		file = "#{Rails.root}/public/uploads/imports/#{importsession_id}/#{image_tag}"
 		if image_tag
-			ImageWorker.perform_async(img,dir)
+			ImageWorker.perform_async(file, item_id)
 		end
 	end
 
@@ -69,15 +70,6 @@ module Importv3Helper
 			hash[key_name] = key_value if key_value
 		end
 		hash
-	end
-
-	def save_image(el,item,dir)
-		if el.at("Картинка")
-			img = {'file'=> el.at("Картинка").content}
-			img['item_id'] = item.id
-			img['comment'] = el.at("Картинка").attribute('Описание').value if el.at("Картинка").attribute('Описание')
-			ImageWorker.perform_async(img,dir)
-		end 
 	end
 
 	def set_group(importsession_id)
@@ -148,7 +140,7 @@ module Importv3Helper
 # Импорт
 	def import1c(importsession_id)
 			# проверяем тип выгрузки
-			importsessions = Importsessions.find(importsession_id)
+			importsession = Importsession.find(importsession_id)
 			if importsession.exchange_type == "changes"
 				# Действия для изменений
 				change_import(importsession_id)
@@ -174,6 +166,13 @@ module Importv3Helper
 		#Импортируем цены
 		get_offers(importsession_id)
 		#Привязываем товары к группе
+		set_group(importsession_id)
+		return true
+	end
+
+	def change_import(importsession_id)
+		parse_items(importsession_id)
+		get_offers(importsession_id)
 		set_group(importsession_id)
 		return true
 	end

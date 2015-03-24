@@ -1,15 +1,15 @@
 class ImageWorker
   include Sidekiq::Worker
 
-	def perform(image,dir)
-		if item = Item.where(:id => image['item_id']).first
+	def perform(file, item_id)
+		if item = Item.where(:id => item_id).first
 			if item.image.size != 0
 				@md5_exist = Digest::MD5.hexdigest(File.read("#{Rails.root}/public#{item.image}"))
-				@md5_new = Digest::MD5.hexdigest(File.read("#{dir}/#{image['file']}"))
+				@md5_new = Digest::MD5.hexdigest(File.read(file))
 				@cr = true if @md5_exist == @md5_new
 			end
 			unless @cr
-			item.image = File.open("#{dir}/#{image['file']}")
+			item.image = File.open(file)
 			puts "save image"
 				if item.save
 					while not FileTest.exist?("#{Rails.root}/public#{item.image.item.url}")

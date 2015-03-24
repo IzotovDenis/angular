@@ -99,7 +99,11 @@ end
       resources :rates, :only => [:create]
       resources :orders
       resources :pricelists
-      resources :activities
+      resources :activities do
+        collection do
+          get "user_online"
+        end
+      end
       resources :users do
         collection do
           post "update_role"

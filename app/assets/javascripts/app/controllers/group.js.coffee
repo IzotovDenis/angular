@@ -12,6 +12,10 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 	
 	# Урл для запросов infinity-scroll
 	url = "/api/groups/" + $routeParams.groupId
+	if $routeParams.page
+		url = url + "?page="+$routeParams.page
+
+
 
 	# Отправляемся запрос
 	$http.get(url).success (data) ->
@@ -27,6 +31,6 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 		Page.setTitle($scope.group.title)
 
 		# Записываем первые товары в фабрику
-		Item.firstLoad(data.items, url)
+		Item.firstLoad(data.items, url, data.total_entries)
 	
 ]

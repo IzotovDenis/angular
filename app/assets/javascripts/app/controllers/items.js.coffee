@@ -1,8 +1,27 @@
-app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$filter", "$location", ($scope, Item, $modal, Order, $filter, $location) ->
+app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$filter", "$location", "$routeParams", ($scope, Item, $modal, Order, $filter, $location, $routeParams) ->
+
 	$scope.items = Item
 
+	$scope.pageChanged = ->
+		a = $location.search()
+		a['page'] = $scope.currentPage
+		$location.search(a)
+
+	if $routeParams.page
+		console.log("yes")
 	$scope.showHead = ->
 		$scope.items.list.length > 0
+
+	$scope.imageSize = ->
+		return "img_thumb"
+
+	$scope.$on("$routeChangeSuccess", ->
+		console.log('change')
+		)
+
+	$scope.$on("$routeUpdate", ->
+		console.log('update')
+		)
 
 	$scope.itemShow = (item) ->
 		modalInstance = $modal.open(

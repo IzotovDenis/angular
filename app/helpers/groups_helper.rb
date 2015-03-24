@@ -15,4 +15,15 @@ module GroupsHelper
 			end
 	end
 
+	def group_column(count)
+		case count
+			when 0..19
+				return "1"
+			when 20..60
+				return "2"
+			else
+				return "3"
+		end
+	end
+
 end

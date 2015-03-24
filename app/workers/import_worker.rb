@@ -1,7 +1,7 @@
 class ImportWorker
   include Sidekiq::Worker
   sidekiq_options :retry => false
-  include Importv2Helper
+  include Importv3Helper
 
   def perform(importsession_id,change=true)
   	@importsession = Importsession.find_by_id(importsession_id) || Importsession.create(:status=>'progress',:cookie=>"Full")
@@ -15,7 +15,7 @@ class ImportWorker
 			@path = "public/uploads/imports/#{@importsession.id.to_s}/"
 			#@path = "/media/1C5E04585E042CD8/1cbitrix"
 		end
-		if import1c(@path,@importsession.id)
+		if import1c(@importsession.id)
 			@importsession.status = 'success'
 			@importsession.save
 		end

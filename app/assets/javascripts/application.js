@@ -25,4 +25,3 @@
 //= require_tree ./templates
 //= require_tree ./general
 //= require_tree ./app
-
