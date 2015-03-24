@@ -2,13 +2,14 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 
 	$scope.items = Item
 
+	if $routeParams.page
+		$scope.currentPage = $routeParams.page
+
 	$scope.pageChanged = ->
 		a = $location.search()
 		a['page'] = $scope.currentPage
 		$location.search(a)
 
-	if $routeParams.page
-		console.log("yes")
 	$scope.showHead = ->
 		$scope.items.list.length > 0
 

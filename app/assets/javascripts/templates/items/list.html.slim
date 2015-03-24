@@ -66,6 +66,6 @@
 							input.btn.btn-xs.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" value="В корзину"
 					.cell.item-view-price ng-if="canOrder() == false"
 						.btn.btn-default.btn-xs ng-click="priceShow()" увидеть цены
-	pagination total-items="items.totalEntries" ng-model="currentPage" ng-change="pageChanged()" items-per-page="60" previous-text="Назад" next-text="Вперед"
+	pagination total-items="items.totalEntries" ng-model="currentPage" ng-change="pageChanged()" items-per-page="60" previous-text="Назад" next-text="Вперед" ng-show="showHead()"
 	.center ng-show="items.busy"
 		.glyphicon.glyphicon-refresh.glyphicon-refresh-animate.loading

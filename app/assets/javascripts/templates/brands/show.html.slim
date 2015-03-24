@@ -1,7 +1,7 @@
 h1 
 	| {{brand.title}}
-ul
-	li ng-repeat="group in groups"
-		a.btn.btn-default.btn-xs ng-href="/brands/{{brand.id}}?group_id={{group.id}}"
-			| {{group.title}}
+	
+select.form-control ng-model="group" ng-options="group.id as group.title for group in groups"
+	option value="" Выбрать категорию
+| {{group}}
 div ng-include="'items/list.html'" 

@@ -1,4 +1,4 @@
-app.controller "BrandShowCtrl", BrandShowCtrl = ["$scope", "$http", "$routeParams", "Item", ($scope, $http, $routeParams, Item) ->
+app.controller "BrandShowCtrl", BrandShowCtrl = ["$scope", "$http", "$routeParams", "Item", "$location", ($scope, $http, $routeParams, Item, $location) ->
 
 	$scope.groups = []
 	# Урл для запросов infinity-scroll
@@ -7,6 +7,15 @@ app.controller "BrandShowCtrl", BrandShowCtrl = ["$scope", "$http", "$routeParam
 		url = url + "?group_id=" + $routeParams.group_id
 
 	console.log(url)
+	if $routeParams.group_id
+		$scope.group = $routeParams.group_id
+		console.log($routeParams.group_id)
+	$scope.$watch (->
+		$scope.group), ((newVal,oldVal) ->
+			if newVal
+				if newVal != oldVal
+					$location.url("/brands/"+ $routeParams.brandId+"?group_id="+ newVal)
+			)
 
 	$http.get(url).success (data) ->
 		$scope.brand = data.brand
