@@ -1,92 +1,107 @@
-H1 
+.app-view-header
 	| {{user.name}}
 
 .col-xs-3
-	.btn.btn-default.cursor-pointer ng-click="editUser(user.id)" Полная информация
-	.h-line-dashed
-	select.form-control ng-model="user.role" ng-disabled="user.role == 'dev'" ng-change="updateRole()"
-		option value='user' Пользователь
-		option value='buyer' Покупатель
-	.h-line-dashed	
-	p
-		span.bold Контактное лицо
-		br
-	 	span 
-	 		| {{user.person}}
-	p
-		span.bold Телефон
-		br
-		span
-			| {{user.phone}}
-	p
-		span.bold email
-		br
-		span
-			| {{user.email}}
-	p
-		span.bold Город
-		br
-		span
-			| {{user.city}}
-	p
-		span.bold ИНН
-		br
-		span
-			| {{user.inn}}
-			a.focus-checker ng-href="https://focus.kontur.ru/search?query={{user.inn}}" target="_blank"
-				| [проверить]
-	.h-line-dashed
-	p
-		span.bold Дата регистрации
-		br
-		span
+	.panel.panel-info.cursor-pointer ng-click="editUser(user.id)"
+		.panel-heading
+			.panel-title 
+				| Полная информация
+	.panel.panel-info
+		.panel-heading
+			| Краткая информация
+		.panel-body.panel-user-short-info
+			.block-info
+				span.info
+					| {{user.person}}
+				span.title 
+					| Контактное лицо
+			.block-info
+				span.info
+					| {{user.phone}}
+				span.title  Телефон
+			.block-info
+				span.info
+					| {{user.email}}
+				span.title email
+			.block-info
+				span.info
+					| {{user.city}}
+				span.title Город
+			.block-info
+				span.info
+					| {{user.inn}}
+				span.title  ИНН
+		.panel-footer
+			a.btn.btn-block.btn-success.btn-xs ng-href="https://focus.kontur.ru/search?query={{user.inn}}" target="_blank"
+				| проверить в фокусе
+	.panel.panel-default
+		.panel-heading
+			.panel-title 
+				| Статус пользователя
+			.panel-body
+				select.form-control ng-model="user.role" ng-disabled="user.role == 'dev'" ng-change="updateRole()"
+					option value='user' Пользователь
+					option value='buyer' Покупатель
+
+	.panel.panel-info
+		.panel-heading
+			| Дата регистрации
+		.panel-body
 			| {{user.created_at}}
 .col-xs-9
 	.row
-		.col-md-4
-			.thumbnail
-				.caption.center
-					p.bold Заказов
-					p.lead
+		.col-md-3
+			.panel.panel-default
+				.panel-body
+					h1
 						| {{user.orders_count}}
-		.col-md-4
-			.thumbnail
-				.caption.center
-					p.bold Всего действий
-					p.lead
-						| {{user.activities_count}}
-		.col-md-4
-			.thumbnail
-				.caption.center
-					p.bold последнее действи
-					p.lead
+					p.bold Заказов
+		.col-md-6
+			.panel.panel-default
+				.panel-body
+					h1
 						| {{activities[0].date}}
-	p.lead Заказы
-	table.table
-		tr
-			th Id
-			th Позиций
-			th Сумма
-			th Дата
-		tr ng-repeat="order in orders"
-			td
-				| {{order.id}}
-			td
-				| {{order.count_positions}}
-			td
-				| {{order.amount}}
-			td
-				| {{order.date}}
-	p.lead Активность
-	.activity-group
-		ul.activity-group-activities
-			li.activity-group-activity ng-repeat="activity in activities" ng-class="{
-			success: activity.controller=='order_items' && activity.action=='create',
-			danger: activity.controller=='order_items' && activity.action=='destroy',
-			warning: activity.controller=='order_items' && activity.action=='update',
-			info: activity.controller=='find'
-			}"
-				span.activity-group-activity-date
-					| {{activity.date}}
-				span.activity-group-activity-log
-					actionlog controller="activity.controller" log="activity.log" action="activity.action"
+					p.bold Последняя активность
+		.col-md-3
+			.panel.panel-default
+				.panel-body
+					h1
+						| {{user.activities_count}}
+					p.bold Всего действий
+	.panel.panel-default
+		.panel-heading
+			.panel-title 
+				| Заказы
+		.panel-table
+			table.table
+				tr
+					th Id
+					th Позиций
+					th Сумма
+					th Дата
+				tr ng-repeat="order in orders"
+					td
+						| {{order.id}}
+					td
+						| {{order.count_positions}}
+					td
+						| {{order.amount}}
+					td
+						| {{order.date}}
+	.panel.panel-default
+		.panel-heading
+			.panel-title 
+				| Активность
+		.panel-table
+			.activity-group
+				ul.activity-group-activities
+					li.activity-group-activity ng-repeat="activity in activities" ng-class="{
+					success: activity.controller=='order_items' && activity.action=='create',
+					danger: activity.controller=='order_items' && activity.action=='destroy',
+					warning: activity.controller=='order_items' && activity.action=='update',
+					info: activity.controller=='find'
+					}"
+						span.activity-group-activity-date
+							| {{activity.date}}
+						span.activity-group-activity-log
+							actionlog controller="activity.controller" log="activity.log" action="activity.action"

@@ -2,18 +2,16 @@ app.controller "FindCtrl", GroupCtrl = ["$scope", "$http", "$location","Item", "
 
 	$scope.find_success = true
 	# Устанавливаем урл для запроса, необходим для infinity-scroll
-	
+	$scope.error = false	
 
 	# Отправляем запрос на поиск
 	sendRequest = ->
 		url = "/api" + $location.url()
 		if Item.list.length < 0
 			Item.itemsControl = false
-		$http.get(url).success (data) ->
+		$http.get(url).success((data) ->
 			if data.items.length > 0
 				$scope.total_count = data.total_count
-				console.log(data.total_count)
-				# Устанавлием "занят", отключая infinity-scroll пока не закгрузится новая страница
 				Item.busy = true
 				$scope.find_success = true
 				# Добавляем первые товары в фабрику
@@ -25,6 +23,16 @@ app.controller "FindCtrl", GroupCtrl = ["$scope", "$http", "$location","Item", "
 				Item.end = true
 				$scope.find_success = false
 				Item.itemsControl = false
+			).error((data, status) ->
+				if status == 500
+					console.log("Ошибка")
+				Item.itemsControl = false
+				Item.list = []
+				$scope.error = true
+				$scope.find_success = true
+				Item.itemsControl = false
+			)
+
 
 	sendRequest()
 

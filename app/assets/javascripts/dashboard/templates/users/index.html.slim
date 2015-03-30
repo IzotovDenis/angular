@@ -1,51 +1,53 @@
-H1 Пользователи
-
-table.table
-	tr
-		td 
-		td 
-			input.input-sm.form-control ng-model="search.name" placeholder="фильтр наименование"
-		td 
-			input.input-sm.form-control ng-model="search.inn" placeholder="фильтр инн"
-		td
-			input.input-sm.form-control ng-model="search.email" placeholder="фильтр email"
-		td 
-		td 
-		td 
-		td
-			select.form-control.input-sm ng-model="search.role" ng-init="search.role = ''"
-          		option value="" все
-          		option value="user" пользователи
-          		option value="buyer" покупатели
-	tr
-		th 
-		th 
-			a href="" ng-click="predicate = 'name'; reverse=!reverse" Наименование
-		th 
-			a href="" ng-click="predicate = 'inn'; reverse=!reverse" ИНН
-		th
-			a href="" ng-click="predicate = 'email'; reverse=!reverse" email
-		th
-			a href="" ng-click="predicate = 'orders_count'; reverse=!reverse" Заказов
-		th
-			a href="" ng-click="predicate = 'activities_count'; reverse=!reverse" Активности
-		th
-			a href="" ng-click="predicate = 'last_action'; reverse=!reverse" Работал
-		th Статус
-	tr	ng-repeat="user in users | filter:search:strict | orderBy:predicate:reverse" 
-		td
-			.btn.btn-info.btn-xs ng-click="showUser(user.id)" инфо
-		td
-			| {{user.name}}
-		td
-			| {{user.inn}}
-		td
-			| {{user.email}}
-		td
-			| {{user.orders_count}}
-		td
-			| {{user.activities_count}}
-		td
-			| {{user.last_action}}
-		td
-			| {{user.role}}
+.app-view-header
+	| Пользователи
+.panel.panel-default
+	.panel-table
+		table.table
+			tr
+				td 
+				td 
+					input.input-sm.form-control ng-model="search.name" placeholder="фильтр наименование"
+				td 
+					input.input-sm.form-control ng-model="search.inn" placeholder="фильтр инн"
+				td
+					input.input-sm.form-control ng-model="search.email" placeholder="фильтр email"
+				td 
+				td 
+				td 
+				td
+					select.form-control.input-sm ng-model="search.role" ng-init="search.role = ''"
+		          		option value="" все
+		          		option value="user" пользователи
+		          		option value="buyer" покупатели
+			tr
+				th 
+				th 
+					a href="" ng-click="predicate = 'name'; reverse=!reverse" Наименование
+				th 
+					a href="" ng-click="predicate = 'inn'; reverse=!reverse" ИНН
+				th
+					a href="" ng-click="predicate = 'email'; reverse=!reverse" email
+				th
+					a href="" ng-click="predicate = 'orders_count'; reverse=!reverse" Заказов
+				th
+					a href="" ng-click="predicate = 'activities_count'; reverse=!reverse" Активности
+				th
+					a href="" ng-click="predicate = 'last_action'; reverse=!reverse" Работал
+				th Статус
+			tr	ng-repeat="user in users | filter:search:strict | orderBy:predicate:reverse" 
+				td
+					.btn.btn-info.btn-xs ng-click="showUser(user.id)" инфо
+				td
+					| {{user.name}}
+				td
+					| {{user.inn}}
+				td
+					| {{user.email}}
+				td
+					| {{user.orders_count}}
+				td
+					| {{user.activities_count}}
+				td
+					| {{user.last_action}}
+				td
+					| {{user.role}}

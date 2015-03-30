@@ -77,11 +77,11 @@ module Importv3Helper
 		items.each do |item|
 			if item.group_cid
 				group = Group.where(:cid=>item.group_cid).first
-					if group
-						item.group = group
-						item.save
-						puts "#{item.full_title} -- >> #{group.title}"
-					end
+				if group
+					item.group = group
+					item.save
+					puts "#{item.full_title} -- >> #{group.title}"
+				end
 			end
 		end
 	end
@@ -115,18 +115,17 @@ module Importv3Helper
 		end
 	end
 
-
-#### ДЕБАГ
-
 # Удаление старых групп
 	def remove_old_groups(importsession_id)
 		# Поиск групп не из текущей сессии обмена
 		groups = Group.where.not(importsession_id: importsession_id)
-			if groups
-				groups.each do |group|
-						group.destroy
+		if groups
+			groups.each do |group|
+				group.items each do |item|
+					group.destroy
 				end
 			end
+		end
 	end
 
 # Делаем группы скрытыми
@@ -157,8 +156,6 @@ module Importv3Helper
 		parse_groups(importsession_id)
 		#Устанавливаем иерархию
 		set_parent_group
-		#Удаляем старые группы
-		remove_old_groups(importsession_id)
 		#Скрываем скрытые папки
 		set_disabled_group
 		#Импортируем товары
@@ -221,7 +218,6 @@ module Importv3Helper
 		hash['cy'] = item_tag(tag["Валюта"]) 
 		return hash
 	end
-#### КОНЕЦ ДЕБАГА
 
 end
 

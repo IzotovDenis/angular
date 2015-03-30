@@ -8,11 +8,12 @@ html ng-app="App" ng-controller="MainCtrl"
     base href="/"
   body
     = render 'layouts/navbar'
-    .wrapper
+    .wrapper ng-class="{app_load: appLoad}"
       .inner-block.clearfix
         .left-bar
           = render "layouts/menu"
         .content
+          .alert.alert-danger.center На сайте проходят технические работы.
           = yield
     .footer
       = render "layouts/footer"

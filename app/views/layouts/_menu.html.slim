@@ -1,43 +1,34 @@
-.price-list-btn
-	.btn.btn-primary.btn-block ng-click="downloadPricelist()"
-		span.glyphicon.glyphicon-cloud-download
-		| Скачать прайс-лист [zip]
+-if @a
+	.price-list-btn
+		.btn.btn-primary.btn-block ng-click="downloadPricelist()"
+			span.glyphicon.glyphicon-cloud-download
+			| Скачать прайс-лист [zip]
 .menu
 	ul.menu-bar
-		li.menu-bar-root denismenu="" id="brand"
-			span.title
-				| БРЕНДЫ
-			span.glyphicon.glyphicon-chevron-right
-			.test-drop ng-show="aa == 'brand'" denismenu1="" id="brand" class="column3"
-				ul
-					- Brand.all.order(:title).each do |brand|
-						li
-							.menu-block
-								=link_to brand.title, "brands/#{brand.id}"
-		li.menu-bar-root-title
-			| КАТАЛОГ ТОВАРОВ
-		- Group.roots.each do |group|
-			-if group.has_children?
-				li.menu-bar-root denismenu="" id="#{group.id}"
-					span.title
-						= group.title
-					span.glyphicon.glyphicon-chevron-right
-				.test-drop ng-show="aa == #{group.id}" denismenu1="" id="#{group.id}" class="column#{group_column(group.descendants.count)}"
+		-if @a
+			li.menu-bar-root denismenu="" id="brand"
+				span.title
+					| БРЕНДЫ
+				span.glyphicon.glyphicon-chevron-right
+				.menu-dropright ng-show="aa == 'brand'" denismenu1="" id="brand" class="column-brands"
 					ul
-						- group.children.each do |gr|
+						- Brand.all.order(:title).each do |brand|
 							li
 								.menu-block
-									= link_to gr.title, "groups/#{gr.id}"
-									ul
-										- gr.children.each do |grs|
-											li
-												= link_to grs.title, "groups/#{grs.id}"
-												ul
-													- grs.children.each do |grss|
-														li
-															= link_to grss.title, "groups/#{grss.id}"
-			-else
-				li.menu-bar-root
+									=link_to brand.title, "brands/#{brand.id}"
+		li.menu-bar-root-title
+			| КАТАЛОГ ТОВАРОВ
+		- Group.able.select("id, title, ancestry").arrange_serializable(:order=>:title).each do |group|
+			-if !group['children'].empty?
+				li.menu-bar-root denismenu="" id="#{group['id']}"
 					span.title
-						= link_to group.title, "groups/#{group.id}" 
-
+						= group["title"]
+					span.glyphicon.glyphicon-chevron-right
+				.menu-dropright ng-show="aa == #{group['id']}" denismenu1="" id="#{group['id']}" class="column#{group_column(group)}"
+					ul
+						= render "layouts/children", group: group['children']
+			- else
+				li.menu-bar-root
+					= link_to "groups/#{group["id"]}" do
+						span.title
+							= group["title"]

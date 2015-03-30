@@ -45,7 +45,6 @@ gem 'russian'
 gem 'will_paginate', '~> 3.0'
 gem 'will_paginate-bootstrap'
 gem 'sinatra', '>= 1.3.0', :require => nil
-gem 'database_cleaner'
 gem 'icomoon-rails'
 # gem 'rack-mini-profiler'
 gem 'x-editable-rails'
@@ -64,6 +63,14 @@ gem 'angular-rails-templates'
 gem 'angular-ui-bootstrap-rails'
 group :production do
 	gem 'unicorn'
+end
+group :development, :test do
+  gem 'spring-commands-rspec'
+  gem 'rspec-rails'
+  gem 'guard-rspec'
+  gem "factory_girl_rails", "~> 4.0"
+  gem 'capybara'
+  gem 'database_cleaner'
 end
 
 group :development do

@@ -15,7 +15,8 @@ module GroupsHelper
 			end
 	end
 
-	def group_column(count)
+	def group_column(group)
+		count = tree_count(group).count
 		case count
 			when 0..19
 				return "1"
@@ -24,6 +25,13 @@ module GroupsHelper
 			else
 				return "3"
 		end
+	end
+
+	def tree_count(tree, p = 0)
+	  id = tree["id"]
+	  (tree["children"] || [])
+	    .flat_map { |sub| tree_count(sub, id) }
+	    .unshift("id" => id, "parent_id" => p)
 	end
 
 end

@@ -35,14 +35,15 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 		)
 
 	$scope.itemShowImage = (item) ->
-		modalInstance = $modal.open(
-			templateUrl: "items/modal_image.html"
-			controller: "ModalImageCtrl"
-			windowClass: 'modal-item'
-			resolve:
-				item: ->
-					item
-		)
+		if item.image.exist
+			modalInstance = $modal.open(
+				templateUrl: "items/modal_image.html"
+				controller: "ModalImageCtrl"
+				windowClass: 'modal-item'
+				resolve:
+					item: ->
+						item
+			)
 
 	$scope.priceShow = (item) ->
 		modalInstance = $modal.open(

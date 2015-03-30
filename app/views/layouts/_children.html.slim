@@ -1,0 +1,7 @@
+- group.each do |children|
+	li
+		.menu-block
+			= link_to children["title"], "groups/#{children["id"]}"
+			-if children['children']
+				ul
+					= render "layouts/children", group: children['children']

@@ -1,4 +1,4 @@
-@dashboard = angular.module("Dashboard", ["ngResource","ng-rails-csrf", "templates", "ngRoute", "ui.bootstrap", "ngSanitize", "naif.base64"])
+@dashboard = angular.module("Dashboard", ["ngResource","ng-rails-csrf", "templates", "ngRoute", "ui.bootstrap", "ngSanitize", "naif.base64", "textAngular", "dndLists"])
 
 dashboard.config ["$routeProvider", "$locationProvider", ($routeProvider, $locationProvider) ->
 	$locationProvider.html5Mode false
@@ -15,6 +15,9 @@ dashboard.config ["$routeProvider", "$locationProvider", ($routeProvider, $locat
 	$routeProvider.when '/groups', templateUrl: 'dashboard/templates/groups/index.html', controller: "GroupsIndexCtrl"
 	$routeProvider.when '/sliders/:promoId', templateUrl: 'dashboard/templates/sliders/show.html', controller: "SlidersShowCtrl"
 	$routeProvider.when '/groups/:groupId', templateUrl: 'dashboard/templates/groups/show.html', controller: "GroupsShowCtrl"
+	$routeProvider.when '/posts', templateUrl: 'dashboard/templates/posts/index.html', controller: "PostsIndexCtrl"
+	$routeProvider.when '/posts/:postId', templateUrl: 'dashboard/templates/posts/show.html', controller: "PostsShowCtrl"
+	$routeProvider.when '/pricelist/', templateUrl: 'dashboard/templates/pricelists/index.html', controller: "PricelistsIndexCtrl"
 	$routeProvider.when '/', templateUrl: 'dashboard/templates/dashboard.html', controller: "MainCtrl"
 
 ]

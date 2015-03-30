@@ -23,13 +23,10 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 	), (reason) ->
 		console.log('error')
 
-	# Получить список групп меню
-	$scope.groups = Group.tree()
-
 	$scope.$on "$routeChangeStart", ->
 	  $scope.aa = false
 
-
+	console.log($scope.appLoad)
 	# Метода поиска
 	$scope.enterFind = (newQuery) ->
 		unless (newQuery.query == undefined || newQuery.query.length == 0)
@@ -39,11 +36,6 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 			if newQuery.attr
 				query += "&attr=" + newQuery.attr
 			$location.url('/find?' + query)
-
-
-	# TODO: разобраться
-	$scope.keyalert = ->
-		console.log("alert") 
 
 
 	# Что то для работы с модалью заказа

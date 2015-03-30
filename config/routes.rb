@@ -89,6 +89,7 @@ end
       end
     end
     resources :brands, :only => [:index, :show]
+    resources :posts, :only => [:show]
   end
 
   get 'dashboard' => "dashboard#index"
@@ -122,6 +123,11 @@ end
       end
       resources :sliders
       resources :currencies
+      resources :posts do
+        collection do
+          post "sort"
+        end
+      end
     end
   end
 

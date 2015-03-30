@@ -1,7 +1,6 @@
 class Dashboard::Api::OrdersController < Dashboard::ApiController
   respond_to :json
   before_action :set_order, only: [:show]
-  load_and_authorize_resource only: [:index,:forwarding,:show]
 
   def index
     if params[:user_id]

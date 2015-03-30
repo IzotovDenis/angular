@@ -1,4 +1,4 @@
-@app = angular.module("App", ["ngResource", "treeControl","ng-rails-csrf", "templates", "infinite-scroll", "ngRoute", "ui.bootstrap", "ngSanitize", "ngAnimate"])
+@app = angular.module("App", ["ngResource", "treeControl","ng-rails-csrf", "templates", "ngRoute", "ui.bootstrap", "ngSanitize", "ngAnimate"])
 
 app.config ["$routeProvider", "$locationProvider", ($routeProvider, $locationProvider) ->
 	$locationProvider.html5Mode true
@@ -11,6 +11,7 @@ app.config ["$routeProvider", "$locationProvider", ($routeProvider, $locationPro
 	$routeProvider.when '/orders', templateUrl: 'orders/index.html', controller: "OrderIndexCtrl"
 	$routeProvider.when '/orders/:orderId', templateUrl: 'orders/show.html', controller: "OrderShowCtrl"
 	$routeProvider.when '/offers/:offerId', templateUrl: 'offers/show.html', controller: "OfferShowCtrl"
+	$routeProvider.when '/info/:page', templateUrl: 'info/show.html', controller: "InfoShowCtrl"
 	$routeProvider.when '/', templateUrl: 'groups/index.html', controller: "GroupIndexCtrl"
 ]
 
@@ -22,5 +23,7 @@ app.factory "User", ["$resource",($resource) ->
 	$resource("api/users/:id.json", {id: "@id"}, {update: {method: "PUT"}})
 ]
 
-
+app.run ["$rootScope", ($rootScope)->
+	$rootScope.appLoad = true
+	]
 
