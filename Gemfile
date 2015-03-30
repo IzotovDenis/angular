@@ -18,7 +18,6 @@ gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 gem 'rake', '~> 10.4.2'
@@ -33,7 +32,6 @@ gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', :branch => 'bootstrap3'
 gem 'activerecord-postgres-hstore'
 gem 'slim'
-gem 'nokogiri'
 gem 'sidekiq'
 gem 'foreman'
 gem 'ancestry'
