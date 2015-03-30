@@ -1,4 +1,4 @@
-.row
+.row ng-if="1==4"
 	.col-md-3
 		.panel.panel-default
 			.panel-body
@@ -70,7 +70,7 @@
 					| Новые
 			.panel-body
 				ul.list-group
-					li.list-group-item ng-repeat="user in stat.online"
+					li.list-group-item ng-repeat="user in stat.noobs"
 						a ng-href="#/users/{{user.id}}"
 							span.glyphicon.glyphicon-user
 							span 
