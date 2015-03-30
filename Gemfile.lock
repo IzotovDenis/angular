@@ -312,8 +312,6 @@ GEM
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
-    turbolinks (2.5.3)
-      coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.1)
@@ -366,7 +364,6 @@ DEPENDENCIES
   mini_magick
   mysql2 (~> 0.3.13)
   ng-rails-csrf
-  nokogiri
   nprogress-rails
   pg
   rails (= 4.1.8)
@@ -385,7 +382,6 @@ DEPENDENCIES
   spring-commands-rspec
   therubyracer
   thinking-sphinx (~> 3.1.1)
-  turbolinks
   twitter-bootstrap-rails!
   uglifier (>= 1.3.0)
   unicorn
