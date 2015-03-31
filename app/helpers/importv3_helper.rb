@@ -160,10 +160,10 @@ module Importv3Helper
 		set_disabled_group
 		#Импортируем товары
 		parse_items(importsession_id)
-		#Импортируем цены
-		get_offers(importsession_id)
 		#Привязываем товары к группе
 		set_group(importsession_id)
+		#Импортируем цены
+		get_offers(importsession_id)
 		return true
 	end
 
