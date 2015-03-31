@@ -21,7 +21,8 @@ class Ability
     can [:forwarding], Order do |order|
       order.user_id == @user.id && order.formed = nil
     end
-    can [:update,:create,:destroy], OrderItem do |order_item|
+    can [:create], OrderItem
+    can [:update,:destroy], OrderItem do |order_item|
       order_item.order.user_id == @user.id && order_item.order.formed == nil
     end
   end
@@ -32,11 +33,6 @@ class Ability
     can [:show, :update], User do |current_user|
       current_user.id == @user.id
     end
-  end
-
-  def superbuyer
-    buyer
-    can :view_docs, Item
   end
 
   def manager
