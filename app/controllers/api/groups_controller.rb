@@ -7,7 +7,7 @@ class Api::GroupsController < ApiController
   def index
     @sliders = Slider.all
     @offers = Offer.all
-    @items = Item.able.includes(:prices).limit(10)
+    @items = Item.able.limit(10)
     @order_list = order_list(current_order)
   end
 

@@ -1,6 +1,6 @@
 class ImportsController < ApplicationController
 	include ImportsHelper
-  include Importv2Helper #Import catalog
+  include Importv3Helper #Import catalog
 	skip_before_filter :verify_authenticity_token
   http_basic_authenticate_with name: "dhh", password: "secret1", only: :index
 

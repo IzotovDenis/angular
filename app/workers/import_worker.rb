@@ -5,7 +5,7 @@ class ImportWorker
 
   def perform(importsession_id,change=true)
   	@importsession = Importsession.find_by_id(importsession_id) || Importsession.create(:status=>'progress',:cookie=>"Full")
-  	if change
+  		if change
 			system ("cat public/uploads/imports/#{@importsession.id.to_s}/imp.zip.* > public/uploads/imports/#{@importsession.id.to_s}/import.zip")
 			system ("unzip public/uploads/imports/#{@importsession.id.to_s}/import.zip -d public/uploads/imports/#{@importsession.id.to_s}/")
 			@path = "public/uploads/imports/#{@importsession.id.to_s}"

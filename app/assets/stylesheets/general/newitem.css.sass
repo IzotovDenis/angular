@@ -78,6 +78,8 @@
 			text-align: center
 			position: relative
 			cursor: -webkit-zoom-in
+			vertical-align: middle
+			display: table-cell
 			img, .img_thumb, .img_thumb_m
 				margin: 0 auto
 		.item-qty
@@ -103,17 +105,20 @@
 .item-list-thumbs
 	overflow: hidden
 	padding-top: 1px
-	margin-right: -3px
+	margin-right: -15px
+	display: block
+	padding: 1px
 	.item-list-table-head
 		display: none
 	.item
 		float: left
-		border: 1px dashed rgba(0, 0, 0, 0.2)
-		width: 25%
-		margin: -1px -1px 0px 0px
+		width: calc(100%/4 - 15px)
 		background: white
 		height: 305px
 		position: relative
+		-webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1)
+		box-shadow: 0 0 0 1px rgba(0,0,0,.1)
+		margin: 0 15px 15px 0
 	.item-photo
 		height: 200px
 		width: 230px
@@ -150,8 +155,8 @@
 			display: none
 	.item-qty
 		position: absolute
-		bottom: 28px
-		right: 5px
+		bottom: 22px
+		right: -1px
 		width: 105px
 		font-size: 10px
 		&:before
@@ -167,8 +172,8 @@
 	.item-order
 		width: 105px
 		position: absolute
-		bottom: 5px
-		right: 5px
+		bottom: -1px
+		right: -4px
 		.order-qty
 			width: 35px
 			text-align: center

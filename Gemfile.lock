@@ -190,6 +190,8 @@ GEM
     orm_adapter (0.5.0)
     pg (0.18.1)
     pg-hstore (1.2.0)
+    polyamorous (1.1.0)
+      activerecord (>= 3.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -292,6 +294,10 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    squeel (1.2.3)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      polyamorous (~> 1.1.0)
     sshkit (1.7.1)
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
@@ -380,6 +386,7 @@ DEPENDENCIES
   spreadsheet
   spring
   spring-commands-rspec
+  squeel
   therubyracer
   thinking-sphinx (~> 3.1.1)
   twitter-bootstrap-rails!

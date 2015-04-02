@@ -1,19 +1,27 @@
-app.directive "denismenu", [ "$timeout", ($timeout)  ->
+app.directive "denismenu", [ "$timeout", "RightMenu", ($timeout, RightMenu)  ->
 	restrict: "A"
-	link: ($scope, elem, attrs) ->  
+	link: ($scope, elem, attrs) ->
+		elem.bind "click", ->
+			RightMenu.active = true
+			RightMenu.current = attrs.id
+			console.log(RightMenu)
+			$scope.aa = RightMenu.current
+			$scope.$apply()
+
 		elem.bind "mouseover", ->
-			$scope.inTimeout = attrs.id
-			$scope.cinTimeout = false
-			$timeout (->
-				if $scope.inTimeout == attrs.id
-					$scope.inTimeout = false
-					$scope.aa = attrs.id
-					$scope.$apply()
-				return
-			), 400
+			if RightMenu.active
+				RightMenu.next = attrs.id
+				$scope.cinTimeout = false
+				$timeout (->
+					if RightMenu.next == attrs.id
+						RightMenu.next = false
+						$scope.aa = attrs.id
+						$scope.$apply()
+					return
+				), 400
 
 		elem.bind "mouseleave", ->
-			$scope.inTimeout = false
+			RightMenu.next = false
 			$scope.$apply()
 			$timeout (->
 				if $scope.cinTimeout == true
@@ -21,12 +29,13 @@ app.directive "denismenu", [ "$timeout", ($timeout)  ->
 					$scope.inTimeout = false
 					$scope.aa = false
 					$scope.$apply()
+					RightMenu.active = false
 				return
 			), 1
 			$scope.cinTimeout = true
 ]
 
-app.directive "denismenu1", [ "$timeout", ($timeout)  ->
+app.directive "denismenu1", [ "$timeout", "RightMenu", ($timeout, RightMenu)  ->
 	restrict: "A"
 	link: ($scope, elem, attrs) ->  
 		elem.bind "mouseover", ->
@@ -40,6 +49,7 @@ app.directive "denismenu1", [ "$timeout", ($timeout)  ->
 				if $scope.cinTimeout == true
 					$scope.cinTimeout = false
 					$scope.aa = false
+					RightMenu.active = false
 					$scope.$apply()
 				return
 			), 300
