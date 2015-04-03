@@ -86,6 +86,13 @@ module Importv3Helper
 		end
 	end
 
+	def sset_group(importsession_id)
+		groups = Group.where("importsession_id"=>importsession_id)
+		groups.each do |group|
+			Item.where(:group_cid=>group.cid).update_all(:group_id=>group.id)
+		end
+	end
+
 	def tree_to_a(tree, p = nil)
 		cid = tree["Ид"]
 		title = tree["Наименование"]
