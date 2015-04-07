@@ -41,7 +41,7 @@ nav.navbar.navbar-blue.header role="navigation" ng-class="{app_load: appLoad}"
             span.btn-head-lable
               | Корзина:
             .label.label-success 
-              | {{order.current.items_count}}
+              | {{order.itemIds.length}}
         li
         li.nav-link ng-if="user.authorized == false"
           = link_to new_user_session_path, :target=>"_self" do

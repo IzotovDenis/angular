@@ -51,19 +51,19 @@
 							span.oem.cursor-pointer ng-repeat="oem in ::item.properties.oems" go-find="{{::oem.oem}}" title="Искать товары с ОЕМ: {{::oem.oem}}" 
 								| {{::oem.oem}}
 
-					.cell.item-qty ng-if="::(canOrder() != false)"
+					.cell.item-qty ng-if="canOrder() != false"
 						| {{::item.qty}}
-					.cell.item-price ng-if="::(canOrder() != false)"
+					.cell.item-price ng-if="canOrder() != false"
 						span.price-value ng-class="{'price-confirm': item.price == 0.00}"
 							currency value="item.price" item="true"
 						br
 						span.price-currency ng-if="item.price != 0.00"
 							| руб.
-					.cell.item-order ng-if="::(canOrder() != false)"
+					.cell.item-order ng-if="canOrder() != false"
 						item-ordered
 						form ng-submit="addToCart(item)"
 							input.order-qty type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
-							input.btn.btn-xs.btn-default.qty-btn.btn-order ng-class="{'btn-primary': inCart(item.kod)}" type="submit" value="В корзину"
+							input.btn.btn-xs.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.id)}" type="submit" value="В корзину"
 					.cell.item-view-price ng-if="canOrder() == false"
 						.btn.btn-default.btn-xs ng-click="priceShow()" увидеть цены
 	pagination total-items="items.totalEntries" ng-model="currentPage" ng-change="pageChanged()" items-per-page="60" previous-text="Назад" next-text="Вперед" ng-show="showHead()"

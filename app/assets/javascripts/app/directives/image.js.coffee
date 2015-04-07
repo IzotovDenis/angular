@@ -12,12 +12,13 @@ app.directive "itemImage", ->
 				html = "<div class='"+attrs.size+"'></div>"
 			element.append html
 		setImage()
+
 app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
 	restrict: "E"
 	link: (scope, element, attrs) ->
 		scope.$watch (->
-			Order.itemList), ((newVal,oldVal) ->
-				found = $filter('getById')(Order.itemList, scope.item.kod)
+			Order.itemIds), ((newVal,oldVal) ->
+				found = $filter('getById')(Order.itemIds, scope.item.id)
 				if found
 					scope.item.ordered = found.qty
 					scope.item.orderitem_id = found.order_item_id

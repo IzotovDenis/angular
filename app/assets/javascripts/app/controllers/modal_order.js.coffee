@@ -1,7 +1,7 @@
 app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "Order", "$http", "$window", ($scope, $modalInstance, Order, $http, $window) ->
 	$scope.order = Order
-	$scope.aler = (item) ->
-		console.log(item.id)
+	
+	Order.getCurrent()
 
 	$scope.addToCart = (item) ->
 		new_order_item = {

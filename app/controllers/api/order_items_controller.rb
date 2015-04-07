@@ -10,7 +10,7 @@ class Api::OrderItemsController < ApiController
       @order_item = OrderItem.find_or_initialize_by(:order=>current_order,:item=>@item)
       @order_item.qty = order_item_params[:qty]
       @order_item.save
-      render :json => @order_item
+      render :json => current_order.order_items.select("item_id, qty")
     end
   end
 

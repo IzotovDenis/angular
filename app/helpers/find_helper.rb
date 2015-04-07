@@ -21,6 +21,7 @@ module FindHelper
 		query = []
 		string = query_str.dup
 		#Оставляем только разрешенные символы
+		string.gsub!('-', '')
 		string.gsub!(/[^0-9A-Za-zА-Яа-я]/, ' ')
 		where_find = indexes(index)
 		if where_find.include? "kod"
@@ -42,6 +43,7 @@ module FindHelper
 		# Формируем строку для поиска
 		d = string_find(string)
 		#Если в строке цифра добавляем разделяем ее пробелами
+		d << " | #{string_find(string)}"
 		string.gsub!(/(\d+)/, ' \1 ')
 		d << " | #{string_find(string)}"
 		string.delete!(" ")
@@ -67,8 +69,4 @@ module FindHelper
 		query = "(@(kod) #{string})"
 	end
 
-
-	def te
-		@items = Item.search("(@(kod) 73) | (@(article) *clt*)")
-	end
 end

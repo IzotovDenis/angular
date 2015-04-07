@@ -1,4 +1,4 @@
-app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order", "System",  "$location", "$modal", "Page", "$window", ($scope, $http, Group, User,Order, System, $location, $modal, Page, $window) ->
+app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order", "System",  "$location", "$modal", "Page", "$window", "$timeout", "$route", ($scope, $http, Group, User,Order, System, $location, $modal, Page, $window, $timeout, $route) ->
 	
 	# Привязываем фабрики
 	$scope.order = Order
@@ -18,15 +18,13 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 
 	# Получить текущего пользователя
 	User.getCurrent().then ((res) ->
-		Order.getCurrent().then	((res) ->
-			Order.current = res)
+		Order.getCurrentIds()
 	), (reason) ->
 		console.log('error')
 
 	$scope.$on "$routeChangeStart", ->
 	  $scope.aa = false
 
-	console.log($scope.appLoad)
 	# Метода поиска
 	$scope.enterFind = (newQuery) ->
 		unless (newQuery.query == undefined || newQuery.query.length == 0)
@@ -80,4 +78,14 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 	        labelSelected: "a6"
 	    }
 	}
+
+	$scope.relS = ->
+		$route.reload()
+
+	$scope.$watch (->
+		$scope.httpError), ((newVal,oldVal) ->
+			if $scope.httpError
+				console.log("start----")
+				console.log($scope.httpError)
+				console.log("end----"))
 ]

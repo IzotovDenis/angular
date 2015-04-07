@@ -14,5 +14,7 @@ form ng-submit="enterFind(newQuery)"
     	label
       		input type="checkbox" ng-model="newQuery.group"
             | Искать в категории: {{system.group.title}}
+.btn.btn-default ng-click="relS()" ng-if="httpError" Test
 
 div ng-view="" autoscroll=""
+

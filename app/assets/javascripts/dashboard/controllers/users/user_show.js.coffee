@@ -16,4 +16,8 @@ dashboard.controller "UsersShowCtrl", UsersEditCtrl = ["$scope", "$http", "$rout
 	$scope.editUser = (id) ->
 		$location.url("users/" + id + "/edit")
 
+	$scope.updateRole = ->
+		$http.post("api/users/update_role", {id: $scope.user.id, role: $scope.user.role}).success (data) ->
+			console.log(data)
+
 ]

@@ -8,7 +8,7 @@ class Item < ActiveRecord::Base
 	has_many :order_items
 	has_many :orders, through: :order_items
 	has_many :order_items_pop, -> (object){ where("order_items.created_at >= ?", Time.now-1.month)}, :class_name => 'OrderItem'
-	scope :popular, -> {joins(:group).where(:groups => {:disabled => [nil,false]}).order("RANDOM()").select('distinct items.*, groups.title as group_title')}
+	scope :popular, -> {joins(:group).where(:groups => {:disabled => [nil,false]}).select('distinct items.*, groups.title as group_title')}
 	mount_uploader :image, ImageUploader
 	self.per_page = 60
 	scope :able, ->{joins(:group).where(:groups => {:disabled => [nil,false]}).select('distinct items.*, groups.title as group_title').order("position")}

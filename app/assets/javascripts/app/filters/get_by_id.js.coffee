@@ -1,8 +1,8 @@
 app.filter "getById", ->
-  (input, kod) ->
+  (input, id) ->
     i = 0
     len = input.length
     while i < len
-      return input[i]  if +input[i].kod is +kod
+      return input[i]  if +input[i].item_id is +id
       i++
     null

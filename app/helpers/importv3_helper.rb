@@ -8,7 +8,6 @@ module Importv3Helper
 				group = Group.find_or_initialize_by(cid: xml_group['cid'])
 				xml_group['importsession_id'] = importsession_id
 				group.update(xml_group)
-				puts group.title
 			end
 		end
 	end
@@ -21,8 +20,6 @@ module Importv3Helper
 			hash['importsession_id'] = importsession_id
 			item = Item.find_or_initialize_by(cid: hash['cid'])
 			if item.update(hash)
-				puts "import item #{item.full_title}"
-				puts tag["Картинка"]
 				save_image(importsession_id, tag["Картинка"], item.id)
 			end
 		end
@@ -73,20 +70,6 @@ module Importv3Helper
 	end
 
 	def set_group(importsession_id)
-		items = Item.where("importsession_id"=>importsession_id)
-		items.each do |item|
-			if item.group_cid
-				group = Group.where(:cid=>item.group_cid).first
-				if group
-					item.group = group
-					item.save
-					puts "#{item.full_title} -- >> #{group.title}"
-				end
-			end
-		end
-	end
-
-	def sset_group(importsession_id)
 		groups = Group.where("importsession_id"=>importsession_id)
 		groups.each do |group|
 			Item.where(:group_cid=>group.cid).update_all(:group_id=>group.id)
@@ -216,6 +199,7 @@ module Importv3Helper
 			end
 		end
 	end
+	
 
 	def parsing_price(tag)
 		hash = Hash.new

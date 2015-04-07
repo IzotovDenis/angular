@@ -6,6 +6,8 @@ app.controller "FindCtrl", GroupCtrl = ["$scope", "$http", "$location","Item", "
 
 	# Отправляем запрос на поиск
 	sendRequest = ->
+		Item.list = []
+		Item.busy = true
 		url = "/api" + $location.url()
 		if Item.list.length < 0
 			Item.itemsControl = false
@@ -24,6 +26,8 @@ app.controller "FindCtrl", GroupCtrl = ["$scope", "$http", "$location","Item", "
 				$scope.find_success = false
 				Item.itemsControl = false
 			).error((data, status) ->
+				if status == 0
+					console.log("Пропало соединение")
 				if status == 500
 					console.log("Ошибка")
 				Item.itemsControl = false
@@ -32,8 +36,6 @@ app.controller "FindCtrl", GroupCtrl = ["$scope", "$http", "$location","Item", "
 				$scope.find_success = true
 				Item.itemsControl = false
 			)
-
-
 	sendRequest()
 
 

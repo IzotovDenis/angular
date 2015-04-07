@@ -72,6 +72,7 @@ end
         get 'tree'
       end
     end
+    resources :ping, :only => [:index]
     resources :items, :only => [:show]
     resources :orders, :only => [:index, :show] do
       collection do

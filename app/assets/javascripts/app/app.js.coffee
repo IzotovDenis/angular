@@ -1,6 +1,6 @@
 @app = angular.module("App", ["ngResource", "treeControl","ng-rails-csrf", "templates", "ngRoute", "ui.bootstrap", "ngSanitize", "ngAnimate"])
 
-app.config ["$routeProvider", "$locationProvider", ($routeProvider, $locationProvider) ->
+app.config ["$routeProvider", "$locationProvider", "$httpProvider", ($routeProvider, $locationProvider, $httpProvider) ->
 	$locationProvider.html5Mode true
 	$routeProvider.when '/groups/:groupId', templateUrl: 'groups/show.html', controller: 'GroupCtrl'
 	$routeProvider.when '/brands', templateUrl: 'brands/index.html', controller: 'BrandIndexCtrl'

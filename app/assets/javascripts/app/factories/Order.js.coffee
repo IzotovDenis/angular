@@ -3,6 +3,19 @@ app.factory "Order", ["$http", "$q", ($http, $q) ->
 	order.current = {}
 	order.itemList = {}
 
+	order.itemIds = {}
+
+	order.getCurrentIds = ->
+	  defer = $q.defer()
+	  $http.get("api/orders/current?type=ids").success((res) ->
+	    order.itemIds = res
+	    defer.resolve res
+	    return
+	  ).error (err, status) ->
+	    defer.reject err
+	    return
+	  defer.promise
+
 	order.getCurrent = ->
 	  defer = $q.defer()
 	  $http.get("api/orders/current").success((res) ->
@@ -16,9 +29,11 @@ app.factory "Order", ["$http", "$q", ($http, $q) ->
 	  defer.promise
 
 	order.addToCart = (item) ->
+		console.log("start add")
 		defer = $q.defer()
 		$http.post('api/order_items', item).success((res) ->
-			order.getCurrent()
+			order.itemIds = res
+			console.log(order.itemIds)
 			defer.resolve res
 		).error (err, status) ->
 			defer.reject(err)
