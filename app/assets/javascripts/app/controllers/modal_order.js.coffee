@@ -22,7 +22,8 @@ app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "
 				$modalInstance.close()
 				$window.alert("Заказ успешно отправлен!")
 				Order.getCurrent().then	((res) ->
-					Order.current = res)
+					Order.current = res
+					Order.itemIds = [])
 			else
 				$window.alert("Ошибка при отправке!")
 				console.log("SOME ERROR")

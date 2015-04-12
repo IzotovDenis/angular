@@ -1,6 +1,7 @@
 # coding: utf-8
 class Api::FindController < ApiController
   include FindHelper
+  include EmexHelper
   after_action :set_activity
   respond_to :json
   def index

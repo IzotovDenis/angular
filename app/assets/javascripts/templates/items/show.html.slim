@@ -1,7 +1,8 @@
 h1
 	| {{item.title}}
-.item-image-area
-	item-image image="item.image" size="img_item"
+	.item-image-area ng-click="itemShowImage(item)"
+		item-image image="item.image" size="img_item"
+	| {{item.image}}
 .item-content-area
 	div
 		span Категория

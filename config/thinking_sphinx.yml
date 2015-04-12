@@ -6,6 +6,8 @@ development:
  morphology: "stem_ru"
  wordforms: "config/wordforms.txt"
  stopwords: "config/stopwords.txt"
+ item_oem_core:
+  ignore_chars: "(, )"
 
 production:
  ignore_chars: "(, )"

@@ -21,7 +21,6 @@ module FindHelper
 		query = []
 		string = query_str.dup
 		#Оставляем только разрешенные символы
-		string.gsub!('-', '')
 		string.gsub!(/[^0-9A-Za-zА-Яа-я]/, ' ')
 		where_find = indexes(index)
 		if where_find.include? "kod"

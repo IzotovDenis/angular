@@ -10,8 +10,7 @@
 .carousels
 	carousel interval="5000" 
 	  slide active="slider.active" ng-repeat="slider in sliders"
-	  	a ng-href="{{slider.link}}"
-			img ng-src="{{slider.image}}" style="margin:auto;"
+		img ng-src="{{slider.image}}"
 
 / Список товаров
 div ng-include="'items/list.html'"

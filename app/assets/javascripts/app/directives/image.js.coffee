@@ -11,20 +11,26 @@ app.directive "itemImage", ->
 			else
 				html = "<div class='"+attrs.size+"'></div>"
 			element.append html
-		setImage()
+		watch = scope.$watch (->
+			scope.image), ((newVal,oldVal) ->
+				if scope.image
+					setImage()
+					watch()
+				)
 
 app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
 	restrict: "E"
 	link: (scope, element, attrs) ->
 		scope.$watch (->
 			Order.itemIds), ((newVal,oldVal) ->
-				found = $filter('getById')(Order.itemIds, scope.item.id)
-				if found
-					scope.item.ordered = found.qty
-					scope.item.orderitem_id = found.order_item_id
-				else
-					delete scope.item.ordered
-					delete scope.item.orderitem_id
+				if scope.item
+					found = $filter('getById')(Order.itemIds, scope.item.id)
+					if found
+						scope.item.ordered = found.qty
+						scope.item.orderitem_id = found.order_item_id
+					else
+						delete scope.item.ordered
+						delete scope.item.orderitem_id
 				)
 ]
 
