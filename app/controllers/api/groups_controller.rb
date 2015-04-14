@@ -5,6 +5,7 @@ class Api::GroupsController < ApiController
   respond_to :json
 
   def index
+    sleep 10
     @sliders = Slider.all
     @offers = Offer.all
     @items = Item.popular.limit(12)

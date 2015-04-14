@@ -52,6 +52,10 @@ app.directive "currency", ["User", (User) ->
 			User.discount), ((newVal,oldVal) ->
 				setPrice()
 				)
+		set = scope.$watch (->
+			scope.value), ((newVal,oldVal) ->
+				setPrice()
+				)
 		setPrice()
 ]
 

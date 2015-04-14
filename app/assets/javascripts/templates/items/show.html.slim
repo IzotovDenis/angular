@@ -2,7 +2,6 @@ h1
 	| {{item.title}}
 	.item-image-area ng-click="itemShowImage(item)"
 		item-image image="item.image" size="img_item"
-	| {{item.image}}
 .item-content-area
 	div
 		span Категория
@@ -28,8 +27,8 @@ h1
 			| {{item.properties.in_pack}} шт.
 	p.lead
 		| Оптовая цена: 
-		span.price-value
-			currency value="item.price"
+		span.price-value ng-class="{'price-confirm': item.price == 0.00}"
+			currency value="item.price" item="true"
 		span.price-currency
 			|  руб.
 	item-ordered
@@ -37,7 +36,7 @@ h1
 		.input-group.input-group-qty
 			input.form-control type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
 			span.input-group-btn
-				button.btn.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.kod)}" type="submit" В корзину
+				button.btn.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.id)}" type="submit" В корзину
 	.clear.h-line-dashed
 	div
 		table.table

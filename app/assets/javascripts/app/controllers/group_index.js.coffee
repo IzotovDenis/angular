@@ -1,4 +1,4 @@
-app.controller "GroupIndexCtrl", GroupIndexCtrl = ["$scope", "$http", "Item", "Order", "OrderItem", "$location", "$routeParams", "$modal", "System", "Page", ($scope, $http, Item, Order, OrderItem, $location, $routeParams, $modal, System, Page) ->
+app.controller "GroupIndexCtrl", GroupIndexCtrl = ["$scope", "$http", "Item", "Order", "OrderItem", "$location", "$routeParams", "$modal", "System", "Page", "$q", ($scope, $http, Item, Order, OrderItem, $location, $routeParams, $modal, System, Page, $q) ->
 	
 	# Очищаемся System.group для скрытия чекбока "Искать в группе"
 	System.group = {}
@@ -11,13 +11,16 @@ app.controller "GroupIndexCtrl", GroupIndexCtrl = ["$scope", "$http", "Item", "O
 
 	# Устанавливаем стандартный титл страницы
 	Page.setDefaultTitle()
-
 	# Запрос на получения данныйх для главной страницы
-	$http.get("/api/groups").success (data) ->
+	canceler = $q.defer()
+	$http.get("/api/groups", {timeout: canceler.promise}).success (data) ->
 		# Устанавливаем товары
 		Item.setItems(data.items)
 		# Записываем карусель
 		$scope.sliders = data.sliders
 		# Записываем новинки, акции, предложения
 		$scope.offers = data.offers
+
+	$scope.$on "$routeChangeStart", ->
+		canceler.resolve()
 ]

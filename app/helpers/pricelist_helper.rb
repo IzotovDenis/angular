@@ -8,7 +8,7 @@ module PricelistHelper
 	def create_pricelist
 		begin
 			require 'spreadsheet'
-			@groups = Group.arrange_as_array(:order=>"position").each {|n| n.position ="#{n.depth}" }
+			@groups = Group.able.arrange_as_array(:order=>"position").each {|n| n.position ="#{n.depth}" }
 			book = Spreadsheet::Workbook.new
 			format = Spreadsheet::Format.new :size => 8
 			format_head = Spreadsheet::Format.new :size => 8, :weight => :bold, :horizontal_align => :center
@@ -31,24 +31,24 @@ module PricelistHelper
 			end
 			sheet[3,4] = Spreadsheet::Link.new "http://planeta-avtodv.ru/?marker=price_list_title", 'ПЕРЕЙТИ НА САЙТ'
 			sheet.row(3).set_format 4, link_format
-			sheet.row(4).concat %w{Фото Код Бренд Артикул Наименование Тип OEM Кросс Цена Заказ}
-			10.times do |x|
+			sheet.row(4).concat %w{Фото Код Бренд Артикул Наименование Тип Размер OEM Кросс Применяемость Цена Заказ}
+			12.times do |x|
 				sheet.row(4).set_format x, format_head
 			end
 			row = 5
 			@groups.each do |group|
 				sheet[row,4] = group.title
-				10.times do |x|
+				12.times do |x|
 					sheet.row(row).set_format x, title_format
 				end
 				row = add_items(sheet, group, row, format)
 				row = row+1
-				[7,7,13,13,70,15,23,13,13,7].each_with_index do |value,index|
+				[7,7,13,13,70,15,10,23,13,23,13,7].each_with_index do |value,index|
 					sheet.column(index).width = value
 				end
 			end
-			book.write 'public/sys/pricelist/out.xls'
-			system ("zip -j -o public/sys/pricelist/ponomarev-pricelist.zip public/sys/pricelist/out.xls")
+			book.write 'public/sys/pricelist/ipponomarev.xls'
+			system ("zip -j -o public/sys/pricelist/ponomarev-pricelist.zip public/sys/pricelist/ipponomarev.xls")
 			return true
 		rescue => e
 			puts e.to_s
@@ -71,15 +71,18 @@ module PricelistHelper
 			sheet[row,3] = item.article.strip if item.article
 			sheet[row,4] = item.properties["Полное наименование"].strip if item.properties["Полное наименование"]
 			sheet[row,5] = item.properties["Тип"].strip if item.properties["Тип"]
-			sheet[row,6] = item.properties["ОЕМ"].strip if item.properties["ОЕМ"]
-			sheet[row,8] = item.price
-			10.times do |x|
+			sheet[row,6] = ""
+			sheet[row,7] = item.properties["ОЕМ"].strip if item.properties["ОЕМ"]
+			sheet[row,8] = item.cross.join(", ") if item.cross
+			sheet[row,9] = item.properties["Применяемость"].strip if item.properties["Применяемость"]
+			sheet[row,10] = item.price
+			11.times do |x|
 				sheet.row(row).set_format x, format
 			end
 			sheet.row(row).set_format 0, link_format
 			sheet.row(row).set_format 1, kod_format
-			sheet.row(row).set_format 8, price_format
-			sheet.row(row).set_format 9, order_format
+			sheet.row(row).set_format 10, price_format
+			sheet.row(row).set_format 11, order_format
 		end
 		row
 	end

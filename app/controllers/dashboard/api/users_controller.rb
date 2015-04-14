@@ -19,6 +19,7 @@ class Dashboard::Api::UsersController < Dashboard::ApiController
 
   def update_role
     if @user.update_attribute('role', params[:role])
+      UserMailer.change_role(@user).deliver
       render :json => @user
     end
   end
