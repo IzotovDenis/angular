@@ -2,31 +2,8 @@
 	h3 
 		| {{title}}
 	.find_empty ng-if="!find_success"
-		.alert.alert-danger
-			p.lead 
-				span Мы искали, но ничего не нашли.
-		p.bold Пара советов по поиску
-		ul
-			li 
-				p Вводите поисковый запрос без грамматических ошибок 
-				.alert.alert-danger 
-					p
-						span.glyphicon.glyphicon-thumbs-down.icon-padding
-						| "Копот", "Амортик", "Амартизатор", "Провода пускавые" - неправильно
-				.alert.alert-success 
-					p
-						span.glyphicon.glyphicon-thumbs-up.icon-padding
-						| "Капот", "Амортизатор", "Провода пусковые" - правильно
-			li
-				p Если вы ищите деталь по размеру не используйте буквы в качестве разделителя.
-				.alert.alert-danger 
-					p
-						span.glyphicon.glyphicon-thumbs-down.icon-padding
-						| "Сальник 30x44x9", "Сальник 30на44на9" - неправильно
-				.alert.alert-success 
-					p
-						span.glyphicon.glyphicon-thumbs-up.icon-padding
-						| "Сальник 30 44 9", "Сальник 30*44*9" - правильно
+		p.lead 
+			span Поиск не дал результатов.
 	.alert.alert-danger ng-if="error"
 		p.lead Ошибка на сервере. Приносим свои извинения. Мы скоро починим.
 div ng-include="'items/list.html'"
