@@ -37,9 +37,9 @@ app.directive "focusMe", [ ->
 			elem[0].select()
 ]
 
-app.directive 'disableAnimation', ($animate) ->
+app.directive 'disableAnimation', ["$animate", ($animate) ->
 	restrict: 'A'
 	link: ($scope, $element, $attrs) ->
 		$attrs.$observe 'disableAnimation', (value) ->
 			$animate.enabled !value, $element
-				
+]
