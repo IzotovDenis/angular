@@ -1,4 +1,0 @@
-$("#order-modal").modal("show");
-$("#OrderModalTitle").text("Заказ № <%=@order.id%> от <%=Russian::strftime(@order.formed, "%A %d %B %H:%M")%>")
-$("#order-modal .modal-body").html("<%= escape_javascript(render 'orders/show_modal_order', :order=>@order, :order_items=>@order_items ) %>");
-ready();

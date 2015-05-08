@@ -7,17 +7,28 @@ dashboard.controller "UsersShowCtrl", UsersEditCtrl = ["$scope", "$http", "$rout
 	$http.get('api/users/' + $routeParams.userId).success (data) ->
 		$scope.user = data
 
-	$http.get('api/activities?user_id='+$routeParams.userId).success (data) ->
-		$scope.activities = data
-
-	$http.get('api/orders?user_id='+$routeParams.userId).success (data) ->
-		$scope.orders = data
 
 	$scope.editUser = (id) ->
 		$location.url("users/" + id + "/edit")
 
 	$scope.updateRole = ->
-		$http.post("api/users/update_role", {id: $scope.user.id, role: $scope.user.role}).success (data) ->
+		$http.post("api/users/update_role", {id: $scope.user.id, role: $scope.user.role, confirm: $scope.user.mailConfirm}).success (data) ->
+			console.log($scope.user.mailConfirm)
 			console.log(data)
 
+	$scope.loadActivities = ->
+		$http.get('api/activities?user_id='+$routeParams.userId).success (data) ->
+			$scope.activities = data.activities
+
+	$scope.loadCurrentOrder = ->
+		$http.get('api/orders/' + $routeParams.userId + "?current=true").success (data) ->
+			$scope.order = data
+			$scope.order.amount = 0
+			angular.forEach(data.items, (value) ->
+				$scope.order.amount += value.qty*value.price
+			)
+
+	$scope.loadOrders = ->
+		$http.get('api/orders?user_id='+$routeParams.userId).success (data) ->
+			$scope.orders = data
 ]

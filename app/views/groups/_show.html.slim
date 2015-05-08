@@ -1,7 +1,0 @@
-.content
-	.h-underline
-		-@group.ancestors.each do |group|
-			= link_to "#{group.title} >", group
-		span.lead = " #{@group.title}"
-	=render 'groups/items_list', :items=>@items, :query=>@query
-	= will_paginate @items, renderer: BootstrapPagination::Rails, :next_label=>"Вперед", :previous_label=>"Назад"

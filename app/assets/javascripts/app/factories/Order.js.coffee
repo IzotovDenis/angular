@@ -2,6 +2,7 @@ app.factory "Order", ["$http", "$q", ($http, $q) ->
 	order = this
 	order.current = {}
 	order.itemList = {}
+	order.busy = false
 
 	order.itemIds = {}
 
@@ -49,8 +50,11 @@ app.factory "Order", ["$http", "$q", ($http, $q) ->
 		defer.promise
 
 	order.deleteFromCart = (item) ->
-		$http.delete("api/order_items/" + item.order_item_id).success((data) ->
-			order.itemList.splice(order.itemList.indexOf(item), 1)
-			order.getCurrent())
+		unless order.busy
+			order.busy = true
+			$http.delete("api/order_items/" + item.order_item_id).success((data) ->
+				order.itemList.splice(order.itemList.indexOf(item), 1)
+				order.getCurrent().then (res) ->
+					order.busy = false)
 	order
 ]

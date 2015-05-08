@@ -12,7 +12,7 @@
 			th.center Заказ
 			th.center Сумма
 			th.center Удалить
-		tr.tr_middle ng-repeat="item in order.current.items"
+		tr.tr_middle ng-repeat="item in order.current.items" ng-class="{'out-of-stock': item.item_qty == 0}"
 			td.center.photo
 				item-image image="item.image" size="img_thumb"
 			td.kod

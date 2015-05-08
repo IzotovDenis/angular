@@ -21,8 +21,8 @@ if item.properties
 		json.country item.properties['Страна изготовления']
 		json.weight item.properties['Вес']
 		if item.properties['ОЕМ']
-			json.oems item.properties["ОЕМ"].split(",").each do |oem|
-				json.oem oem.to_s
+			json.oems item.properties["ОЕМ"].split(/;|,/).each do |oem|
+				json.oem oem.to_s.strip
 			end
 		end
 		json.type item.properties['Тип']

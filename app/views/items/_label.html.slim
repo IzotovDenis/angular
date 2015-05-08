@@ -1,9 +1,0 @@
--if item.label['new']
-	span.label.label-green
-		=link_to "новинка", offer_path(:id=>item.label['new'])
--if item.label['hit']
-	span.label.label-orange
-		=link_to "популярный", offer_path(:id=>item.label['hit'])
--if item.label['special']
-	span.label.label-red
-		=link_to "акция", offer_path(:id=>item.label['special'])

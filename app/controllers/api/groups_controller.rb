@@ -5,8 +5,7 @@ class Api::GroupsController < ApiController
   respond_to :json
 
   def index
-    sleep 10
-    @sliders = Slider.all
+    @banners = Banner.all.select("id, image, location, label, link").group_by { |d| d[:location]  }
     @offers = Offer.all
     @items = Item.popular.limit(12)
     @order_list = order_list(current_order)

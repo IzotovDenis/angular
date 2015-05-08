@@ -19,3 +19,7 @@ json.kpp user.kpp
 json.created_at Russian::strftime(user.created_at, "%H:%M %d %B %Y")
 json.orders_count user.orders_count
 json.activities_count user.activities_count
+if user.last_activity_at
+	json.last_activity_at_hum Russian::strftime(user.last_activity_at, "%H:%M %d %B %Y")
+	json.last_activity_at_unix user.last_activity_at.to_i
+end

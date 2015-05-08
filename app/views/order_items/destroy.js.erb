@@ -1,6 +1,0 @@
-$("#order_item_<%=@order_item.id%>").fadeOut("normal", function() {
-        $("#order_item_<%=@order_item.id%>").remove();
-    });
-set_order_info("<%=current_order.count_position%>","<%=number_to_currency(current_order.amount, separator: ',')%>");
-$("#cart-modal .modal-footer").html("<%= escape_javascript(render 'orders/modal_order_footer') %>");
-ready();

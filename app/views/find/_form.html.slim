@@ -1,8 +1,0 @@
-=form_tag find_path, :class=>'form-inline', :remote=>true, method: :post, :id=>"action-form-find"
-	=text_field_tag 'find', '', :placeholder=>'Введите запрос и нажмите ENTER', :class=>"form-control central-find"
-	= select_tag 'attribute', options_for_select(find_attributes, :selected=>find_attributes[0]), :class=>"form-control",:disabled=>"disabled"
-	=submit_tag "Найти", :class=>'btn btn-default btn-primary'
-	- if @group
-		= check_box_tag "group_id", @group.id
-		span 
-			= "Искать в категории \"#{@group.title}\"" 

@@ -3,15 +3,19 @@ class Dashboard::Api::ActivitiesController < Dashboard::ApiController
 
   def index
     if params[:user_id]
-      @activities = Activity.includes(:user).where(:user_id=>params[:user_id]).order("updated_at DESC").limit(50)
+      @activities = Activity.includes(:user).where(:user_id=>params[:user_id]).order("updated_at DESC").limit(200)
     else
-  	 @activities = Activity.where.not(user_id: '').includes(:user).limit(500).order("updated_at DESC")
+      if params[:from]
+        @activities = Activity.where('id > ?', params[:from]).where.not(user_id: '').includes(:user).order("updated_at DESC")
+      else
+        @activities = Activity.where.not(user_id: '').includes(:user).limit(500).order("updated_at DESC")
+      end
     end
     # render :json => @activities.as_json(:only=>[:log, :updated_at, :action, :controller], :include=> {:user => {:only => [:name, :id]}} )
   end
 
   def user_online
-    @users = User.online
+    @users = User.online.select("users.id, users.name")
     render :json => @users
   end
 

@@ -1,23 +1,21 @@
-app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "OrderItem", "System", "$location", "$routeParams", "$modal", "Page", ($scope, $http, Item, Order, OrderItem, System, $location, $routeParams, $modal, Page) ->
+app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "OrderItem", "System", "$location", "$routeParams", "$modal", "Page", "$q", "Banner", ($scope, $http, Item, Order, OrderItem, System, $location, $routeParams, $modal, Page, $q, Banner) ->
 	
 	# Очищаем список товаров
 	Item.list = []
 	# Устанавлием "занят", отключая infinity-scroll пока не закгрузится новая страница
 	Item.busy = true
-	# Делаем вид в группах списком
-	Item.itemsView = "list"
-
+	$scope.banners = Banner.list
 	# Показываем контроль панель в группах
-	Item.itemsControl = true
+	Item.itemsControl = false
+	Item.itemsPagin = false
 	
 	# Урл для запросов infinity-scroll
 	url = "/api/groups/" + $routeParams.groupId
 	if $routeParams.page
 		url = url + "?page="+$routeParams.page
 
-
-
 	# Отправляемся запрос
+	canceler = $q.defer()
 	$http.get(url).success (data) ->
 		# Записываем группу в скоуп
 		$scope.group = data.group

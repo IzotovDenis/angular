@@ -19,6 +19,5 @@
 //= require ng-rails-csrf
 //= require angular-route
 //= require angular-rails-templates
-//= require angular-ui-bootstrap-tpls
 //= require_tree ./dashboard
 //= require_tree ./general

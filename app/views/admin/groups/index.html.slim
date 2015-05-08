@@ -1,8 +1,0 @@
-h1 Редактирование групп
-ul.list-group#group-sort data-update-url="#{sort_admin_groups_url}"
-	- @groups.each do |group|
-		= content_tag_for :li, group,:class=>"list-group-item" do
-			span.handle.glyphicon.glyphicon-sort
-			= link_to group.title, admin_group_path(group)
-			span.float-right
-				= link_to "Активна","#", :class=>"btn btn-success btn-xs"

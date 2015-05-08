@@ -12,6 +12,7 @@
  *
  *= require jquery-ui/datepicker
  *= require_tree ./admin
+ *= require_tree ./general
  *= require_self
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  *= require editable/bootstrap-editable

@@ -14,7 +14,10 @@ form ng-submit="enterFind(newQuery)"
     	label
       		input type="checkbox" ng-model="newQuery.group"
             | Искать в категории: {{system.group.title}}
-.btn.btn-default ng-click="relS()" ng-if="httpError" Test
+div ng-if="system.error.status"
+  .alert.alert-danger
+    p.lead 
+      | {{system.error.message}}
 
-div ng-view="" autoscroll=""
+div ng-view="" autoscroll="" ng-if="!system.error.status"
 

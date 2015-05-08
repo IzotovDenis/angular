@@ -1,10 +1,10 @@
-app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order", "System",  "$location", "$modal", "Page", "$window", "$timeout", "$route", ($scope, $http, Group, User,Order, System, $location, $modal, Page, $window, $timeout, $route) ->
+app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order", "System",  "$location", "$modal", "Page", "$window", "$timeout", "$route", "Banner", ($scope, $http, Group, User,Order, System, $location, $modal, Page, $window, $timeout, $route, Banner) ->
 	
 	# Привязываем фабрики
 	$scope.order = Order
 	$scope.user = User
-	$scope.system = System
 	$scope.title = Page
+	$scope.banners = Banner.list
 
 	# Может ли пользователь видеть цены, оформлять заказы?
 	$scope.canOrder = ->
@@ -17,10 +17,6 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 		User.setDiscount(value)
 
 	# Получить текущего пользователя
-	User.getCurrent().then ((res) ->
-		Order.getCurrentIds()
-	), (reason) ->
-		console.log('error')
 
 	$scope.$on "$routeChangeStart", ->
 	  $scope.aa = false
@@ -82,10 +78,4 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 	$scope.relS = ->
 		$route.reload()
 
-	$scope.$watch (->
-		$scope.httpError), ((newVal,oldVal) ->
-			if $scope.httpError
-				console.log("start----")
-				console.log($scope.httpError)
-				console.log("end----"))
 ]

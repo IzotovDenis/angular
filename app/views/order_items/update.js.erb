@@ -1,4 +1,0 @@
-set_order_info("<%=current_order.count_position%>","<%=number_to_currency(current_order.amount, separator: ',')%>");
-set_order_item_total("<%=@order_item.id%>","<%=number_to_currency(@order_item.amount, separator: ',')%>","<%=@order_item.qty%>");
-$("#cart-modal .modal-footer").html("<%= escape_javascript(render 'orders/modal_order_footer') %>");
-send_btn();

@@ -1,8 +1,0 @@
-h1 Новинки и акции
-.offers
-	- @offers.each do |offer|
-		= link_to offer do
-			.offer
-				h2 = offer.title
-				= image_tag offer.thumb, :class=>"offer-image-thumb"
-				span.text= offer.text

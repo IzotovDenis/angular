@@ -38,6 +38,7 @@ module Importv3Helper
 		item['cross'] = item_cross(tag["Кросс1"], tag["Кросс2"])
 		item['properties'] = item_properties(tag["ЗначенияРеквизитов"])
 		item['properties']['Применяемость'] = item_tag(tag["Применяемость"]) if tag["Применяемость"]
+		item['properties']['Размер'] = item_tag(tag["Размер"]) if tag["Размер"]
 		return item
 	end
 	
@@ -154,6 +155,7 @@ module Importv3Helper
 		set_group(importsession_id)
 		#Импортируем цены
 		get_offers(importsession_id)
+		sort_items
 		return true
 	end
 
@@ -161,6 +163,7 @@ module Importv3Helper
 		parse_items(importsession_id)
 		get_offers(importsession_id)
 		set_group(importsession_id)
+		sort_items
 		return true
 	end
 
@@ -208,6 +211,15 @@ module Importv3Helper
 		hash['unit'] = item_tag(tag["Единица"])
 		hash['cy'] = item_tag(tag["Валюта"]) 
 		return hash
+	end
+
+	def sort_items
+		Group.find_each do |group|
+			items = group.items.able.sort_by &:full_title
+			items.each_with_index do |item,index|
+				item.update_attribute('position', index)
+			end
+		end
 	end
 
 end

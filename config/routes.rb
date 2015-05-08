@@ -1,59 +1,8 @@
 Rails.application.routes.draw do
 
-
   require 'sidekiq/web'
-authenticate :user, lambda { |u| u.role == 'dev' } do
-  mount Sidekiq::Web => '/sidekiq'
-end
-
-  namespace :admin do
-    get '/' => "dashboard#index"
-    resources :searches
-    resources :offers do
-      collection do
-        get "app"
-      end
-    end
-    resources :currencies
-    resources :rates
-    resources :sliders do
-      collection do
-        post "sort"
-      end
-    end
-    resources :activities
-    resources :pcatalogs do
-      collection do
-        post "sort"
-      end
-    end
-    resources :promos do
-      collection do
-        post "sort"
-      end
-    end
-    resources :groups do
-      collection do
-        post "sort"
-        patch "sort_items/:id", :action=>'sort_items', as: :sort_items
-      end
-    end
-    resources :items do
-      collection do
-        post "sort"
-      end
-    end
-    resources :orders, :only => [:index, :show] do
-      collection do
-        post "", :action=>'index'
-        post ":id/forward", :action=>'forward', as: :forward
-      end
-    end
-    resources :users do
-      collection do
-        post ":id/reset_password", :action=>"reset_password", as: :reset_password
-      end
-    end
+    authenticate :user, lambda { |u| u.role == 'dev' } do
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   devise_for :users
@@ -72,7 +21,6 @@ end
         get 'tree'
       end
     end
-    resources :ping, :only => [:index]
     resources :items, :only => [:show]
     resources :orders, :only => [:index, :show] do
       collection do
@@ -122,13 +70,19 @@ end
           post "toggle"
         end
       end
-      resources :sliders
+      resources :banners do
+        collection do
+          post "sort"
+        end
+      end
       resources :currencies
       resources :posts do
         collection do
           post "sort"
         end
       end
+      resources :folders
+      resources :files
     end
   end
 

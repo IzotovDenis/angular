@@ -1,5 +1,9 @@
 app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$filter", "$location", "$routeParams", ($scope, Item, $modal, Order, $filter, $location, $routeParams) ->
 
+	$scope.$on "$routeChangeStart", ->
+		Item.fixedView = false
+		Item.itemsPagin = false
+
 	$scope.items = Item
 
 	if $routeParams.page
@@ -15,14 +19,6 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 
 	$scope.imageSize = ->
 		return "img_thumb"
-
-	$scope.$on("$routeChangeSuccess", ->
-		console.log('change')
-		)
-
-	$scope.$on("$routeUpdate", ->
-		console.log('update')
-		)
 
 	$scope.itemShow = (item) ->
 		modalInstance = $modal.open(
@@ -69,8 +65,4 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 
 	$scope.goFind = (query) ->
 		$location.url('/find/' + query)
-
-	$scope.setFocus = (item, event) ->
-		console.log(event.target)
-
 ]

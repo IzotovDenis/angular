@@ -60,7 +60,6 @@ gem 'angularjs-rails', '1.3.14'
 gem 'ng-rails-csrf'
 gem 'saxerator', :git => 'git://github.com/soulcutter/saxerator.git'
 gem 'angular-rails-templates'
-gem 'angular-ui-bootstrap-rails'
 group :production do
 	gem 'unicorn'
 end

@@ -26,6 +26,13 @@ class Dashboard::Api::OrdersController < Dashboard::ApiController
     private
   # Use callbacks to share common setup or constraints between actions.
   def set_order
-    @order = Order.find(params[:id])
+    if params[:current]
+      user = User.where(:id=>params[:id]).first
+      if user
+        @order = user.current_order if user.current_order
+      end
+    else
+      @order = Order.find(params[:id])
+    end
   end
 end

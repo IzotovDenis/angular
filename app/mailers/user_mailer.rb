@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "order@planeta-avtodv.ru"
+  default from: "'Планета-Авто' <order@planeta-avtodv.ru>"
 
   def reset_password(user, password)
     @password = password

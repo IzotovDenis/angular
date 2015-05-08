@@ -5,7 +5,6 @@ html ng-app="App" ng-controller="MainCtrl"
     = javascript_include_tag "application"
     = stylesheet_link_tag    "application", media: "all"
     = csrf_meta_tags
-    meta http-equiv="cache-control" content="no-cache"
     base href="/"
   body
     = render 'layouts/navbar'
@@ -15,7 +14,7 @@ html ng-app="App" ng-controller="MainCtrl"
           = render "layouts/menu"
         .content
           = yield
-    .footer
-      = render "layouts/footer"
+      .footer
+        = render "layouts/footer"
 
 

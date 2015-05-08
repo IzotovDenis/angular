@@ -43,7 +43,7 @@ module FindHelper
 		d = string_find(string)
 		#Если в строке цифра добавляем разделяем ее пробелами
 		d << " | #{string_find(string)}"
-		string.gsub!(/(\d+)/, ' \1 ')
+		string.gsub!(/(\d+)/, ' \1')
 		d << " | #{string_find(string)}"
 		string.delete!(" ")
 		d << " | (#{string} | *#{string}*)"

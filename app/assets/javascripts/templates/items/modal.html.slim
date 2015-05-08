@@ -54,16 +54,24 @@
 		.clear.h-line-dashed
 		div
 			table.table
-				tr ng-if="item.properties.oems"
-					td ОЕМ
-					td 
-						span.oem.cursor-pointer ng-repeat="oem in item.properties.oems" go-find="{{oem.oem}}" title="Искать товары с ОЕМ: {{oem.oem}}"
-							| {{oem.oem}}
-							br
-				tr
+				tr ng-if="::item.properties.weight"
 					td Вес
 					td
 						| {{item.properties.weight}} кг.
+				tr ng-if="::item.properties.type"
+					td Тип
+					td
+						| {{item.properties.type}}
+				tr ng-if="item.properties.oems"
+					td ОЕМ
+					td 
+						span.oem.cursor-pointer ng-repeat="oem in item.properties.oems" go-find="{{oem.oem}}" title="Искать товары с ОЕМ: {{oem.oem}}" 
+							| {{oem.oem}}
+							br
+				tr ng-if="::item.properties.applicability"
+					td Применямость запчасти
+					td	
+						| {{item.properties.applicability}}
 	.text ng-if="item.text"
 		p.lead
 			| Описание товара
