@@ -18,12 +18,15 @@
 									=link_to brand.title, "brands/#{brand.id}"
 		li.menu-bar-root-title
 			| КАТАЛОГ ТОВАРОВ
-		- Group.able.select("id, title, ancestry").arrange_serializable(:order=>:title).each do |group|
+		- Group.able.select("id, title, ancestry, last_new_item").arrange_serializable(:order=>:title).each do |group|
 			-if !group['children'].empty?
 				li.menu-bar-root denismenu="" id="#{group['id']}"
 					span.title
 						= group["title"]
-					span.glyphicon.glyphicon-chevron-right
+					-if group["last_new_item"].to_i > (Time.now-5.days).to_i
+						.menu-new
+							.label.label-new.label-danger new
+					span.menu-arrow.glyphicon.glyphicon-chevron-right
 				.menu-dropright ng-show="aa == #{group['id']}" denismenu1="" id="#{group['id']}" class="column#{group_column(group)}"
 					ul
 						= render "layouts/children", group: group['children']
@@ -32,3 +35,4 @@
 					= link_to "groups/#{group["id"]}" do
 						span.title
 							= group["title"]
+	

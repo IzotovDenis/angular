@@ -56,5 +56,7 @@ app.factory "Order", ["$http", "$q", ($http, $q) ->
 				order.itemList.splice(order.itemList.indexOf(item), 1)
 				order.getCurrent().then (res) ->
 					order.busy = false)
+				.error (err, status) ->
+					order.busy = false
 	order
 ]

@@ -156,6 +156,7 @@ module Importv3Helper
 		#Импортируем цены
 		get_offers(importsession_id)
 		sort_items
+		Group.set_new_item_time
 		return true
 	end
 
@@ -164,6 +165,7 @@ module Importv3Helper
 		get_offers(importsession_id)
 		set_group(importsession_id)
 		sort_items
+		Group.set_new_item_time
 		return true
 	end
 

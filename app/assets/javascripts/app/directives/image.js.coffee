@@ -27,7 +27,7 @@ app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
 					found = $filter('getById')(Order.itemIds, scope.item.id)
 					if found
 						scope.item.ordered = found.qty
-						scope.item.orderitem_id = found.order_item_id
+						scope.item.orderitem_id = found.id
 					else
 						delete scope.item.ordered
 						delete scope.item.orderitem_id
@@ -65,11 +65,12 @@ app.directive "labeltext",  ->
 		variant: "="
 	}
 	link: (scope, element, attrs) ->
-      if scope.variant is "special"
-        text = "акция"
-      if scope.variant is "hit"
-        text = "популярный"
-      if scope.variant is "new"
-        text = "новинка"
-      element.html text
+		console.log(scope.variant)
+		if scope.variant is "special"
+			text = "акция"
+		if scope.variant is "hit"
+			text = "популярный"
+		if scope.variant is "new"
+			text = "new"
+		element.html text
 

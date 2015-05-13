@@ -77,5 +77,4 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 
 	$scope.relS = ->
 		$route.reload()
-
 ]

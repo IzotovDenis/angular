@@ -14,6 +14,7 @@ app.config ["$routeProvider", "$locationProvider", "$httpProvider", ($routeProvi
 	$routeProvider.when '/offers/:offerId', templateUrl: 'offers/show.html', controller: "OfferShowCtrl"
 	$routeProvider.when '/info/:page', templateUrl: 'info/show.html', controller: "InfoShowCtrl"
 	$routeProvider.when '/', templateUrl: 'groups/index.html', controller: "GroupIndexCtrl"
+	$routeProvider.otherwise templateUrl: '404.html'
 ]
 
 app.factory "OrderItem", ["$resource",($resource) ->

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504232311) do
+ActiveRecord::Schema.define(version: 20150512020758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20150504232311) do
     t.string   "sort_type",        default: "auto"
     t.boolean  "disabled"
     t.integer  "importsession_id"
+    t.datetime "last_new_item"
   end
 
   create_table "imports", force: true do |t|

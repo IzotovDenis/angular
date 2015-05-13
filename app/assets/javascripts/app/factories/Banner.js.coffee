@@ -10,7 +10,6 @@ app.factory "Banner", [ ->
 		banner.list.slot = shuffleArray(data.slot)
 		banner.list.well = data.well
 		banner.list.carousel = shuffleArray(data.carousel)
-		console.log(banner.list)
 
 	banner.getBanners = ->
 		banner.list

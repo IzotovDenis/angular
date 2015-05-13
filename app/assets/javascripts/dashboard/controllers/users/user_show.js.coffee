@@ -13,8 +13,7 @@ dashboard.controller "UsersShowCtrl", UsersEditCtrl = ["$scope", "$http", "$rout
 
 	$scope.updateRole = ->
 		$http.post("api/users/update_role", {id: $scope.user.id, role: $scope.user.role, confirm: $scope.user.mailConfirm}).success (data) ->
-			console.log($scope.user.mailConfirm)
-			console.log(data)
+			alert("Сохранено")
 
 	$scope.loadActivities = ->
 		$http.get('api/activities?user_id='+$routeParams.userId).success (data) ->

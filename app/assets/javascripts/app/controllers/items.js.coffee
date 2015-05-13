@@ -56,7 +56,7 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 			Order.updateInCart(new_order_item, item.orderitem_id)
 		else
 			Order.addToCart(new_order_item)
-
+		console.log(item)
 
 	$scope.inCart = (id) ->
 		found = $filter('getById')(Order.itemIds, id)

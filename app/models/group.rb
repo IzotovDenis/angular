@@ -1,9 +1,9 @@
 class Group < ActiveRecord::Base
 	has_ancestry
 	has_many :items
+  scope :with_new_items, -> { joins(:items).select('MAX(items.created_at) AS item_created_at, groups.*').group('groups.id').order("item_created_at ASC") }
 	scope :able, ->{ where(disabled: [false,nil]).order('title') }
   scope :disableded, -> {where(disabled: true)}
-
 
 def self.arrange_as_array(options={}, hash=nil)                                                                                                                                                            
     hash ||= arrange(options)
@@ -40,6 +40,12 @@ def self.arrange_as_array(options={}, hash=nil)
   def change_disabled(val)
     disabled = val
     save!
+  end
+
+  def self.set_new_item_time
+    Group.with_new_items.each do |group|
+      Group.where("id IN (?)",[group.id, group.root_id]).update_all(:last_new_item => group.item_created_at)
+    end
   end
 
 end

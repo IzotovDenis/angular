@@ -27,16 +27,17 @@ if item.properties
 		end
 		json.type item.properties['Тип']
 		json.in_pack item.properties['Количество в упаковке']
+		json.applicability item.properties['Применяемость']
 	end
 end
 if can? :view_price, item
 	json.qty helper_item_qty(item.qty)
 	json.price price(item.price)
 end
-if !item.label.blank?
-	json.labels item.label do |key, value|
-		json.variant key
-		json.offer_id value
+if item.created_at.to_i > (Time.now-7.days).to_i
+	json.label do
+		json.variant 'new'
 	end
 end
+json.date item.created_at.to_i
 #json.text simple_format(item.text) if item.text

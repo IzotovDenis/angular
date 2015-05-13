@@ -10,7 +10,7 @@ class Api::OrdersController < ApiController
   def current
   	@order = current_order
     if params[:type] == "ids"
-      render :json => @order.order_items.select("item_id, qty")
+      render :json => @order.order_items.select("item_id, qty, id")
     else
       @order_items = @order.order_items.includes(:item=>:prices).order(:created_at) if @order
     end

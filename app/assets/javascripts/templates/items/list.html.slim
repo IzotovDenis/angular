@@ -43,9 +43,10 @@
 					.cell.item-title
 						span.cursor-pointer ng-click="itemShow(item)"
 							| {{::item.title}}
-						.item-offers ng-if="::item.labels"
-							a.label.label-green ng-class="::label.variant" ng-href="/offers/{{::label.offer_id}}/" ng-repeat="label in ::item.labels"
-								labeltext variant="::label.variant"
+						.item-offers ng-if="::item.label"
+							.label.label-green ng-class="::item.label.variant" 
+								labeltext variant="::item.label.variant"
+								| {{label.variant}}
 						.oems ng-if="::item.properties.oems"
 							span.oems-label
 								| OEM:
