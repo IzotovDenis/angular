@@ -17,7 +17,6 @@ class Api::GroupsController < ApiController
 
   def show
   	ids = @group.subtree_ids
-    @order_list = order_list(current_order)
   	respond_with @items = Item.able.includes(:prices).where(:group_id=>ids).page(params[:page])
   end
 

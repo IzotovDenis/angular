@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base
 	scope :popular, -> {joins(:group).where(:groups => {:disabled => [nil,false]}).where.not(:items => {:image => nil}).select("items.*, groups.title as group_title").order("RANDOM()")}
 	mount_uploader :image, ImageUploader
 	self.per_page = 60
-	scope :able, ->{joins(:group).where(:groups => {:disabled => [nil,false]}).select('distinct items.*, groups.title as group_title').order("group_id, position")}
+	scope :able, ->{joins(:group).where(:groups => {:disabled => [nil,false]}).select('distinct items.*, groups.site_title as group_title').order("group_id, position")}
 
 	  sphinx_scope(:visible) {
 	    {:groups => {:disabled => [nil,false]}}

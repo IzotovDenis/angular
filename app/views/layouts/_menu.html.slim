@@ -18,11 +18,11 @@
 									=link_to brand.title, "brands/#{brand.id}"
 		li.menu-bar-root-title
 			| КАТАЛОГ ТОВАРОВ
-		- Group.able.select("id, title, ancestry, last_new_item").arrange_serializable(:order=>:title).each do |group|
+		- Group.able.select("id, title, site_title, ancestry, last_new_item").arrange_serializable(:order=>:title).each do |group|
 			-if !group['children'].empty?
 				li.menu-bar-root denismenu="" id="#{group['id']}"
 					span.title
-						= group["title"]
+						= group["site_title"]
 					-if group["last_new_item"].to_i > (Time.now-5.days).to_i
 						.menu-new
 							.label.label-new.label-danger new

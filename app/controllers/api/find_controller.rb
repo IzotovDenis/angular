@@ -18,7 +18,7 @@ class Api::FindController < ApiController
 
   def set_options
     options = {}
-    options[:sql] = {:include => :prices, :joins => :group, :select=>"distinct items.*, groups.title as group_title, groups.id as group_id"}
+    options[:sql] = {:include => :prices, :joins => :group, :select=>"distinct items.*, groups.site_title as group_title, groups.id as group_id"}
     options[:field_weights] = {:kod => 1000, :article => 60, :oem => 5,:full_name => 20}
     options[:order_by] = 'properties["Код товара"]'
     options[:per_page] = 60

@@ -19,6 +19,6 @@ class Api::ItemsController < ApiController
 	private
 	# Use callbacks to share common setup or constraints between actions.
 		def set_item
-		@item = Item.joins(:group).where("properties -> 'Код товара' = :value", :value=>params[:id]).select('distinct items.*, groups.title as group_title').first
+		@item = Item.joins(:group).where("properties -> 'Код товара' = :value", :value=>params[:id]).select('distinct items.*, groups.site_title as group_title').first
 		end
 end

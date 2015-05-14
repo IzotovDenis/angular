@@ -2,7 +2,7 @@
 	li
 		.menu-block
 			= link_to "groups/#{children["id"]}" do
-				= children["title"]
+				= children["site_title"]
 			-if children["last_new_item"].to_i > (Time.now-5.days).to_i
 				span.label.label-new.label-danger new
 			-if children['children']
