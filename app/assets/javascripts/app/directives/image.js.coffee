@@ -68,7 +68,7 @@ app.directive "currency", ["User", (User) ->
 	}
 	link: (scope, element, attrs) ->
 		setPrice = ->
-			if scope.value == "0.00" && scope.item == true
+			if scope.value == "0" && scope.item == true
 				element.html "по запросу"
 			else
 				price = scope.value * (100-User.discount) / 100

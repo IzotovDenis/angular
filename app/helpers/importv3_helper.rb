@@ -22,7 +22,7 @@ module Importv3Helper
 			item = Item.find_or_initialize_by(cid: hash['cid'])
 			if item.update(hash)
 				puts item.full_title
-				#save_image(importsession_id, tag["Картинка"], item.id)
+				save_image(importsession_id, tag["Картинка"], item.id)
 			end
 		end
 		puts Time.now-time
@@ -172,45 +172,7 @@ module Importv3Helper
 		return true
 	end
 
-# Выгрузка цен и остатков
 	def get_offers(importsession_id)
-		time = Time.now
-		file = "public/uploads/imports/#{importsession_id}/offers.xml"
-		parser = Saxerator.parser(File.new(file))
-		price_types = Hash[Pricetype.pluck(:cid, :id)]
-		parser.for_tag("Предложение").take(1000).each do |tag|
-			item = Item.find_by_cid(tag["Ид"])
-			next if !item
-			item.qty = tag["Количество"].to_i
-			item.save
-			next unless tag["Цены"]
-
-			if tag["Цены"]["Цена"]
-				if tag["Цены"]["Цена"].class.to_s == "Saxerator::Builder::HashElement"
-					el = [tag["Цены"]["Цена"]]
-				else
-					el = tag["Цены"]["Цена"]
-				end
-			else	
-				el = []
-			end
-
-			el.each do |offer|
-				if price_types[offer["ИдТипаЦены"]]
-					hash = parsing_price(offer)
-					hash['pricetype_id'] = price_types[offer["ИдТипаЦены"]].to_i
-					hash['item_id'] = item.id
-					price = Price.find_or_initialize_by(:item_id=>hash['item_id'],:pricetype_id=>hash['pricetype_id'])
-					price.update(hash)
-				else
-					next
-				end
-			end
-		end
-		puts Time.now-time
-	end
-
-	def get_offers1(importsession_id)
 		time = Time.now
 		file = "public/uploads/imports/#{importsession_id}/offers.xml"
 		parser = Saxerator.parser(File.new(file))

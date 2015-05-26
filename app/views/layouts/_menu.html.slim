@@ -23,7 +23,7 @@
 				li.menu-bar-root denismenu="" id="#{group['id']}"
 					span.title
 						= group["site_title"]
-					-if group["last_new_item"].to_i > (Time.now-5.days).to_i
+					-if group["last_new_item"].to_i > (Time.now-14.days).to_i
 						.menu-new
 							.label.label-new.label-danger new
 					span.menu-arrow.glyphicon.glyphicon-chevron-right

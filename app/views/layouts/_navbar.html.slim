@@ -70,4 +70,4 @@ nav.navbar.navbar-blue.header role="navigation" ng-class="{app_load: appLoad}"
               a ng-href="/orders"  Мои заказы
             li.divider
             li
-              = link_to 'выход', destroy_user_session_path, :method=>:delete
+              = link_to 'выход', destroy_user_session_path, :target=>"_self", :method=>:delete
