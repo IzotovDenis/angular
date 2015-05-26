@@ -2,11 +2,10 @@ json.id order_item.item.id
 json.title order_item.item.properties["Полное наименование"]
 json.kod order_item.item.properties["Код товара"]
 json.article order_item.item.article
-json.image do 
-	json.exist order_item.item.image?
-	json.img_thumb order_item.item.image.thumb.url
-	json.img_item order_item.item.image.item.url
-	json.img_large order_item.item.image.large.url
+if order_item.item.image?
+json.image "t"
+else
+json.image "f"
 end
 json.price price(order_item.item.price)
 json.item_qty helper_item_qty(order_item.item.qty)

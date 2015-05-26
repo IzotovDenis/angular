@@ -5,6 +5,11 @@ nav.navbar.navbar-blue.header role="navigation" ng-class="{app_load: appLoad}"
         = link_to "/#/" do
           = image_tag "logo100.png", :height=>"48px"
       ul.nav.navbar-nav.navbar-right
+        li.nav-link
+          = link_to "/newest" do
+            span.glyphicon.glyphicon-plus-sign
+            span.btn-head-lable
+              | Новинки
         li.dropdown.cursor-pointer
           a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" role="button"
             span.text
@@ -42,7 +47,6 @@ nav.navbar.navbar-blue.header role="navigation" ng-class="{app_load: appLoad}"
               | Корзина:
             .label.label-success 
               | {{order.itemIds.length}}
-        li
         li.nav-link ng-if="user.authorized == false"
           = link_to new_user_session_path, :target=>"_self" do
             span.glyphicon.glyphicon-log-in

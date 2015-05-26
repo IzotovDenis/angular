@@ -32,7 +32,7 @@ if item.properties
 end
 if can? :view_price, item
 	json.qty helper_item_qty(item.qty)
-	json.price price(item.price)
+	json.price price(item.cost)
 end
 if item.created_at.to_i > (Time.now-7.days).to_i
 	json.label do

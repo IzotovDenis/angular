@@ -21,7 +21,11 @@ Rails.application.routes.draw do
         get 'tree'
       end
     end
-    resources :items, :only => [:show]
+    resources :items, :only => [:show] do
+      collection do
+        get 'newest'
+      end
+    end
     resources :orders, :only => [:index, :show] do
       collection do
         get 'current'

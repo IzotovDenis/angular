@@ -1,5 +1,14 @@
 app.controller "ModalItemCtrl", ModalItemCtrl = ["$scope", "$modalInstance", "item", "Order", "$filter", "$http","$modal", ($scope, $modalInstance, item, Order, $filter, $http, $modal) ->
 	$scope.item = item
+	if item.ordered
+		$scope.ordered = item.ordered
+		$scope.orderitem_id = item.orderitem_id
+
+	$http.get("/api/items/"+$scope.item.kod).success (data) ->
+		$scope.item = data
+		if $scope.ordered
+			$scope.item.ordered = $scope.ordered
+			$scope.item.orderitem_id = $scope.orderitem_id
 
 	$scope.addToCart = (item) ->
 		new_order_item = {
@@ -10,7 +19,6 @@ app.controller "ModalItemCtrl", ModalItemCtrl = ["$scope", "$modalInstance", "it
 			Order.updateInCart(new_order_item, item.orderitem_id)
 		else
 			Order.addToCart(new_order_item)
-
 
 	$scope.inCart = (kod) ->
 		found = $filter('getById')(Order.itemList, kod)

@@ -8,6 +8,7 @@ app.config ["$routeProvider", "$locationProvider", "$httpProvider", ($routeProvi
 	$routeProvider.when '/brands/:brandId', templateUrl: 'brands/show.html', controller: 'BrandShowCtrl'
 	$routeProvider.when '/items/:itemId', templateUrl: 'items/show.html', controller: 'ItemShowCtrl'
 	$routeProvider.when '/find', templateUrl: 'find/index.html', controller: 'FindCtrl'
+	$routeProvider.when '/newest', templateUrl: 'newest/index.html', controller: 'NewestCtrl'
 	$routeProvider.when '/profile', templateUrl: 'profile/index.html', controller: "ProfileCtrl"
 	$routeProvider.when '/orders', templateUrl: 'orders/index.html', controller: "OrderIndexCtrl"
 	$routeProvider.when '/orders/:orderId', templateUrl: 'orders/show.html', controller: "OrderShowCtrl"

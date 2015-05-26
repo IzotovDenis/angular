@@ -4,7 +4,6 @@ app.directive "denismenu", [ "$timeout", "RightMenu", ($timeout, RightMenu)  ->
 		elem.bind "click", ->
 			RightMenu.active = true
 			RightMenu.current = attrs.id
-			console.log(RightMenu)
 			$scope.aa = RightMenu.current
 			$scope.$apply()
 

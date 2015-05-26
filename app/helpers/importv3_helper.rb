@@ -13,6 +13,7 @@ module Importv3Helper
 	end
 
 	def parse_items(importsession_id)
+		time = Time.now
 		file = "public/uploads/imports/#{importsession_id}/import.xml"
 		parser = Saxerator.parser(File.new(file))
 		parser.for_tag("Товар").each do |tag|
@@ -20,9 +21,11 @@ module Importv3Helper
 			hash['importsession_id'] = importsession_id
 			item = Item.find_or_initialize_by(cid: hash['cid'])
 			if item.update(hash)
-				save_image(importsession_id, tag["Картинка"], item.id)
+				puts item.full_title
+				#save_image(importsession_id, tag["Картинка"], item.id)
 			end
 		end
+		puts Time.now-time
 	end 
 
 	def parse_item(tag)
@@ -171,10 +174,11 @@ module Importv3Helper
 
 # Выгрузка цен и остатков
 	def get_offers(importsession_id)
+		time = Time.now
 		file = "public/uploads/imports/#{importsession_id}/offers.xml"
 		parser = Saxerator.parser(File.new(file))
 		price_types = Hash[Pricetype.pluck(:cid, :id)]
-		parser.for_tag("Предложение").each do |tag|
+		parser.for_tag("Предложение").take(1000).each do |tag|
 			item = Item.find_by_cid(tag["Ид"])
 			next if !item
 			item.qty = tag["Количество"].to_i
@@ -203,6 +207,44 @@ module Importv3Helper
 				end
 			end
 		end
+		puts Time.now-time
+	end
+
+	def get_offers1(importsession_id)
+		time = Time.now
+		file = "public/uploads/imports/#{importsession_id}/offers.xml"
+		parser = Saxerator.parser(File.new(file))
+		price_types = Hash[Pricetype.pluck(:cid, :id)]
+		parser.for_tag("Предложение").each do |tag|
+			item = Item.find_by_cid(tag["Ид"])
+			next if !item
+			item.qty = tag["Количество"].to_i
+
+			unless tag["Цены"]
+				item.save
+				next
+			end
+
+			if tag["Цены"]["Цена"]
+				if tag["Цены"]["Цена"].class.to_s == "Saxerator::Builder::HashElement"
+					el = [tag["Цены"]["Цена"]]
+				else
+					el = tag["Цены"]["Цена"]
+				end
+			else	
+				el = []
+			end
+
+			el.each do |offer|
+				if price_types[offer["ИдТипаЦены"]]
+					item.bids[offer["ИдТипаЦены"]] = parsing_price(offer)
+					item.save
+				else
+					next
+				end
+			end
+		end
+		puts Time.now-time
 	end
 	
 

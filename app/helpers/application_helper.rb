@@ -6,16 +6,11 @@ def resource_name
 end
 
 def helper_item_qty(qty)
-	case qty
-		when 0..9
-			qty.to_s
-		when 10..49
-			"10-49"
-		when 50..100
-			"50-100"
-		else
-			"> 100"
-	end
+	a = qty.to_s if qty < 10
+	a = "10-49" if qty > 9 && qty < 50
+	a = "50-100" if qty > 49 && qty < 101
+	a = "> 100" if qty > 100
+	a
 end
 
 def resource
@@ -23,7 +18,7 @@ def resource
 end
 
 def devise_mapping
-@devise_mapping ||= Devise.mappings[:user]
+	@devise_mapping ||= Devise.mappings[:user]
 end
 
 def price(value)
@@ -31,12 +26,11 @@ def price(value)
 end
 
 def cy_value(currency_name)
-if @currency = Currency.where(:name=>currency_name).first
-	@currency.rate
-else
-	0
-end
-
+	if @currency = Currency.where(:name=>currency_name).first
+		@currency.actual
+	else
+		0
+	end
 end
 
 def page_title(page_title)

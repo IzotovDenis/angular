@@ -2,20 +2,46 @@ app.directive "itemImage", ->
 	restrict: "E"
 	transclude: true
 	scope: {
+		id: "="
 		image: "="
+		size: "="
 	}
 	link: (scope, element, attrs) ->
-		setImage = ->
-			if scope.image.exist
-				html = "<img src="+scope.image[attrs.size]+"></img>"
+		setUrl = ->
+			if scope.size == 'list'
+				noimage = 'img_thumb'
+				isize = 'thumb'
+			if scope.size == 'thumbs'
+				noimage = 'img_thumb_m'
+				isize = 'thumb_m'
+			if scope.size == 'img_item'
+				noimage = 'img_item'
+				isize = 'item'
+			if scope.size == 'img_large'
+				noimage = 'img_large'
+				isize = 'large'
+			if scope.image == 't'
+				return url = 'uploads/item/'+scope.id%20+'/'+isize + '_'+md5(scope.id+''+isize)+'.jpg'
 			else
-				html = "<div class='"+attrs.size+"'></div>"
-			element.append html
-		watch = scope.$watch (->
+				return noimage
+
+		setImage = ->
+			if scope.image == "t"
+				html = "<img src="+setUrl()+"></img>"
+			else
+				html = "<div class="+setUrl()+"></div>"
+			element.html html
+
+		watch_img = scope.$watch (->
 			scope.image), ((newVal,oldVal) ->
 				if scope.image
 					setImage()
-					watch()
+					watch_img()
+				)
+		watch_size = scope.$watch (->
+			scope.size), ((newVal,oldVal) ->
+				if scope.image
+					setImage()
 				)
 
 app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
@@ -65,7 +91,6 @@ app.directive "labeltext",  ->
 		variant: "="
 	}
 	link: (scope, element, attrs) ->
-		console.log(scope.variant)
 		if scope.variant is "special"
 			text = "акция"
 		if scope.variant is "hit"

@@ -6,6 +6,16 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 
 	$scope.items = Item
 
+	$scope.$watch (->
+		Item.userView), ((newVal,oldVal) ->
+			$scope.imageView = $scope.items.itemsView()
+			)
+
+	$scope.$watch (->
+		Order.itemIds), ((newVal,oldVal) ->
+			Item.setOrderQty()
+			)
+
 	if $routeParams.page
 		$scope.currentPage = $routeParams.page
 
@@ -31,7 +41,7 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 		)
 
 	$scope.itemShowImage = (item) ->
-		if item.image.exist
+		if item.image == 't'
 			modalInstance = $modal.open(
 				templateUrl: "items/modal_image.html"
 				controller: "ModalImageCtrl"

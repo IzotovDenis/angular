@@ -4,13 +4,13 @@
   	| {{item.title}}
 .modal-body.modal-item-body
 	.item-image-area ng-click="itemShowImage(item)"
-		item-image image="item.image" size="img_item"
+		item-image image="item.image" size="'img_item'" id="item.id"
 	.item-content-area
 		div
 			span Категория
 			span.bold 
-				a ng-href="/groups/{{item.group.id}}"
-					|  {{item.group.title}}
+				a ng-href="/groups/{{item.group_id}}"
+					|  {{item.group_title}}
 		div
 			span Артикул:
 			span.bold
@@ -28,7 +28,7 @@
 			p
 				span Количество в упаковке:
 				span.bold
-					| {{item.properties.in_pack}} шт.
+					| {{item.in_pack}} шт.
 			p.lead
 				| Оптовая цена: 
 				span.price-value
@@ -36,6 +36,7 @@
 				span.price-currency ng-if="item.price != 0.00"
 					|  руб.
 			form ng-submit="addToCart(item)"
+				item-ordered
 				.input-group.input-group-qty
 					input.form-control type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
 					span.input-group-btn
@@ -54,24 +55,28 @@
 		.clear.h-line-dashed
 		div
 			table.table
-				tr ng-if="::item.properties.weight"
+				tr ng-if="::item.country"
+					td Страна происхождения
+					td
+						| {{item.country}}
+				tr ng-if="::item.weight"
 					td Вес
 					td
-						| {{item.properties.weight}} кг.
-				tr ng-if="::item.properties.type"
+						| {{item.weight}} кг.
+				tr ng-if="::item.type"
 					td Тип
 					td
-						| {{item.properties.type}}
-				tr ng-if="item.properties.oems"
+						| {{item.type}}
+				tr ng-if="item.oems"
 					td ОЕМ
 					td 
-						span.oem.cursor-pointer ng-repeat="oem in item.properties.oems" go-find="{{oem.oem}}" title="Искать товары с ОЕМ: {{oem.oem}}" 
-							| {{oem.oem}}
+						span.oem.cursor-pointer ng-repeat="oem in ::item.oems" go-find="{{::oem}}" title="Искать товары с ОЕМ: {{::oem}}" 
+							| {{::oem}}
 							br
-				tr ng-if="::item.properties.applicability"
+				tr ng-if="::item.applicability"
 					td Применямость запчасти
 					td	
-						| {{item.properties.applicability}}
+						| {{item.applicability}}
 	.text ng-if="item.text"
 		p.lead
 			| Описание товара

@@ -23,7 +23,7 @@ class Api::OrderItemsController < ApiController
 
   def destroy
     @order_item.destroy
-    render :json => @order_item
+    render :json => current_order.order_items.select("item_id, qty, id")
   end
 
   private

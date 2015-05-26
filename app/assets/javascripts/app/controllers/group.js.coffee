@@ -4,7 +4,6 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 	Item.list = []
 	# Устанавлием "занят", отключая infinity-scroll пока не закгрузится новая страница
 	Item.busy = true
-	$scope.banners = Banner.list
 	# Показываем контроль панель в группах
 	Item.itemsControl = false
 	Item.itemsPagin = false
@@ -19,6 +18,8 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 	$http.get(url).success (data) ->
 		# Записываем группу в скоуп
 		$scope.group = data.group
+		# Записываем первые товары в фабрику
+		Item.firstLoad(data.items, url, data.total_entries)
 
 		# Записываем текущую группу в сустем для отображения чекбока "искать в группе"
 		System.group = {}
@@ -28,7 +29,7 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 		# Устанавливаем тит страницы
 		Page.setTitle($scope.group.title)
 
-		# Записываем первые товары в фабрику
-		Item.firstLoad(data.items, url, data.total_entries)
+
+
 	
 ]

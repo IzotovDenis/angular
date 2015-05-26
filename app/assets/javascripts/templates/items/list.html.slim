@@ -4,9 +4,9 @@
 		.item-view
 			span.title Показывать товары:
 			.btn-group
-				label.btn.btn-default btn-radio="'list'" ng-model="items.userView"
+				label.btn.btn-default btn-radio="'list'" ng-model="items.userView" ng-click="items.setUserView('list')"
 					.glyphicon.glyphicon-th-list
-				label.btn.btn-default btn-radio="'thumbs'" ng-model="items.userView"
+				label.btn.btn-default btn-radio="'thumbs'" ng-model="items.userView" ng-click="items.setUserView('thumbs')"
 					.glyphicon.glyphicon-th-large
 	.items-area.sample-show-hide ng-show="showHead()"
 		.item-view-table.sample-show-hide
@@ -27,8 +27,7 @@
 					.cell.item-view-price ng-if="canOrder() == false"
 				.item ng-repeat="item in items.list" key-focus="" ng-class="{sold: item.qty == 0}"
 					.cell.item-photo ng-click="itemShowImage(item)"
-						item-image image="::item.image" size="img_thumb" ng-if="items.itemsView() == 'list'"
-						item-image image="::item.image" size="img_thumb_m" ng-if="items.itemsView() == 'thumbs'"
+						item-image image="::item.image" size="imageView" id="::item.id"
 					.cell.item-article
 						.item-article-kod
 							.item-article-label
@@ -47,12 +46,11 @@
 							.label.label-green ng-class="::item.label.variant" 
 								labeltext variant="::item.label.variant"
 								| {{label.variant}}
-						.oems ng-if="::item.properties.oems"
+						.oems ng-if="::item.oems"
 							span.oems-label
 								| OEM:
-							span.oem.cursor-pointer ng-repeat="oem in ::item.properties.oems" go-find="{{::oem.oem}}" title="Искать товары с ОЕМ: {{::oem.oem}}" 
-								| {{::oem.oem}}
-
+							span.oem.cursor-pointer ng-repeat="oem in ::item.oems" go-find="{{::oem}}" title="Искать товары с ОЕМ: {{::oem.oem}}" 
+								| {{::oem}}
 					.cell.item-qty ng-if="canOrder() != false" 
 						| {{::item.qty}}
 					.cell.item-price ng-if="canOrder() != false"
@@ -62,7 +60,6 @@
 						span.price-currency ng-if="item.price != 0.00"
 							| руб.
 					.cell.item-order ng-if="canOrder() != false"
-						item-ordered
 						form ng-submit="addToCart(item)"
 							input.order-qty type="text" ng-model="item.ordered" name="order_item[qty]" placeholder="0"
 							input.btn.btn-xs.btn-default.qty-btn.btn-order ng-class="{'btn-success': inCart(item.id)}" type="submit" value="В корзину"

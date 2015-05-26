@@ -14,7 +14,7 @@
 			th.center Удалить
 		tr.tr_middle ng-repeat="item in order.current.items" ng-class="{'out-of-stock': item.item_qty == 0}"
 			td.center.photo
-				item-image image="item.image" size="img_thumb"
+				item-image image="item.image" size="'list'" id="::item.id"
 			td.kod
 				.table_kod_lable = "код:"
 				.item_kod.table_kod_value
@@ -41,7 +41,7 @@
 				br
 				span.price-currency
 					| руб
-			td.center
+			td.center.action
 				.icon-destroy.cursor-pointer ng-click="deleteFromCart(item)" 
 					.glyphicon.glyphicon-remove
 		tr.tr-order-total.center

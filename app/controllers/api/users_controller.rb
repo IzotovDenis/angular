@@ -21,8 +21,9 @@ class Api::UsersController < ApiController
       if params[:pswd][:pass].length > 5 && params[:pswd][:pass].length > 5
         @user.password = params[:pswd][:pass]
         @user.password_confirmation = params[:pswd][:confirm]
-        @user.save
-        sign_in(@user, :bypass => true)
+        if @user.save
+          sign_in(@user, :bypass => true)
+        end
       else
         @user.errors.add(:password, :empty)
       end

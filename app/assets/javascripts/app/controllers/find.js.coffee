@@ -38,7 +38,6 @@ app.controller "FindCtrl", GroupCtrl = ["$scope", "$http", "$location","Item", "
 			)
 	sendRequest()
 
-
 	# Устанавливаем h1 страницы
 	$scope.title = "Результат поиска " + $routeParams.query
 	# Устанавливаем титл страницы

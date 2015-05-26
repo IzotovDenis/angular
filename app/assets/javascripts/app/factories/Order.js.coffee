@@ -1,4 +1,4 @@
-app.factory "Order", ["$http", "$q", ($http, $q) ->
+app.factory "Order", ["$http", "$q", "$filter", ($http, $q, $filter) ->
 	order = this
 	order.current = {}
 	order.itemList = {}
@@ -41,8 +41,11 @@ app.factory "Order", ["$http", "$q", ($http, $q) ->
 		defer.promise
 
 	order.updateInCart = (item, orderitem_id) ->
+		console.log("start update")
 		defer = $q.defer()
 		$http.patch('api/order_items/'+orderitem_id, item).success((res) ->
+			order.itemIds = res
+			console.log('update')
 			order.getCurrent()
 			defer.resolve res
 		).error (err, status) ->
@@ -53,6 +56,7 @@ app.factory "Order", ["$http", "$q", ($http, $q) ->
 		unless order.busy
 			order.busy = true
 			$http.delete("api/order_items/" + item.order_item_id).success((data) ->
+				order.itemIds = data
 				order.itemList.splice(order.itemList.indexOf(item), 1)
 				order.getCurrent().then (res) ->
 					order.busy = false)

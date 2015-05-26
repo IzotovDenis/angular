@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512020758) do
+ActiveRecord::Schema.define(version: 20150521235538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "pgcrypto"
 
-  create_table "activities", force: true do |t|
+  create_table "activities", force: :cascade do |t|
     t.integer  "user_id"
     t.hstore   "log"
     t.string   "controller"
@@ -27,7 +28,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.string   "ip"
   end
 
-  create_table "attachments", force: true do |t|
+  create_table "attachments", force: :cascade do |t|
     t.string   "file"
     t.string   "comment"
     t.integer  "item_id"
@@ -35,7 +36,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.datetime "updated_at"
   end
 
-  create_table "banners", force: true do |t|
+  create_table "banners", force: :cascade do |t|
     t.string   "image"
     t.integer  "position"
     t.datetime "created_at"
@@ -45,7 +46,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.string   "link"
   end
 
-  create_table "brands", force: true do |t|
+  create_table "brands", force: :cascade do |t|
     t.string   "title"
     t.string   "image"
     t.text     "text"
@@ -53,14 +54,17 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.datetime "updated_at"
   end
 
-  create_table "currencies", force: true do |t|
+  create_table "currencies", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.float    "actual"
   end
 
-  create_table "ffiles", force: true do |t|
+  add_index "currencies", ["name"], name: "index_currencies_on_name", using: :btree
+
+  create_table "ffiles", force: :cascade do |t|
     t.string   "file"
     t.string   "name"
     t.integer  "folder_id"
@@ -68,7 +72,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.datetime "updated_at"
   end
 
-  create_table "folders", force: true do |t|
+  create_table "folders", force: :cascade do |t|
     t.string   "name"
     t.string   "ancestry"
     t.datetime "created_at"
@@ -76,7 +80,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.boolean  "children_cache"
   end
 
-  create_table "groups", force: true do |t|
+  create_table "groups", force: :cascade do |t|
     t.string   "cid"
     t.string   "title"
     t.string   "parent_cid"
@@ -91,7 +95,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.datetime "last_new_item"
   end
 
-  create_table "imports", force: true do |t|
+  create_table "imports", force: :cascade do |t|
     t.string   "filename"
     t.string   "status"
     t.datetime "created_at"
@@ -99,7 +103,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.integer  "importsession_id"
   end
 
-  create_table "importsessions", force: true do |t|
+  create_table "importsessions", force: :cascade do |t|
     t.string   "cookie"
     t.string   "status"
     t.datetime "created_at"
@@ -107,7 +111,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.string   "exchange_type"
   end
 
-  create_table "items", force: true do |t|
+  create_table "items", force: :cascade do |t|
     t.string   "cid"
     t.string   "article"
     t.string   "title"
@@ -119,20 +123,22 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "importsession_id"
     t.integer  "qty",              default: 0
+    t.integer  "importsession_id"
     t.integer  "position"
     t.string   "brand"
     t.hstore   "label"
     t.string   "certificate"
-    t.string   "cross",                        array: true
+    t.string   "cross",                                      array: true
+    t.jsonb    "bids",             default: {}, null: false
   end
 
+  add_index "items", ["cid"], name: "index_items_on_cid", using: :btree
   add_index "items", ["cross"], name: "index_items_on_cross", using: :btree
   add_index "items", ["group_id"], name: "index_items_on_group_id", using: :btree
   add_index "items", ["properties"], name: "items_properties", using: :gin
 
-  create_table "offers", force: true do |t|
+  create_table "offers", force: :cascade do |t|
     t.string   "variant"
     t.hstore   "store"
     t.string   "status"
@@ -141,7 +147,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.string   "title"
   end
 
-  create_table "order_items", force: true do |t|
+  create_table "order_items", force: :cascade do |t|
     t.integer  "item_id"
     t.integer  "order_id"
     t.integer  "qty"
@@ -153,7 +159,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
   add_index "order_items", ["item_id"], name: "index_order_items_on_item_id", using: :btree
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
 
-  create_table "orders", force: true do |t|
+  create_table "orders", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -164,14 +170,14 @@ ActiveRecord::Schema.define(version: 20150512020758) do
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
-  create_table "pcatalogs", force: true do |t|
+  create_table "pcatalogs", force: :cascade do |t|
     t.string   "name"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "posts", force: true do |t|
+  create_table "posts", force: :cascade do |t|
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -182,14 +188,14 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.string   "url"
   end
 
-  create_table "pricelists", force: true do |t|
+  create_table "pricelists", force: :cascade do |t|
     t.integer  "size"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status"
   end
 
-  create_table "prices", force: true do |t|
+  create_table "prices", force: :cascade do |t|
     t.integer  "item_id"
     t.string   "title"
     t.integer  "pricetype_id"
@@ -202,7 +208,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
 
   add_index "prices", ["item_id"], name: "index_prices_on_item_id", using: :btree
 
-  create_table "pricetypes", force: true do |t|
+  create_table "pricetypes", force: :cascade do |t|
     t.string   "cid"
     t.string   "title"
     t.string   "cy"
@@ -210,7 +216,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.datetime "updated_at"
   end
 
-  create_table "promos", force: true do |t|
+  create_table "promos", force: :cascade do |t|
     t.string   "name"
     t.string   "file"
     t.integer  "position"
@@ -220,7 +226,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.integer  "pcatalog_id"
   end
 
-  create_table "rates", force: true do |t|
+  create_table "rates", force: :cascade do |t|
     t.integer  "currency_id"
     t.float    "value"
     t.integer  "user_id"
@@ -228,7 +234,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.datetime "updated_at"
   end
 
-  create_table "searches", force: true do |t|
+  create_table "searches", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "text"
     t.string   "where"
@@ -237,7 +243,7 @@ ActiveRecord::Schema.define(version: 20150512020758) do
     t.integer  "result"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",     null: false
     t.string   "encrypted_password",     default: "",     null: false
     t.string   "reset_password_token"

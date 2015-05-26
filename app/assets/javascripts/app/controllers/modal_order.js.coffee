@@ -4,11 +4,12 @@ app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "
 	Order.getCurrent()
 
 	$scope.addToCart = (item) ->
+		console.log(item)
 		new_order_item = {
 			item_id: item.id,
 			qty: item.qty
 		}
-		Order.addToCart(new_order_item)
+		Order.updateInCart(new_order_item, item.order_item_id)
 
 	$scope.deleteFromCart = (item) ->
 		Order.deleteFromCart(item)
