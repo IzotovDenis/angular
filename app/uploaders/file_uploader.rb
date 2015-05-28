@@ -17,8 +17,8 @@ class FileUploader < CarrierWave::Uploader::Base
   end
 
   def full_filename (for_file = model.logo.file)
-    name = Digest::MD5.hexdigest("#{model.id}thumb_m")
-    "#{name}.jpg"
+    name = Digest::MD5.hexdigest("#{model.id}")
+    "#{name}.#{file.extension}"
   end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url

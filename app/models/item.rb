@@ -15,17 +15,6 @@ class Item < ActiveRecord::Base
 	scope :able, ->{joins(:group).where(:groups => {:disabled => [nil,false]}).select('distinct items.*, groups.site_title as group_title').order("group_id, position")}
 
 	def price
-		self.prices.empty? ? value = {'value'=>0,'cy'=>'руб'} : value = self.prices.first
-		case value["cy"]
-			when 'руб'
-				val = value["value"].to_f
-			else
-				val = value["value"].to_f*cy_value(value["cy"]).to_f
-		end
-		val
-	end
-
-	def price1
 		id = '0fa9bc88-166f-11e0-9aa1-001e68eacf93'
 		self.bids[id] ? value = self.bids[id] : value = {'value'=>0,'cy'=>'руб'}
 		if value["cy"] == 'руб'
