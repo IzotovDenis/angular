@@ -16,9 +16,12 @@ class FileUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{model.id % 20}"
   end
 
-  def full_filename (for_file = model.logo.file)
-    name = Digest::MD5.hexdigest("#{model.id}")
-    "#{name}.#{file.extension}"
+  def filename (for_file = model.logo.file)
+    "#{secure_token}.#{file.extension}" if original_filename
+  end
+
+  def secure_token
+    Digest::MD5.hexdigest("#{model.id}")
   end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
