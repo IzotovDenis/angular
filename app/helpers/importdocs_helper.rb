@@ -28,7 +28,7 @@ module ImportdocsHelper
 			f.delete(".")
 			f.delete("..")
 			f = f[0]
-			file = File.open("/home/deployer/doc/file/#{line['id']}/#{d}")
+			file = File.open("/home/deployer/doc/file/#{line['id']}/#{f}")
 			file.save
 		end
 		end
