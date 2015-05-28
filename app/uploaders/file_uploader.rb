@@ -16,7 +16,7 @@ class FileUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{model.id % 20}"
   end
 
-  def filename (for_file = model.logo.file)
+  def filename
     "#{secure_token}.#{file.extension}" if original_filename
   end
 
