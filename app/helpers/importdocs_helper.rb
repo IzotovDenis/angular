@@ -4,7 +4,7 @@ module ImportdocsHelper
 		require 'csv'
 		next_id = Folder.create(:name=>"sys").id-6
 		Folder.last.destroy
-		file = File.read("/home/den/folder.csv")
+		file = File.read("/home/deployer/folder.csv")
 		csv = CSV.parse(file, :headers => true)
 		csv.each do |line|
 			folder = Folder.new(:name=>line['name'])
@@ -15,15 +15,14 @@ module ImportdocsHelper
 		end
 	end
 
-	def import_doc
+	def import_doc(ratio)
 		require 'csv'
-		ratio = 32
-		file = File.read("/home/den/doc.csv")
+		file = File.read("/home/deployer/doc.csv")
 		csv = CSV.parse(file, :headers => true)
 		csv.each do |line|
 			file = Ffile.new(:name=>line['name'])
 			if line["folder_id"]
-				file.folder_id = line["folder_id"].to_i+32
+				file.folder_id = line["folder_id"].to_i+ratio
 			end
 			f = Dir.entries("/home/deployer/doc/file/#{line['id']}")
 			f.delete(".")
