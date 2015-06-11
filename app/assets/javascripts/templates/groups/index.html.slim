@@ -6,7 +6,7 @@
 				img ng-src="{{banner.image}}"
 	.clear
 	/ Карусель
-	.carousels.shadowed
+	.carousels
 		carousel interval="5000" disable-animation="true"
 		  slide active="banner.active" label="banner.label" ng-repeat="banner in banners.carousel"
 		  	a ng-href="{{banner.link}}"
