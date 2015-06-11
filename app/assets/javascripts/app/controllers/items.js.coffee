@@ -58,15 +58,26 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 		)
 
 	$scope.addToCart = (item) ->
-		new_order_item = {
-			item_id: item.id,
-			qty: item.ordered
-		}
-		if item.orderitem_id
-			Order.updateInCart(new_order_item, item.orderitem_id)
-		else
-			Order.addToCart(new_order_item)
-		console.log(item)
+		unless item.busy
+			update = true
+			i = 0
+			while i < Order.itemIds.length
+				if item.id == Order.itemIds[i].item_id
+					if item.ordered != Order.itemIds[i].qty
+						update = true
+						break
+					else
+						update = false
+						break
+				else
+					update = true
+				i++
+			if update
+				item.busy = true
+				Order.itemAdd(item).then (->
+					item.busy = false
+				), (reason) ->
+					item.busy = false
 
 	$scope.inCart = (id) ->
 		found = $filter('getById')(Order.itemIds, id)
@@ -75,4 +86,5 @@ app.controller "ItemsCtrl", ItemCtrl = ["$scope", "Item", "$modal", "Order", "$f
 
 	$scope.goFind = (query) ->
 		$location.url('/find/' + query)
+
 ]

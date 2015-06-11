@@ -1,25 +1,24 @@
 h1 Все заказы
 
-table.table
-	tr.head
-		th.center
-			| Номер
-		th.center
-			| Наименований
-		th.center
-			| Сумма
-		th.center
-			| Сформирован
-		th.center
-			| Комментарий
-	tr.cursor-pointer ng-repeat="order in orders" ng-click="showOrder(order.id)"
-		td.center
-			| {{order.id}}
-		td.center
-			| {{order.positions}}
-		td
-			| {{order.amount}}
-		td
-			| {{order.date}}
-		td
+.orders-history
+	.order ng-repeat="order in orders"
+		p.title
+			span.sm
+				| Заказ № 
+			span.bold
+				|  {{order.id}}
+			span.sm
+				|  от 
+			span.bold
+				|  {{order.date}}
+			span.sm 
+				|  Сумма: 
+			span.bold 
+				currency value="order.total" item="false"
+			span.sm
+				|  руб.
+		.comment
 			| {{order.comment}}
+		.view-order
+			.btn.btn-default ng-click="showOrder(order.id)" Открыть
+		.h-line-dashed

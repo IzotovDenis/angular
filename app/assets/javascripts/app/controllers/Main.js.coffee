@@ -36,9 +36,10 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 	# TODO: разобраться, переименовать
 	$scope.open = ->
 	  modalInstance = $modal.open(
-	    templateUrl: "modal.html"
-	    controller: "ModalOrderCtrl"
-	    windowClass: 'modal-order'
+	    templateUrl: "modal.html",
+	    controller: "ModalOrderCtrl",
+	    windowClass: 'modal-order',
+	    animation: false
 	  )
 
 	# Кнопка скачать прайс-лис

@@ -1,7 +1,7 @@
 app.controller "ItemShowCtrl", ItemShowCtrl = ["$scope", "$http", "$routeParams", "$modal", "Order", "$filter", ($scope, $http, $routeParams, $modal, Order, $filter) ->
 	$http.get("/api/items/"+$routeParams.itemId).success (data) ->
+
 		$scope.item = data
-		console.log(data)
 
 	$scope.addToCart = (item) ->
 		console.log("start")

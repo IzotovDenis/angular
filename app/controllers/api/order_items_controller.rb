@@ -1,7 +1,7 @@
 class Api::OrderItemsController < ApiController
   include OrderItemsHelper
-  after_action :set_activity
-  load_and_authorize_resource only: [:create,:update,:destroy]
+  after_action :set_activity, except: [:create_array]
+  load_and_authorize_resource only: [:create,:update,:destroy,:create_array]
   before_action :set_order_item, only: [:update, :destroy, :set_activity]
 
   def create
@@ -13,6 +13,19 @@ class Api::OrderItemsController < ApiController
         render :json => current_order.order_items.select("item_id, qty, id")
       end
     end
+  end
+
+  def create_array
+    if !params[:items].blank?
+      @new_order_items = params[:items]
+      @items = Item.where("id in (?)", @new_order_items.keys).select("id")
+      @items.each do |item|
+        @order_item = OrderItem.find_or_initialize_by(:order=>current_order,:item=>item)
+        @order_item.qty = @new_order_items["#{item.id}"]
+        @order_item.save
+      end
+    end
+        render :json => current_order.order_items.select("item_id, qty, id")
   end
 
   def update

@@ -30,9 +30,15 @@ Rails.application.routes.draw do
       collection do
         get 'current'
         post 'forwarding'
+        post 'add_items'
+        post 'delete_items'
       end
     end
-    resources :order_items
+    resources :order_items do
+      collection do
+        post 'create_array'
+      end
+    end
     resources :offers, :only => [:index, :show]
     resources :find
     resources :users, :only => [:index, :update] do

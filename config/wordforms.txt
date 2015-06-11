@@ -1,4 +1,4 @@
-Хайгир > Hi-Gear
+Хайгир > HiGear
 Абро > ABRO
 Аляска > Аляsка
 Ойлрайт > OILRIGHT
@@ -7,3 +7,6 @@
 Шеврон > CHEVRON
 Сакура > SAKURA
 Сата > SATA
+Автопрофи > Autoprofi
+Газпромнефть > Gazpromneft
+Газпром > Gazprom

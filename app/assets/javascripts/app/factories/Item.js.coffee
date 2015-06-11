@@ -1,4 +1,4 @@
-app.factory "Item", Item = ["Order","$filter", (Order,$filter) ->
+app.factory "Item", Item = ["Order","$filter","$timeout", (Order,$filter, $timeout) ->
 	item = {}
 	item.page = 1
 	item.busy = false
@@ -27,11 +27,12 @@ app.factory "Item", Item = ["Order","$filter", (Order,$filter) ->
 		if item.totalEntries > item.itemsPerPage
 			item.itemsPagin = true
 
-	item.firstLoad = (newItems, url, total_entries) ->
-		angular.forEach(newItems, (value) ->
-			value.oems = item.setOem(value.oems)
-			item.list.push(value)
-		)
+	item.firstLoad1 = (newItems, url, total_entries) ->
+		i = 0
+		while i < count
+			console.log(newItems[i])
+			item.list.push(newItems[i])
+			i++
 		item.show_pagin = false
 		item.itemsControl = true
 		item.totalEntries = total_entries
@@ -40,34 +41,54 @@ app.factory "Item", Item = ["Order","$filter", (Order,$filter) ->
 		item.end = false
 		item.busy = false
 		showPagin()
-		item.setOrderQty()
 
-	item.setOem = (str) ->
-		if str
-			oem = str.split(/,|;/)
-			angular.forEach(oem, (value) ->
-				value = value.trim()
-			)
-			return oem
+	item.firstLoad = (newItems, url, total_entries) ->
+		item.show_pagin = false
+		item.itemsControl = true
+		item.totalEntries = total_entries
+		item.busy = true
+		item.url = url
+		item.end = false
+		item.busy = false
+		showPagin()
+		if newItems.length > 8
+			count = 8
 		else
-			return null
+			count = newItems.length
+		i = 0
+		while i < count
+			item.list.push(newItems[i])
+			i++
+		if newItems.length > 8
+			$timeout( -> 
+				item.op(newItems)
+			, 150)
+
+	item.op = (obj) ->
+		i = 8
+		while i < obj.length
+			item.list.push(obj[i])
+			i++
 
 
 
 	item.setOrderQty = ->
-		angular.forEach(item.list, (value) ->
-			if value
-				found = $filter('getById')(Order.itemIds, value.id)
+		i = 0
+		while i < item.list.length
+			if item.list[i]
+				found = $filter('getById')(Order.itemIds, item.list[i].id)
 				if found
-					value.ordered = found.qty
-					value.orderitem_id = found.id
+					item.list[i].ordered = found.qty
+					item.list[i].orderitem_id = found.id
 				else
-					delete value.ordered
-					delete value.orderitem_id
-		)
+					delete item.list[i].ordered
+					delete item.list[i].orderitem_id
+			i++
+
+
 
 	item.getItems = ->
 		item.list
-	console.log(item.fixedView)
+
 	return item
 ]

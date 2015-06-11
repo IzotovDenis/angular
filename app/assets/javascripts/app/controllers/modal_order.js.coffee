@@ -1,18 +1,28 @@
-app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "Order", "$http", "$window", ($scope, $modalInstance, Order, $http, $window) ->
+app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "Order", "$http", "$window", "$timeout", ($scope, $modalInstance, Order, $http, $window, $timeout) ->
+
 	$scope.order = Order
-	
-	Order.getCurrent()
+	$scope.order.current = {}
+	$scope.itemList = []
+
+	getOrder = ->
+		Order.getCurrent()
+
+	$timeout(getOrder, 1)
 
 	$scope.addToCart = (item) ->
-		console.log(item)
-		new_order_item = {
-			item_id: item.id,
-			qty: item.qty
-		}
-		Order.updateInCart(new_order_item, item.order_item_id)
+		Order.itemAdd(item)
 
-	$scope.deleteFromCart = (item) ->
-		Order.deleteFromCart(item)
+	$scope.deleteItem = (item) ->
+		items = [item]
+		Order.deleteFromCart(items)
+
+	$scope.checkAll = (val) ->
+		angular.forEach($scope.order.current.items, (value) ->
+			value.checked = val
+		)
+
+	$scope.deleteItems = (items) ->
+		console.log(items)
 
 	$scope.closeModal = ->
 		$modalInstance.close()
@@ -28,4 +38,15 @@ app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "
 			else
 				$window.alert("Ошибка при отправке!")
 				console.log("SOME ERROR")
+
+	$scope.deleteItems = ->
+		arr = []
+		empty = true
+		angular.forEach($scope.order.current.items, (value) ->
+			if value.checked == true
+				arr.push(value)
+				empty = false
+		)
+		if empty == false
+			Order.deleteFromCart(arr)
 ]

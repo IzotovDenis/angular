@@ -4,20 +4,46 @@ class Api::OrdersController < ApiController
   load_and_authorize_resource only: [:index,:forwarding,:show]
 
   def index
-  	@orders = current_user.orders.ready.order(:formed)
+    @orders = Order.where(:user_id=>1).where("formed IS NOT NULL").select("total, to_char(formed , 'DD.MM.YYYY HH24:MI:SS') as date, id").order("formed DESC")
+    render :json=>@orders
   end
 
   def current
   	@order = current_order
     if params[:type] == "ids"
-      render :json => @order.order_items.select("item_id, qty, id")
+      render :json => @order.order_list
     else
-      @order_items = @order.order_items.includes(:item=>:prices).order('created_at DESC') if @order
+      @order_items = Order.show_list(current_order.id) if @order
+      render :json => @order_items
     end
   end
 
+  def add_items
+    @order = current_order
+    ids = params[:items]
+    @items = Item.where("id IN (?)", ids.keys).select("id")
+    @items.each do |item|
+      @order.order_list[item.id] = {'qty'=>ids[item.id.to_s].to_i}
+    end
+    if @order.save
+      render :json => {'success'=> true, 'items' => @order.order_list}
+    end
+  end
+
+  def delete_items
+    @order = current_order
+    ids = params[:items]
+    ids.each do |id|
+      @order.order_list.delete(id)
+    end
+      if @order.save
+        render :json => {'success'=> true, 'items' => @order.order_list}
+      end
+  end
+
   def show
-    @order_items = @order.order_items.includes(:item=>:prices).order(:created_at)
+    @order = Order.show_list(params[:id])
+    render :json => @order
   end
   
   def forwarding
@@ -36,6 +62,6 @@ class Api::OrdersController < ApiController
     private
   # Use callbacks to share common setup or constraints between actions.
   def set_order
-    @order = Order.find(params[:id])
+    # @order = Order.find(params[:id])
   end
 end

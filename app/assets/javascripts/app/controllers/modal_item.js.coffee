@@ -5,6 +5,10 @@ app.controller "ModalItemCtrl", ModalItemCtrl = ["$scope", "$modalInstance", "it
 		$scope.orderitem_id = item.orderitem_id
 
 	$http.get("/api/items/"+$scope.item.kod).success (data) ->
+		if data.certificate && data.certificate.match(/doc&id=([0-9]*)/)
+			id = data.certificate.match(/doc&id=([0-9]*)/)[1]
+			data.certificate = "http://disk.planeta-avtodv.ru/docs/"+id
+			console.log(data.certificate)
 		$scope.item = data
 		if $scope.ordered
 			$scope.item.ordered = $scope.ordered

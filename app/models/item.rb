@@ -35,6 +35,7 @@ class Item < ActiveRecord::Base
 		if properties
 			@properties = 	"	replace(items.text, '\n', '<br>') as text,
 								items.properties-> 'Страна изготовитель' as country,
+								items.certificate,
 								items.properties-> 'Применяемость' as applicability,
 								items.properties-> 'Количество в упаковке' as in_pack,
 								items.cross,

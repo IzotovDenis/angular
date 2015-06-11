@@ -1,4 +1,4 @@
-worker_processes 2
+worker_processes 4
 
 working_directory "/home/deployer/apps/pavto/current" # available in 0.94.0+
 

@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150521235538) do
+ActiveRecord::Schema.define(version: 20150603045746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pgcrypto"
+  enable_extension "intarray"
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id"
@@ -166,6 +167,7 @@ ActiveRecord::Schema.define(version: 20150521235538) do
     t.datetime "formed"
     t.text     "comment"
     t.float    "total",      default: 0.0
+    t.jsonb    "order_list", default: {}
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree

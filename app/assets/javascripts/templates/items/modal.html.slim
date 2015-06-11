@@ -54,6 +54,10 @@
 						| Регистрация
 		.clear.h-line-dashed
 		div
+			span ng-if="::item.certificate"
+				a ng-href="{{item.certificate}}"
+					span.glyphicon.glyphicon-file
+					span Сертификаты и документы
 			table.table
 				tr ng-if="::item.country"
 					td Страна происхождения
