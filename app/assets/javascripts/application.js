@@ -15,11 +15,7 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require angular-sanitize
-//= require angular-resource
 //= require ng-rails-csrf
-//= require angular-route
-//= require angular-animate
 //= require angular-rails-templates
 //= require_tree ./templates
 //= require_tree ./general
