@@ -71,12 +71,10 @@
 					td Тип
 					td
 						| {{item.type}}
-				tr ng-if="item.oems"
+				tr ng-if="::item.oems"
 					td ОЕМ
-					td 
-						span.oem.cursor-pointer ng-repeat="oem in ::item.oems" go-find="{{::oem}}" title="Искать товары с ОЕМ: {{::oem}}" 
-							| {{::oem}}
-							br
+					td
+						itemoem oems="::item.oems"
 				tr ng-if="::item.applicability"
 					td Применямость запчасти
 					td	

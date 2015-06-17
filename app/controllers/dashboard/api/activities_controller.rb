@@ -8,7 +8,7 @@ class Dashboard::Api::ActivitiesController < Dashboard::ApiController
       if params[:from]
         @activities = Activity.where('id > ?', params[:from]).where.not(user_id: '').includes(:user).order("updated_at DESC")
       else
-        @activities = Activity.where.not(user_id: '').includes(:user).limit(500).order("updated_at DESC")
+        @activities = Activity.where.not(user_id: nil).includes(:user).limit(500).order("updated_at DESC")
       end
     end
     # render :json => @activities.as_json(:only=>[:log, :updated_at, :action, :controller], :include=> {:user => {:only => [:name, :id]}} )

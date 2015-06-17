@@ -10,8 +10,14 @@ app.directive "keyFocus", ["$document", ($document) ->
 				if scope.$first
 					console.log elem[0]
 					console.log($document[0].querySelector(".find-input").focus())
+				pos = window.pageYOffset
+				window.scrollTo(0,pos-70)
 			else if e.keyCode is 40
 				unless scope.$last
+					console.log($(elem[0]).offset())
+					console.log($(elem[0]).position())
+					pos = window.pageYOffset
+					window.scrollTo(0,pos+70)
 					elem[0].nextElementSibling.querySelector(".order-qty").focus()  
 		elem.bind "keyup", (e) ->
 			if e.keyCode is 13
@@ -20,6 +26,15 @@ app.directive "keyFocus", ["$document", ($document) ->
 					elem[0].nextElementSibling.querySelector(".order-qty").focus()  
 ]
 
+app.directive "keyapp", ["$document", ($document) ->
+	restrict: "A"
+	link: (scope,elem, attrs) ->
+		console.log("puts")
+		$document.bind "keydown", (e) ->
+			if e.keyCode == 40
+				e.preventDefault()
+			console.log e.keyCode
+]
 app.directive "findInput", ["$document", ($document) ->
 	restrict: "A"
 	link: (scope, elem, attrs) ->

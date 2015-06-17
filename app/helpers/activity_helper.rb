@@ -33,4 +33,5 @@ def activity_save arg
 	@activity['ip'] = request.remote_ip
 	ActivityWorker.perform_async(@activity)
 end
+
 end

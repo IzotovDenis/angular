@@ -22,17 +22,17 @@ table.table.item-list
 	tr.tr_middle ng-repeat="item in order.items"
 		td.center.photo
 			item-ordered
-			item-image image="item.image" size="img_thumb"
+			item-image image="::item.image" size="'list'" id="::item.id"
 		td.kod
 			.table_kod_lable = "код:"
 			.item_kod.table_kod_value
-				| {{item.kod}}
+				| {{::item.kod}}
 			.table_kod_lable = "артикул:"
 			.item_article.table_kod_value
-				| {{item.article}}
+				| {{::item.article}}
 		td.title
-			| {{item.title}}
+			| {{::item.title}}
 		td.center.qty
-			| {{item.qty}}
+			| {{::item.ordered}}
 		td.center.price
-			| {{item.price}} руб.
+			| {{::item.price}} руб.

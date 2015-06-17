@@ -2,6 +2,7 @@ class Api::OrdersController < ApiController
   respond_to :json
   before_action :set_order, only: [:show]
   load_and_authorize_resource only: [:index,:forwarding,:show]
+  after_action :set_activity, only: [:add_items, :delete_items, :forwarding]
 
   def index
     @orders = Order.where(:user_id=>1).where("formed IS NOT NULL").select("total, to_char(formed , 'DD.MM.YYYY HH24:MI:SS') as date, id").order("formed DESC")
@@ -22,16 +23,19 @@ class Api::OrdersController < ApiController
     @order = current_order
     ids = params[:items]
     @items = Item.where("id IN (?)", ids.keys).select("id")
+    @old_items = @order.order_list.dup
     @items.each do |item|
       @order.order_list[item.id] = {'qty'=>ids[item.id.to_s].to_i}
     end
     if @order.save
       render :json => {'success'=> true, 'items' => @order.order_list}
     end
+    @new_items = @order.order_list.dup
   end
 
   def delete_items
     @order = current_order
+    @old_items = @order.order_list.dup
     ids = params[:items]
     ids.each do |id|
       @order.order_list.delete(id)
@@ -39,6 +43,7 @@ class Api::OrdersController < ApiController
       if @order.save
         render :json => {'success'=> true, 'items' => @order.order_list}
       end
+    @new_items = @order.order_list.dup
   end
 
   def show
@@ -61,6 +66,10 @@ class Api::OrdersController < ApiController
 
     private
   # Use callbacks to share common setup or constraints between actions.
+  def set_activity
+      activity_save :controller=>controller_name, :action=>action_name,  :old_items=>@old_items, :new_items=>@new_items, :path=>URI(request.referer).path
+  end
+
   def set_order
     # @order = Order.find(params[:id])
   end

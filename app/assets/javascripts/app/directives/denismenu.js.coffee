@@ -17,7 +17,7 @@ app.directive "denismenu", [ "$timeout", "RightMenu", ($timeout, RightMenu)  ->
 						$scope.aa = attrs.id
 						$scope.$apply()
 					return
-				), 400
+				), 500
 
 		elem.bind "mouseleave", ->
 			RightMenu.next = false
@@ -30,13 +30,14 @@ app.directive "denismenu", [ "$timeout", "RightMenu", ($timeout, RightMenu)  ->
 					$scope.$apply()
 					RightMenu.active = false
 				return
-			), 1
+			), 500
 			$scope.cinTimeout = true
 ]
 
 app.directive "denismenu1", [ "$timeout", "RightMenu", ($timeout, RightMenu)  ->
 	restrict: "A"
 	link: ($scope, elem, attrs) ->  
+
 		elem.bind "mouseover", ->
 			$scope.inTimeout = false
 			$scope.cinTimeout = false
@@ -51,6 +52,6 @@ app.directive "denismenu1", [ "$timeout", "RightMenu", ($timeout, RightMenu)  ->
 					RightMenu.active = false
 					$scope.$apply()
 				return
-			), 300
+			), 500
 			$scope.cinTimeout = true
 ]

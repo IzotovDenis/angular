@@ -13,10 +13,10 @@ app.controller "OrderShowCtrl", OrderShowCtrl = ["$scope", "$http", "$location",
 		arr = []
 		empty = true
 		i = 0
-		console.log($scope.order)
 		while i < $scope.order.items.length
-			arr.push($scope.order.items[i])
-			console.log($scope.order.items[i])
+			if $scope.order.items[i].checked
+				arr.push($scope.order.items[i])
 			i++
 		console.log(arr)
+		Order.itemsAdd(arr)
 ]

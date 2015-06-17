@@ -22,12 +22,15 @@ class Order < ActiveRecord::Base
 	end
 
 	def complete
-		self.formed = Time.now
-				self.order_items.each do |order_item|
-					order_item.set_price
-					self.total += order_item.price*order_item.qty
-				end
-				self.save!
+		self.formed = Time.now if !self.formed
+		@items = Order.show_list(self.id)['items']
+		total = 0
+			@items.each do |item|
+				self.order_list[item['id']]['price'] = item['price'].to_f
+				total += item['price'].to_f.round(2) * item['ordered'].to_i
+			end
+		self.total = total
+		self.save!
 	end
 
 	def amount
@@ -43,7 +46,7 @@ class Order < ActiveRecord::Base
 	end
 
 	def good?
-		self.count_position >=1 && self.amount >=1
+		self.order_list.keys.count >=1
 	end
 
 	def self.pg_result
@@ -66,18 +69,19 @@ class Order < ActiveRecord::Base
 	end
 
 	def self.show_list(id)
-		@order = Order.where(:id=>id).select("id, formed as date, total, comment").first
+		@order = Order.where(:id=>id).select("id, formed, total, comment").first
 			if @order
 			connection = ActiveRecord::Base.connection
 			hash = {}
 			hash['id'] = @order.id
 			hash['amount'] = @order.total
+			hash['date'] = Russian::strftime(@order.formed, "%H:%M %d %B %Y") if @order.formed
 			hash['comment'] = @order.comment
 			hash['items'] = connection.execute("SELECT
 						items.article,
 						json_data.key AS id, 
 						json_data.value::jsonb->'qty' AS ordered,
-						CASE coalesce(orders.formed::text, 'null') WHEN 'null' THEN coalesce((items.bids->'0fa9bc88-166f-11e0-9aa1-001e68eacf93'->>'value')::float*currencies.actual, '0.00')::text ELSE CAST(json_data.value::jsonb->'price' AS text) END AS price,
+						round (CAST (CASE coalesce(orders.formed::text, 'null') WHEN 'null' THEN coalesce((items.bids->'0fa9bc88-166f-11e0-9aa1-001e68eacf93'->>'value')::float*currencies.actual, '0.00')::text ELSE CAST(json_data.value::jsonb->'price' AS text) END AS numeric),2) AS price,
 						items.full_title as title,
 						CASE  WHEN items.qty BETWEEN 0 AND 9 THEN items.qty::text
 									WHEN items.qty BETWEEN 10 AND 49 THEN '10-49'::text

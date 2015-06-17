@@ -1,14 +1,14 @@
 doctype html
-html ng-app="App" ng-controller="MainCtrl"
+html ng-app="App" ng-controller="MainCtrl" keyapp=""
   head
     title ng-bind="title.getTitle()" Автотовары оптом Планета-Авто
     = javascript_include_tag "application"
     = stylesheet_link_tag    "application", media: "all"
     = csrf_meta_tags
     base href="/"
-  body
+  body 
     = render 'layouts/navbar'
-    .app-container ng-class="{app_load: appLoad}"
+    .app-container ng-class="{app_load: appLoad}" 
       .inner-block.clearfix
         .left-bar
           = render "layouts/menu"

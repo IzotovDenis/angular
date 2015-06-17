@@ -7,7 +7,7 @@ app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "
 	getOrder = ->
 		Order.getCurrent()
 
-	$timeout(getOrder, 1)
+	$timeout(getOrder, 500)
 
 	$scope.addToCart = (item) ->
 		Order.itemAdd(item)

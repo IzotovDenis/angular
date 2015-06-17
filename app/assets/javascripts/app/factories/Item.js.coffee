@@ -27,21 +27,6 @@ app.factory "Item", Item = ["Order","$filter","$timeout", (Order,$filter, $timeo
 		if item.totalEntries > item.itemsPerPage
 			item.itemsPagin = true
 
-	item.firstLoad1 = (newItems, url, total_entries) ->
-		i = 0
-		while i < count
-			console.log(newItems[i])
-			item.list.push(newItems[i])
-			i++
-		item.show_pagin = false
-		item.itemsControl = true
-		item.totalEntries = total_entries
-		item.busy = true
-		item.url = url
-		item.end = false
-		item.busy = false
-		showPagin()
-
 	item.firstLoad = (newItems, url, total_entries) ->
 		item.show_pagin = false
 		item.itemsControl = true
@@ -59,6 +44,7 @@ app.factory "Item", Item = ["Order","$filter","$timeout", (Order,$filter, $timeo
 		while i < count
 			item.list.push(newItems[i])
 			i++
+		item.setOrderQty()
 		if newItems.length > 8
 			$timeout( -> 
 				item.op(newItems)
@@ -69,6 +55,10 @@ app.factory "Item", Item = ["Order","$filter","$timeout", (Order,$filter, $timeo
 		while i < obj.length
 			item.list.push(obj[i])
 			i++
+		item.setOrderQty()
+
+
+
 
 
 

@@ -20,7 +20,7 @@ class Dashboard::Api::OrdersController < Dashboard::ApiController
   end
 
   def show
-    respond_with @order
+    render :json => @order
   end
 
     private
@@ -29,10 +29,10 @@ class Dashboard::Api::OrdersController < Dashboard::ApiController
     if params[:current]
       user = User.where(:id=>params[:id]).first
       if user
-        @order = user.current_order if user.current_order
+        @order = Order.show_list(user.current_order.id) if user.current_order
       end
     else
-      @order = Order.find(params[:id])
+      @order = Order.show_list(params[:id])
     end
   end
 end

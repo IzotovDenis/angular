@@ -44,22 +44,6 @@ app.directive "itemImage", ->
 					setImage()
 				)
 
-app.directive "itemOrdered", ["Order", "$filter", (Order, $filter) ->
-	restrict: "E"
-	link: (scope, element, attrs) ->
-		scope.$watch (->
-			Order.itemIds), ((newVal,oldVal) ->
-				if scope.item
-					found = $filter('getById')(Order.itemIds, scope.item.id)
-					if found
-						scope.item.ordered = found.qty
-						scope.item.orderitem_id = found.id
-					else
-						delete scope.item.ordered
-						delete scope.item.orderitem_id
-				)
-]
-
 app.directive "currency", ["User", (User) ->
 	restrict: "E"
 	scope:	{
@@ -76,9 +60,10 @@ app.directive "currency", ["User", (User) ->
 
 		scope.$watch (->
 			User.discount), ((newVal,oldVal) ->
-				setPrice()
+				setTimeout( ->
+					setPrice()
+				, 100)
 				)
-		setPrice()
 ]
 
 app.directive "labeltext",  ->

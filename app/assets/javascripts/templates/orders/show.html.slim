@@ -33,13 +33,13 @@ table.table.item-list
 		td.kod
 			.table_kod_lable = "код:"
 			.item_kod.table_kod_value
-				| {{item.kod}}
+				| {{::item.kod}}
 			.table_kod_lable = "артикул:"
 			.item_article.table_kod_value
-				| {{item.article}}
+				| {{::item.article}}
 		td.title
-			| {{item.title}}
+			| {{::item.title}}
 		td.center.qty
-			| {{item.ordered}}
+			| {{::item.ordered}}
 		td.center.price
-			| {{item.price}} руб.
+			| {{::item.price}} руб.

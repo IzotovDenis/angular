@@ -24,7 +24,7 @@ dashboard.controller "UsersShowCtrl", UsersEditCtrl = ["$scope", "$http", "$rout
 			$scope.order = data
 			$scope.order.amount = 0
 			angular.forEach(data.items, (value) ->
-				$scope.order.amount += value.qty*value.price
+				$scope.order.amount += value.ordered*value.price
 			)
 
 	$scope.loadOrders = ->

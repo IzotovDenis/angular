@@ -10,7 +10,6 @@ app.directive "goFind", ["$location", "$document", ($location, $document) ->
 app.directive "itemoem", ->
 	restrict: "E"
 	replace: true
-	transclude: true
 	template: "<div class='oems'></div>"
 	scope: {
 		oems: "="
@@ -18,11 +17,11 @@ app.directive "itemoem", ->
 	link: (scope, element, attrs) ->
 		render = ->
 			if scope.oems
-				html = ""
+				html = "<span class='oems-label'>OEM:</span>"
 				oem = scope.oems.split(/,|;/)
 				i = 0
 				while i < oem.length
-					html += "<span class='oem cursor-pointer'>"+oem[i].trim()+"</span>"
+					html += "<span class='oem cursor-pointer' title='Искать товары с ОЕМ: "+oem[i].trim()+"'><a href='find?query="+ oem[i].trim()+"'>"+oem[i].trim()+"</a></span>"
 					i++
 			element.html html
-		setTimeout(render,0)
+		setTimeout(render,100)

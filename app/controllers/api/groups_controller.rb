@@ -20,11 +20,7 @@ class Api::GroupsController < ApiController
 
   def show
   	ids = @group.subtree_ids
-    #@items = Item.able.includes(:prices).where(:group_id=>ids).page(params[:page])
-    #@items = Item.able.where(:group_id=>ids).page(params[:page])
     price = true if can? :view_price, Item
-    #@items = Item.joins(:group, :prices, :currencies).where(:group_id=>ids).select('distinct items.*, (prices.value*currencies.actual) as pr, groups.site_title as group_title').page(params[:page])
-    #respond_with @items
     @items = Item.where(:group_id=>ids).order("items.group_id, items.position").page(params[:page]).pg_result(@can_view_price)
     @total_entries = Item.where(:group_id=>ids).count
     render :json => {

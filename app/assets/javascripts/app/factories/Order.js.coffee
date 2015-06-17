@@ -56,10 +56,10 @@ app.factory "Order", ["$http", "$q", "$filter", ($http, $q, $filter) ->
 	order.itemsAdd = (items_list) ->
 		i = 0
 		items = {}
-		while i < items_list.lenght
-			items[items_list[i].id] = items_list[i].qty
+		while i < items_list.length
+			items[items_list[i].id] = items_list[i].ordered || "1"
 			i++
-		console.log(items)
+		order.AddToCart(items)
 
 
 

@@ -16,7 +16,7 @@ class Api::FindController < ApiController
   private
 
   def set_activity
-  activity_save :controller=>"find", :action=>action_name, :text=>@query, :result=>'1', :page=>params[:page]
+  activity_save :controller=>"find", :action=>action_name, :text=>@query, :result=>@count.length, :page=>params[:page]
   end
 
   def set_options
@@ -31,8 +31,8 @@ class Api::FindController < ApiController
 
   def set_options_ids
     options = set_options
-    options[:group_by] = :group_id
-    options.except(:page, :per_page)
+    options[:page] = nil
+    options[:per_page] = 1000
     options
   end
 
