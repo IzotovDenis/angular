@@ -55,6 +55,7 @@ gem 'whenever', :require => false
 gem "spreadsheet"
 gem "arel"
 gem "sidekiq-status"
+gem 'angularjs-rails', '1.3.14'
 gem 'ng-rails-csrf'
 gem 'oj'
 gem 'oj_mimic_json'

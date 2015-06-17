@@ -10,11 +10,14 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require_tree ./sys
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require angular
+//= require angular-sanitize
+//= require angular-resource
 //= require ng-rails-csrf
+//= require angular-route
 //= require angular-rails-templates
 //= require_tree ./dashboard
 //= require_tree ./general
