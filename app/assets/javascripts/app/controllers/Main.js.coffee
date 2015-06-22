@@ -6,6 +6,8 @@ app.controller "MainCtrl", MainCtrl = ["$scope","$http", "Group", "User", "Order
 	$scope.title = Page
 	$scope.banners = Banner.list
 
+	$scope.groups = Group
+
 	# Может ли пользователь видеть цены, оформлять заказы?
 	$scope.canOrder = ->
 		User.can_order

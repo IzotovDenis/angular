@@ -15,14 +15,14 @@ class Api::GroupsController < ApiController
   end
 
   def tree
-    respond_with Group.able.select("id, title, ancestry").arrange_serializable
+    respond_with Group.able.select("id, title, ancestry, site_title").order(:title)
   end
 
   def show
   	ids = @group.subtree_ids
     price = true if can? :view_price, Item
-    @items = Item.where(:group_id=>ids).order("items.group_id, items.position").page(params[:page]).pg_result(@can_view_price)
-    @total_entries = Item.where(:group_id=>ids).count
+    @items = Item.where(:group_id=>@group.id).order("items.group_id, items.position").page(params[:page]).pg_result(@can_view_price)
+    @total_entries = Item.where(:group_id=>@group.id).count
     render :json => {
               :items => @items, 
               :group => {

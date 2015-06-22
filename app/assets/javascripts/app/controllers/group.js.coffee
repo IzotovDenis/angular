@@ -13,6 +13,8 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 	if $routeParams.page
 		url = url + "?page="+$routeParams.page
 
+	$scope.groups.setGroup($routeParams.groupId)
+
 	# Отправляемся запрос
 	canceler = $q.defer()
 	$http.get(url).success (data) ->
