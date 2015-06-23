@@ -15,7 +15,7 @@ class Api::GroupsController < ApiController
   end
 
   def tree
-    respond_with Group.able.select("id, title, ancestry, site_title").order(:title)
+    respond_with Group.able.select("id, title, ancestry, site_title, items_count").order(:title)
   end
 
   def show
