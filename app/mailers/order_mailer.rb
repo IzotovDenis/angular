@@ -8,7 +8,7 @@ class OrderMailer < ActionMailer::Base
   #
   def order_from(order)
     @order = Order.find(order)
-    @order_items = @order.order_items
+    @order_items = Order.show_list(@order.id)['items']
     @email = Rails.env.development? ? "izotov87@gmail.com" : "info@planeta-avtodv.ru"
     mail to: @email, :reply_to => @order.user.email, subject: "#{t(:order_mail_title)} #{@order.id} #{@order.user.name}"
   end

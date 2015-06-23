@@ -2,7 +2,7 @@ class Api::OrdersController < ApiController
   respond_to :json
   before_action :set_order, only: [:show]
   load_and_authorize_resource only: [:index,:forwarding,:show]
-  after_action :set_activity, only: [:add_items, :delete_items, :forwarding]
+  after_action :set_activity, only: [:add_items, :delete_items]
 
   def index
     @orders = Order.where(:user_id=>1).where("formed IS NOT NULL").select("total, to_char(formed , 'DD.MM.YYYY HH24:MI:SS') as date, id").order("formed DESC")

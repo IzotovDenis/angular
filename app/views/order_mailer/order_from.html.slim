@@ -13,6 +13,6 @@ html
 				td style="text-align: center;border: 1px solid #ccc;width: 500px"= "Наименование"
 			- @order_items.each do |order_item|
 				tr
-					td style="text-align: center;border: 1px solid #ccc;width: 60px"= order_item.item.properties['Код товара']
-					td style="font-weight: bold;text-align: center;border: 1px solid #ccc;width: 60px"= order_item.qty
-					td style="border: 1px solid #ccc;width: 500px"= order_item.item.full_title
+					td style="text-align: center;border: 1px solid #ccc;width: 60px"= order_item['kod']
+					td style="font-weight: bold;text-align: center;border: 1px solid #ccc;width: 60px"= order_item['ordered']
+					td style="border: 1px solid #ccc;width: 500px"= order_item['title']

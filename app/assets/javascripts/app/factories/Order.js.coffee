@@ -42,11 +42,11 @@ app.factory "Order", ["$http", "$q", "$filter", ($http, $q, $filter) ->
 
 	order.calcAmount = ->
 		order.current.amount = 0
-		console.log("start")
 		i = 0
 		while i < order.current.items.length
 			order.current.amount += order.current.items[i].ordered*order.current.items[i].price
 			i++
+		console.log(order.current)
 
 	order.itemAdd = (item) ->
 		items = {}

@@ -3,5 +3,5 @@
 Время отправки <%= Time.now%>
 Код | Кол-во | Наименование
 <% @order_items.each do |order_item| %>
-<%="#{order_item.item.properties['Код товара']} | #{order_item.qty} | #{order_item.item.full_title}"%>
+<%="#{order_item['kod']} | #{order_item['ordered']} | #{order_item['title']}"%>
 <% end %>

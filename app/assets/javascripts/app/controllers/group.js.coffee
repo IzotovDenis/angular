@@ -17,7 +17,7 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 
 	# Отправляемся запрос
 	canceler = $q.defer()
-	$http.get(url).success (data) ->
+	$http.get(url, {timeout: canceler.promise}).success (data) ->
 		# Записываем группу в скоуп
 		$scope.group = data.group
 		# Записываем первые товары в фабрику
@@ -30,6 +30,9 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 
 		# Устанавливаем тит страницы
 		Page.setTitle($scope.group.title)
+
+	$scope.$on "$routeChangeStart", ->
+		canceler.resolve()
 
 
 

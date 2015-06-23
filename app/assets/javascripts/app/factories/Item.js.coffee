@@ -29,7 +29,10 @@ app.factory "Item", Item = ["Order","$filter","$timeout", (Order,$filter, $timeo
 
 	item.firstLoad = (newItems, url, total_entries) ->
 		item.show_pagin = false
-		item.itemsControl = true
+		if newItems.length > 0
+			item.itemsControl = true
+		else
+			item.itemsControl = false
 		item.totalEntries = total_entries
 		item.busy = true
 		item.url = url

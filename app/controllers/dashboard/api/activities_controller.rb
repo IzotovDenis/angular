@@ -6,7 +6,7 @@ class Dashboard::Api::ActivitiesController < Dashboard::ApiController
       @activities = Activity.includes(:user).where(:user_id=>params[:user_id]).order("updated_at DESC").limit(200)
     else
       if params[:from]
-        @activities = Activity.where('id > ?', params[:from]).where.not(user_id: '').includes(:user).order("updated_at DESC")
+        @activities = Activity.where('id > ?', params[:from]).where.not(user_id: nil).includes(:user).limit(500).order("updated_at DESC")
       else
         @activities = Activity.where.not(user_id: nil).includes(:user).limit(500).order("updated_at DESC")
       end

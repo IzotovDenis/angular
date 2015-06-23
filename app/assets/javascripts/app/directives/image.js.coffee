@@ -49,6 +49,7 @@ app.directive "currency", ["User", (User) ->
 	scope:	{
 		value: "="
 		item: "="
+
 	}
 	link: (scope, element, attrs) ->
 		setPrice = ->
@@ -62,6 +63,15 @@ app.directive "currency", ["User", (User) ->
 			User.discount), ((newVal,oldVal) ->
 				setTimeout( ->
 					setPrice()
+				, 100)
+				)
+
+		watch = scope.$watch (->
+			scope.value), ((newVal,oldVal) ->
+				setTimeout( ->
+					setPrice()
+					if scope.value > 0
+						watch()
 				, 100)
 				)
 ]
