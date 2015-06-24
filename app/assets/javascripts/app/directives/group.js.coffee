@@ -12,7 +12,7 @@ app.directive "grouplist", ->
 					if Array.isArray(group.parent)
 						i = 0
 						while i < group.parent.length
-							html = renderParent(group.parent[i],html,i)
+							html = renderParent(group.parent[i],html)
 							i++
 				if group.current
 					html += "<div class='content-title'><p class='lead'>" + group.current.site_title + "</p></div>"
@@ -20,11 +20,14 @@ app.directive "grouplist", ->
 					if Array.isArray(group.children)
 						i = 0
 						while i < group.children.length
-							html = renderParent(group.children[i],html,3)
+							html = renderChild(group.children[i],html,3)
 							i++
 				html
 
-		renderParent = (group, html, count) ->
+		renderParent = (group, html) ->
+			html += "<a href='groups/"+group.id+"' class='group_list group_parent'><span class='title'>"+group.site_title+"</span></a><span class='group_delimeter'> / </span>"
+
+		renderChild = (group, html, count) ->
 			if group.items_count > 0
 				html_count = "<span class='items_count'>(" + group.items_count + ")</span>"
 			else

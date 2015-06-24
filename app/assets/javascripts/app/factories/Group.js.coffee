@@ -116,7 +116,6 @@ app.factory "Group", ["$http", "$q", ($http, $q) ->
 				while i < array.length
 					group.parent.push(groups.find_group(array[i]))
 					i++
-			console.log(group)
 			return group
 
 	groups.build_child = (group) ->
