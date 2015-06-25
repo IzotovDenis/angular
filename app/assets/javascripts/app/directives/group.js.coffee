@@ -12,7 +12,7 @@ app.directive "grouplist", ->
 					if Array.isArray(group.parent)
 						i = 0
 						while i < group.parent.length
-							html = renderParent(group.parent[i],html)
+							html = renderParent(group.parent[i],html, i)
 							i++
 				if group.current
 					html += "<div class='content-title'><p class='lead'>" + group.current.site_title + "</p></div>"
@@ -24,15 +24,15 @@ app.directive "grouplist", ->
 							i++
 				html
 
-		renderParent = (group, html) ->
-			html += "<a href='groups/"+group.id+"' class='group_list group_parent'><span class='title'>"+group.site_title+"</span></a><span class='group_delimeter'> / </span>"
+		renderParent = (group, html, i) ->
+			html += "<a href='groups/"+group.id+"' class='group_list group_parent group_level_"+i+"'><span class='title'>"+group.site_title+"</span></a>"
 
-		renderChild = (group, html, count) ->
+		renderChild = (group, html) ->
 			if group.items_count > 0
 				html_count = "<span class='items_count'>(" + group.items_count + ")</span>"
 			else
 				html_count = ""
-			html += "<a href='groups/"+group.id+"' class='group_list group_level_" + count + "'><span class='title'>"+group.site_title+ " " + html_count + "</span></a>"
+			html += "<a href='groups/"+group.id+"' class='group_list group_level_2'><span class='title'>"+group.site_title+ " " + html_count + "</span></a>"
 
 		renderTree = ->
 			element.html render(scope.group, '', 0)

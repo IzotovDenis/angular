@@ -13,7 +13,6 @@ module Importv3Helper
 	end
 
 	def parse_items(importsession_id)
-		time = Time.now
 		file = "public/uploads/imports/#{importsession_id}/import.xml"
 		parser = Saxerator.parser(File.new(file))
 		parser.for_tag("Товар").each do |tag|
@@ -25,7 +24,6 @@ module Importv3Helper
 				save_image(importsession_id, tag["Картинка"], item.id)
 			end
 		end
-		puts Time.now-time
 	end 
 
 	def parse_item(tag)
@@ -173,7 +171,6 @@ module Importv3Helper
 	end
 
 	def get_offers(importsession_id)
-		time = Time.now
 		file = "public/uploads/imports/#{importsession_id}/offers.xml"
 		parser = Saxerator.parser(File.new(file))
 		price_types = Hash[Pricetype.pluck(:cid, :id)]
@@ -186,7 +183,6 @@ module Importv3Helper
 				item.save
 				next
 			end
-
 			if tag["Цены"]["Цена"]
 				if tag["Цены"]["Цена"].class.to_s == "Saxerator::Builder::HashElement"
 					el = [tag["Цены"]["Цена"]]
@@ -196,7 +192,6 @@ module Importv3Helper
 			else	
 				el = []
 			end
-
 			el.each do |offer|
 				if price_types[offer["ИдТипаЦены"]]
 					item.bids[offer["ИдТипаЦены"]] = parsing_price(offer)
@@ -206,7 +201,6 @@ module Importv3Helper
 				end
 			end
 		end
-		puts Time.now-time
 	end
 	
 

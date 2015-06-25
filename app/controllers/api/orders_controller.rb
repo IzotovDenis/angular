@@ -67,7 +67,7 @@ class Api::OrdersController < ApiController
     private
   # Use callbacks to share common setup or constraints between actions.
   def set_activity
-      activity_save :controller=>controller_name, :action=>action_name,  :old_items=>@old_items, :new_items=>@new_items, :path=>URI(request.referer).path
+    activity_save :controller=>controller_name, :action=>action_name,  :old_items=>@old_items, :new_items=>@new_items, :path=>URI(request.referer).path
   end
 
   def set_order

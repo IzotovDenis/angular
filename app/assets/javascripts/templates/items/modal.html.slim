@@ -3,7 +3,7 @@
   h4.modal-title
   	| {{item.title}}
 .modal-body.modal-item-body
-	.item-image-area ng-click="itemShowImage(item)"
+	.item-image-area. ng-click="itemShowImage(item)"
 		item-image image="item.image" size="'img_item'" id="item.id"
 	.item-content-area
 		div
@@ -58,27 +58,26 @@
 				a ng-href="{{item.certificate}}"
 					span.glyphicon.glyphicon-file
 					span Сертификаты и документы
-			table.table
-				tr ng-if="::item.country"
-					td Страна происхождения
-					td
+				.clear.h-line-dashed
+			.modal-item-properties
+				.modal-item-propertie ng-if="::item.country"
+					span.propertie-name Страна происхождения:
+					span.propertie-value
 						| {{item.country}}
-				tr ng-if="::item.weight"
-					td Вес
-					td
+				.modal-item-propertie ng-if="::item.weight"
+					span.propertie-name Вес:
+					span.propertie-value
 						| {{item.weight}} кг.
-				tr ng-if="::item.type"
-					td Тип
-					td
+				.modal-item-propertie ng-if="::item.type"
+					span.propertie-name Тип:
+					span.propertie-value
 						| {{item.type}}
-				tr ng-if="::item.oems"
-					td ОЕМ
-					td
-						itemoem oems="::item.oems"
-				tr ng-if="::item.applicability"
-					td Применямость запчасти
-					td	
+				.modal-item-propertie ng-if="::item.applicability"
+					span.propertie-name Применямость запчасти
+					span.propertie-value	
 						| {{item.applicability}}
+				.modal-item-properties.modal-item-oem ng-if="::item.oems"
+					itemoem oems="::item.oems"
 	.text ng-if="item.text"
 		p.lead
 			| Описание товара

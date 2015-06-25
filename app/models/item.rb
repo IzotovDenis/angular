@@ -35,7 +35,6 @@ class Item < ActiveRecord::Base
 		if properties
 			@properties = 	"	replace(items.text, '\n', '<br>') as text,
 								items.properties-> 'Страна изготовитель' as country,
-								items.certificate,
 								items.properties-> 'Применяемость' as applicability,
 								items.properties-> 'Количество в упаковке' as in_pack,
 								items.cross,
@@ -46,6 +45,7 @@ class Item < ActiveRecord::Base
 		else
 			@properties = ''
 		end
+		@properties += "items.certificate," if properties && price
 		connection = ActiveRecord::Base.connection
 		if price
 			connection.execute(joins("LEFT JOIN currencies ON currencies.name = (items.bids->'0fa9bc88-166f-11e0-9aa1-001e68eacf93'->>'cy')")
@@ -78,10 +78,6 @@ class Item < ActiveRecord::Base
 							CASE coalesce(items.image, 'null') WHEN 'null' THEN 'false'::boolean ELSE 'true' END AS image,
 							items.created_at").to_sql)
 		end
-	end
-
-	def s
-		connection.execute("select items.id from items WHERE (id IN (1,6,5)) ORDER BY idx(array[5,6,1], items.id)")[0]
 	end
 
 end

@@ -8,24 +8,35 @@ app.controller "ModalItemCtrl", ModalItemCtrl = ["$scope", "$modalInstance", "it
 		if data.certificate && data.certificate.match(/doc&id=([0-9]*)/)
 			id = data.certificate.match(/doc&id=([0-9]*)/)[1]
 			data.certificate = "http://disk.planeta-avtodv.ru/docs/"+id
-			console.log(data.certificate)
 		$scope.item = data
 		if $scope.ordered
 			$scope.item.ordered = $scope.ordered
 			$scope.item.orderitem_id = $scope.orderitem_id
 
 	$scope.addToCart = (item) ->
-		new_order_item = {
-			item_id: item.id,
-			qty: item.ordered
-		}
-		if item.orderitem_id
-			Order.updateInCart(new_order_item, item.orderitem_id)
-		else
-			Order.addToCart(new_order_item)
+		unless item.busy
+			update = true
+			i = 0
+			while i < Order.itemIds.length
+				if item.id == Order.itemIds[i].item_id
+					if item.ordered != Order.itemIds[i].qty
+						update = true
+						break
+					else
+						update = false
+						break
+				else
+					update = true
+				i++
+			if update
+				item.busy = true
+				Order.itemAdd(item).then (->
+					item.busy = false
+				), (reason) ->
+					item.busy = false
 
-	$scope.inCart = (kod) ->
-		found = $filter('getById')(Order.itemList, kod)
+	$scope.inCart = (id) ->
+		found = $filter('getById')(Order.itemIds, id)
 		if found
 			true
 
