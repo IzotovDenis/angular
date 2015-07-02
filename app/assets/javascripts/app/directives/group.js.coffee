@@ -11,9 +11,11 @@ app.directive "grouplist", ->
 				if group.parent
 					if Array.isArray(group.parent)
 						i = 0
+						html = "<div class='group_tree_parents'>"
 						while i < group.parent.length
 							html = renderParent(group.parent[i],html, i)
 							i++
+						html += "</div>"
 				if group.current
 					html += "<div class='content-title'><p class='lead'>" + group.current.site_title + "</p></div>"
 				if group.children
@@ -32,7 +34,7 @@ app.directive "grouplist", ->
 				html_count = "<span class='items_count'>(" + group.items_count + ")</span>"
 			else
 				html_count = ""
-			html += "<a href='groups/"+group.id+"' class='group_list group_level_2'><span class='title'>"+group.site_title+ " " + html_count + "</span></a>"
+			html += "<a href='groups/"+group.id+"' class='group_list group_level_2 group_list_child'><span class='title'>"+group.site_title+ " " + html_count + "</span></a>"
 
 		renderTree = ->
 			element.html render(scope.group, '', 0)

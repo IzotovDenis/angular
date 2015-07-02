@@ -3,11 +3,12 @@
 	max-height: 51px
 	.navbar-nav.navbar-right:last-child
 		margin-right: 0px
+		.head-btn
+			border: 1px solid #ccc
 	.dropdown-user, .dropdown-discount
 		border-top: 0px
 	.dropdown-user:hover, .dropdown-discount:hover
 		background: white
-		border-top: 0px
 	.dropdown-discount
 		width: 110px
 		min-width: 0
@@ -16,7 +17,6 @@
 			span.text
 				font-size: 14px
 				font-weight: bold
-				border-bottom: 1px dashed
 		ul
 			li
 				width: 100px
@@ -60,3 +60,13 @@
 		background-color: #FFFFFF
 .dropdown-user
 	width: 190px
+
+.new-label
+	background-position: 0px 0px
+	&:hover
+		background-position: 0 -28px
+
+.discount-label
+	background-position: 0px -56px
+	&:hover
+		background-position: 0 -84px

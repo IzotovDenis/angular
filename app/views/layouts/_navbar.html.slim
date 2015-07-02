@@ -5,20 +5,9 @@ nav.navbar.navbar-blue.header role="navigation" ng-class="{app_load: appLoad}"
         = link_to "/#/" do
           = image_tag "logo100.png", :height=>"48px"
       ul.nav.navbar-nav.navbar-right
-        li.nav-link
-          = link_to "/newest" do
-            span.glyphicon.glyphicon-plus-sign
-            span.btn-head-lable
-              | Новинки
-        li.dropdown.cursor-pointer
-          a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" role="button"
-            span.text
-              | Информация покупателям
-          ul.dropdown-menu role="menu"
-            - Post.where(:block=>"company_block").order("position ASC").each do |post|
-              li
-                = link_to post.title, "info/#{post.url}"
-        li.dropdown.dropdown-discount.cursor-pointer ng-if="user.authorized == true"
+        li.newdis.new-label
+        li.newdis.discount-label
+        li.head-btn.dropdown.dropdown-discount.cursor-pointer ng-if="user.authorized == true"
           a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" role="button"
             span.text
               | Скидка {{user.discount}} %
@@ -40,24 +29,24 @@ nav.navbar.navbar-blue.header role="navigation" ng-class="{app_load: appLoad}"
             li
               a ng-click="setDiscount(7)"  7%
 
-        li.navbar-cart ng-if="user.authorized == true"
+        li.head-btn.navbar-cart ng-if="user.authorized == true"
           a.cursor-pointer ng-click="open('lg')"
             .glyphicon.glyphicon-shopping-cart
             span.btn-head-lable
               | Корзина:
             .label.label-success 
               | {{order.itemIds.length}}
-        li.nav-link ng-if="user.authorized == false"
+        li.head-btn.nav-link ng-if="user.authorized == false"
           = link_to new_user_session_path, :target=>"_self" do
             span.glyphicon.glyphicon-log-in
             span.btn-head-lable
               | Войти
-        li.nav-link ng-if="user.authorized == false"
+        li.head-btn.nav-link ng-if="user.authorized == false"
           = link_to new_user_registration_path, :target=>"_self" do
             span.glyphicon.glyphicon-edit
             span.btn-head-lable 
               | Регистрация
-        li.dropdown.dropdown-user.cursor-pointer ng-if="user.authorized == true"
+        li.head-btn.dropdown.dropdown-user.cursor-pointer ng-if="user.authorized == true"
           a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" role="button"
             span.glyphicon.glyphicon-user
             span.btn-head-lable

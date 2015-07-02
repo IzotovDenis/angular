@@ -7,12 +7,15 @@ html ng-app="App" ng-controller="MainCtrl"
     = csrf_meta_tags
     base href="/"
   body 
-    = render 'layouts/navbar'
     .app-container ng-class="{app_load: appLoad}" 
       .inner-block.clearfix
         .left-bar
+          .center
+            = link_to "/#/" do
+              = image_tag "small.png"
           = render "layouts/menu"
         .content
+          = render 'layouts/head_content'
           = yield
       .footer
         = render "layouts/footer"
