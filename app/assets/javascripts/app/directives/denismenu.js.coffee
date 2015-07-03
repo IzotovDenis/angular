@@ -5,6 +5,7 @@ app.directive "denismenu", [ "$timeout", "RightMenu", ($timeout, RightMenu)  ->
 			RightMenu.active = true
 			RightMenu.current = attrs.id
 			$scope.aa = RightMenu.current
+			$scope.cinTimeout = false
 			$scope.$apply()
 
 		elem.bind "mouseover", ->
@@ -42,6 +43,7 @@ app.directive "denismenu1", [ "$timeout", "RightMenu", ($timeout, RightMenu)  ->
 			$scope.inTimeout = false
 			$scope.cinTimeout = false
 			$scope.aa = attrs.id
+			$scope.cinTimeout = false
 			$scope.$apply()
 
 		elem.bind "mouseleave", ->
