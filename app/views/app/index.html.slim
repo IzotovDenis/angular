@@ -1,20 +1,3 @@
-.search-form
-	form ng-submit="enterFind(newQuery)"
-		.input-group.center-find
-			input.form-control.find-input placeholder="введите запрос" type="text" ng-model="newQuery.query" ng-change="enterFind(newQuery)" ng-model-options="{debounce: 1000}" find-input=""
-			span.input-group-btn.find-select
-				select.form-control ng-model="newQuery.attr" ng-init="newQuery.attr = 'all'"
-								option value="all" Везде
-								option value="code" По коду
-								option value="article" По артикулу
-								option value="title" По наименованию
-								option value="oem" По OEM
-			span.input-group-btn
-				.btn.btn-primary type="button" ng-click="enterFind(newQuery)" Поиск
-		.checkbox ng-show="system.group.id"
-			label
-					input type="checkbox" ng-model="newQuery.group"
-						| Искать в категории: {{system.group.title}}
 div ng-if="system.error.status"
 	.alert.alert-danger
 		p.lead 

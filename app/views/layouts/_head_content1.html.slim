@@ -1,20 +1,10 @@
 .head-content
-	ul.controls.controls-left
-		li.head-btn
+	ul.controls
+		li.head-btn.navbar-cart
 			a.cursor-pointer ng-href="/newest"
 				span.btn-head-lable
 					| Новинки
-		li.head-btn
-			a.cursor-pointer ng-href="/newest"
-				span.btn-head-lable
-					| Скоро поступление
-		li.head-btn
-			a.cursor-pointer ng-href="/newest"
-				span.btn-head-lable
-					| Избранное
-
-	ul.controls.controls-right
-		li.head-btn.dropdown.dropdown-discount.cursor-pointer ng-if="user.authorized == true"
+		li.head-btn.dropdown.dropdown-discount.cursor-pointer
 			a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" role="button"
 				span.text
 					| Скидка {{user.discount}} %
@@ -35,6 +25,13 @@
 					a ng-click="setDiscount(6)"  6%
 				li
 					a ng-click="setDiscount(7)"  7%
+		li.head-btn.navbar-cart ng-if="user.authorized == true"
+			a.cursor-pointer ng-click="open('lg')"
+				.glyphicon.glyphicon-shopping-cart
+				span.btn-head-lable
+					| Корзина:
+				.label.label-success 
+					| {{order.itemIds.length}}
 		li.head-btn.nav-link ng-if="user.authorized == false"
 			= link_to new_user_session_path, :target=>"_self" do
 				span.glyphicon.glyphicon-log-in
@@ -45,18 +42,17 @@
 				span.glyphicon.glyphicon-edit
 				span.btn-head-lable 
 					| Регистрация
-		li.head-btn.nav-link ng-if="user.authorized == true"
-			= link_to "/orders" do
-				span.glyphicon.glyphicon-list-alt
-				span.btn-head-lable 
-					| Мои заказы
-		li.head-btn.nav-link ng-if="user.authorized == true"
-			= link_to "/profile" do
+		li.head-btn.dropdown.dropdown-user.cursor-pointer ng-if="user.authorized == true"
+			a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" role="button"
 				span.glyphicon.glyphicon-user
-				span.btn-head-lable 
-					| Профиль
-		li.head-btn.nav-link ng-if="user.authorized == true"
-			= link_to destroy_user_session_path, :target=>"_self", :method=>:delete do
-				span.glyphicon.glyphicon-log-out
-				span.btn-head-lable 
-					| Выход
+				span.btn-head-lable
+					| Меню покупателя
+				span.caret
+			ul.dropdown-menu.dropdown-user role="menu" 
+				li
+					a ng-href="/profile"  Профиль
+				li
+					a ng-href="/orders"  Мои заказы
+				li.divider
+				li
+					= link_to 'выход', destroy_user_session_path, :target=>"_self", :method=>:delete

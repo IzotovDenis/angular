@@ -10,7 +10,26 @@ app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "
 	$timeout(getOrder, 500)
 
 	$scope.addToCart = (item) ->
-		Order.itemAdd(item)
+		unless item.busy
+			update = true
+			i = 0
+			while i < Order.itemIds.length
+				if item.id == Order.itemIds[i].item_id
+					if item.ordered.toString() != Order.itemIds[i].qty.toString()
+						update = true
+						break
+					else
+						update = false
+						break
+				else
+					update = true
+				i++
+			if update
+				item.busy = true
+				Order.itemAdd(item).then (->
+					item.busy = false
+				), (reason) ->
+					item.busy = false
 
 	$scope.deleteItem = (item) ->
 		items = [item]

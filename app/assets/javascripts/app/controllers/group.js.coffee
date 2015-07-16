@@ -14,8 +14,7 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 		url = url + "?page="+$routeParams.page
 
 	$scope.groups.setGroup($routeParams.groupId)
-	console.log($scope.groups.tree)
-
+	
 	# Отправляемся запрос
 	canceler = $q.defer()
 	$http.get(url, {timeout: canceler.promise}).success (data) ->
@@ -34,8 +33,5 @@ app.controller "GroupCtrl", GroupCtrl = ["$scope", "$http", "Item", "Order", "Or
 
 	$scope.$on "$routeChangeStart", ->
 		canceler.resolve()
-
-
-
 	
 ]
