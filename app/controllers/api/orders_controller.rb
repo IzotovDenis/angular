@@ -5,8 +5,9 @@ class Api::OrdersController < ApiController
   after_action :set_activity, only: [:add_items, :delete_items]
 
   def index
-    @orders = Order.where(:user_id=>1).where("formed IS NOT NULL").select("total, to_char(formed , 'DD.MM.YYYY HH24:MI:SS') as date, id").order("formed DESC")
-    render :json=>@orders
+    @orders = Order.where(:user_id=>current_user.id).where("formed IS NOT NULL").select("total, to_char(formed , 'DD.MM.YYYY HH24:MI:SS') as date, id").order("formed DESC").page(params[:page])
+    @count = Order.where(:user_id=>current_user.id).where("formed IS NOT NULL").count
+    render :json=>{:orders=>@orders,:orders_count=>@count}
   end
 
   def current

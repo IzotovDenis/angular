@@ -8,6 +8,7 @@ class Order < ActiveRecord::Base
 	scope :today, ->{where(:formed=>DateTime.now.beginning_of_day..DateTime.now.end_of_day).ready}
 	scope :formed_from, ->(period) {where(["formed >= ?", period]).ready}
 	scope :formed_before, ->(period) {where(["formed <= ?", period]).ready}
+	self.per_page = 30
 
 	after_save :update_orders_counter_cache
 	after_destroy :update_orders_counter_cache

@@ -141,7 +141,6 @@ module Importv3Helper
 			end
 	end
 
-
 #Полный импорт
 	def full_import(importsession_id)
 		#Импортируем группы
@@ -183,15 +182,7 @@ module Importv3Helper
 				item.save
 				next
 			end
-			if tag["Цены"]["Цена"]
-				if tag["Цены"]["Цена"].class.to_s == "Saxerator::Builder::HashElement"
-					el = [tag["Цены"]["Цена"]]
-				else
-					el = tag["Цены"]["Цена"]
-				end
-			else	
-				el = []
-			end
+			el = tag_to_array(tag["Цены"]["Цена"])
 			el.each do |offer|
 				if price_types[offer["ИдТипаЦены"]]
 					item.bids[offer["ИдТипаЦены"]] = parsing_price(offer)
@@ -202,8 +193,20 @@ module Importv3Helper
 			end
 		end
 	end
-	
 
+	def tag_to_array(tag)
+		if tag
+			if tag.class.to_s == "Saxerator::Builder::HashElement"
+				el = [tag]
+			else
+				el = tag
+			end
+		else	
+			el = []
+		end
+		el
+	end
+	
 	def parsing_price(tag)
 		hash = Hash.new
 		hash['title'] = item_tag(tag["Представление"])
@@ -221,7 +224,6 @@ module Importv3Helper
 			end
 		end
 	end
-
 end
 
 
