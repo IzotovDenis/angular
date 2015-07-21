@@ -70,8 +70,6 @@ app.directive "currency", ["User", (User) ->
 			scope.value), ((newVal,oldVal) ->
 				setTimeout( ->
 					setPrice()
-					if scope.value > 0
-						watch()
 				, 100)
 				)
 ]
