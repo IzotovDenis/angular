@@ -2,7 +2,11 @@ class Dashboard::Api::UsersController < Dashboard::ApiController
   respond_to :json
   before_action :set_user, :only=>[:show, :update, :update_role]
   def index
-  	@users = User.all
+    if params[:role]
+      @users = User.where(:role=>params[:role])
+    else
+      @users = User.all
+    end
   end
 
   def show

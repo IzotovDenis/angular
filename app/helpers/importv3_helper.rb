@@ -107,19 +107,6 @@ module Importv3Helper
 		end
 	end
 
-# Удаление старых групп
-	def remove_old_groups(importsession_id)
-		# Поиск групп не из текущей сессии обмена
-		groups = Group.where.not(importsession_id: importsession_id)
-		if groups
-			groups.each do |group|
-				group.items each do |item|
-					group.destroy
-				end
-			end
-		end
-	end
-
 # Делаем группы скрытыми
 	def set_disabled_group
 		@group = Group.disableded
@@ -130,15 +117,15 @@ module Importv3Helper
 
 # Импорт
 	def import1c(importsession_id)
-			# проверяем тип выгрузки
-			importsession = Importsession.find(importsession_id)
-			if importsession.exchange_type == "changes"
-				# Действия для изменений
-				change_import(importsession_id)
-			elsif importsession.exchange_type == "full"
-				# Действия для полной выгрузки
-				full_import(importsession_id)
-			end
+		# проверяем тип выгрузки
+		importsession = Importsession.find(importsession_id)
+		if importsession.exchange_type == "changes"
+			# Действия для изменений
+			change_import(importsession_id)
+		elsif importsession.exchange_type == "full"
+			# Действия для полной выгрузки
+			full_import(importsession_id)
+		end
 	end
 
 #Полный импорт
@@ -146,26 +133,18 @@ module Importv3Helper
 		#Импортируем группы
 		parse_groups(importsession_id)
 		#Устанавливаем иерархию
-		set_parent_group
-		#Скрываем скрытые папки
-		set_disabled_group
-		#Импортируем товары
+		GroupSetStructureWorker.perform_async
 		parse_items(importsession_id)
-		#Привязываем товары к группе
-		set_group(importsession_id)
 		#Импортируем цены
 		get_offers(importsession_id)
-		sort_items
-		Group.set_new_item_time
+		SetGroupAndSortItems.perform_async(importsession_id)
 		return true
 	end
 
 	def change_import(importsession_id)
 		parse_items(importsession_id)
 		get_offers(importsession_id)
-		set_group(importsession_id)
-		sort_items
-		Group.set_new_item_time
+		SetGroupAndSortItems.perform_async(importsession_id)
 		return true
 	end
 
