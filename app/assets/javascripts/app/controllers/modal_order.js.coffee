@@ -28,12 +28,14 @@ app.controller "ModalOrderCtrl", ModalOrderCtrl = ["$scope", "$modalInstance", "
 				item.busy = true
 				Order.itemAdd(item).then (->
 					item.busy = false
+					Order.calcAmount
 				), (reason) ->
 					item.busy = false
 
 	$scope.deleteItem = (item) ->
 		items = [item]
 		Order.deleteFromCart(items)
+		Order.calcAmount
 
 	$scope.checkAll = (val) ->
 		angular.forEach($scope.order.current.items, (value) ->
